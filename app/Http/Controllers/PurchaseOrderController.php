@@ -15,6 +15,8 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         //
+
+        return view('purchaseorder.index');
     }
 
     /**
