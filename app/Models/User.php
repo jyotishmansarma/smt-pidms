@@ -18,6 +18,9 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
+     protected $table = 'pidms_users';
+
     /**
      * The attributes that are mass assignable.
      *

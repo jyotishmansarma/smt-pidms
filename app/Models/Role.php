@@ -9,6 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
+    protected $table = 'pidms_role';
+
     protected $fillable=[
         'title'
     ];
