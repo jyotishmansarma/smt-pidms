@@ -167,17 +167,20 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    Do you want to select dealer for this order
+                    Do you want to select dealer for this order ?
+                    <label> YES </label> <input wire:model="showSelect" type="checkbox" value=""/> 
                 </div>
                 <div class="col-md-4">
+                    @if($showSelect)
                     <div class="input_wrap mb-4">
                     <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
                     <select class="form-select" name="user_type">
                         <option value="">Select Dealer</option>
-                            <option> Dealer 1</option>
-                            <option> Dealer 2</option>
+                            <option> Dealer 1 </option>
+                            <option> Dealer 2 </option>
                     </select>
                     </div>
+                    @endif
                 </div>
             </div>
 
