@@ -20,6 +20,9 @@ Route::get('/', function () {
 Route::get('register', [\App\Http\Controllers\RegisterController::class, 'create'])->name('register');
 Route::post('register', [\App\Http\Controllers\RegisterController::class, 'store'])->name('register');
 
+Route::resource('purchase', \App\Http\Controllers\PurchaseOrderController::class);
+
+
 Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
@@ -37,6 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/issue_update/{id}', [ \App\Http\Controllers\IssueTrackingController::class, 'delete'])->name('delete');
     Route::get('/my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'get_myprofile'])->name('get_myprofile');
     Route::post('/update-my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'update_myprofile'])->name('update_myprofile');
+
+
 
 });
 

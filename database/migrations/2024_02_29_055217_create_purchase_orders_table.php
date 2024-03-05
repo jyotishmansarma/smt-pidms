@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIssueSerialNoToIssueTrackings extends Migration
+class CreatePurchaseOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddIssueSerialNoToIssueTrackings extends Migration
      */
     public function up()
     {
-        Schema::table('issue_trackings', function (Blueprint $table) {
-            $table->string('serial_no')->after('id')->nullable();
+        Schema::create('purchase_orders', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class AddIssueSerialNoToIssueTrackings extends Migration
      */
     public function down()
     {
-        Schema::table('issue_trackings', function (Blueprint $table) {
-            $table->dropColumn('serial_no');
-        });
+        Schema::dropIfExists('purchase_orders');
     }
 }
