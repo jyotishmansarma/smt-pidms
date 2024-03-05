@@ -27,24 +27,23 @@
                 </li>
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Issue</span>
+                    <span class="hide-menu">Purches</span>
                 </li>
-                @can('create_issue')
+
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('issue.create') }}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('purchase.create') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                        <span class="hide-menu">Create Issue</span>
+                        <span class="hide-menu">Create Purches</span>
                     </a>
                 </li>
-                @endcan
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('issue.index') }}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('purchase.index') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                        <span class="hide-menu">List Issue</span>
+                        <span class="hide-menu">Purches Lisr</span>
                     </a>
                 </li>
 {{--                <li class="sidebar-item">--}}
@@ -63,14 +62,7 @@
 {{--                        <span class="hide-menu">Forms</span>--}}
 {{--                    </a>--}}
 {{--                </li>--}}
-{{--                <li class="sidebar-item">--}}
-{{--                    <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">--}}
-{{--                <span>--}}
-{{--                  <i class="ti ti-typography"></i>--}}
-{{--                </span>--}}
-{{--                        <span class="hide-menu">Typography</span>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
+                   
                 <li class="nav-small-cap">
                     <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                     <span class="hide-menu">User</span>
