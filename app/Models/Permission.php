@@ -9,7 +9,7 @@ class Permission extends Model
 {
     use HasFactory;
 
-    protected $table = 'pidms_permissions';
+    protected $table = 'permissions';
     
     protected $fillable=[
         'title'

@@ -10,13 +10,16 @@ class Schemes extends Model
     use HasFactory;
     protected $fillable=[
         'scheme_name',
-        'division_id'
+        'division'
     ];
-    protected $with = ['slssc'];
 
-    public function slssc()
-    {
-        return $this->hasOne(SlsscSchemes::class,'id','slssc_id');
+    protected $primaryKey = 'scheme_id';
 
-    }
+    // protected $with = ['slssc'];
+
+    // public function slssc()
+    // {
+    //     return $this->hasOne(SlsscSchemes::class,'id','slssc_id');
+
+    // }
 }

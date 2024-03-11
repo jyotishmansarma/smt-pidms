@@ -12,13 +12,17 @@
             @csrf
             
             <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Division</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="user_type">
-                            <option value="">Select</option>
-                                <option> Division 1</option>
-                                <option> Division 2</option>
+                        <select class="form-select" name="division" wire:model='selectedDivision'>
+                            @if($divisions)
+                                @foreach ($divisions as $division)
+                                <option value="{{ $division->id }}"> {{ $division->division_name }}</option>
+                                @endforeach
+                            @else 
+                                <option value="">Select Division </option>
+                            @endif
                         </select>
                         </div>
                     </div>
@@ -26,43 +30,63 @@
                     <div class="col-md-4">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Scheme</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="user_type">
-                            <option value="">Select</option>
-                                <option> Scheme 1</option>
-                                <option> Scheme 2</option>
+                        <select class="form-select" name="scheme" wire:model='selectedScheme'>
+                            @if($schemes)
+                            @foreach ($schemes as $scheme)
+                                <option value="{{ $scheme->scheme_id }} ">{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
+                            @endforeach
+                            @else
+                                <option value=""> Select scheme</option>
+                            @endif
                         </select>
                         </div>
                     </div>
 
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Contractor</label><span style="color:red">&#42;</span>
                         <select class="form-select" name="user_type">
-                            <option value="">Select</option>
-                                <option> Contractor 1</option>
-                                <option> Contractor 2</option>
+                            @if($contractors)
+                            @foreach ($contractors as $contractor)
+                                <option value="{{ $contractor->id }} ">{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
+                            @endforeach
+                            @else
+                                <option value=""> Select Contractor</option>
+                            @endif
                         </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_wrap mb-4">
+                        <label class="form-label">Work Order No.</label><span style="color:red">&#42;</span>
+                            
                         </div>
                     </div>
             </div>
 
             <div class="products_wrap p-4 mb-4">
+            <div class="product-row">
             <div class="row">
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
-                    <label class="form-label">Product Category</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="user_type">
-                        <option value="">Select</option>
-                            <option> Category 1</option>
-                            <option> Category 2</option>
+                    <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
+                    <select class="form-select" name="product_type">
+                        @if($product_types)
+                            @foreach ($product_types as $product_type)
+                                <option> {{ $product_type }}</option>
+                            @endforeach
+                        @else
+                        <option> Select Type </option>
+                        @endif
                     </select>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="input_wrap mb-4">
-                    <label class="form-label">Product Name</label><span style="color:red">&#42;</span>
+                    <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
                     <select class="form-select" name="user_type">
                         <option value="">Select</option>
                             <option> Name 1</option>
@@ -71,7 +95,19 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
+                    <div class="input_wrap mb-4">
+                    <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
+                    <select class="form-select" name="user_type">
+                        <option value="">Select</option>
+                            <option> Name 1</option>
+                            <option> Name 2</option>
+                    </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-1">
                     <div class="input_wrap mb-4">
                         <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
                         <input type="number" class="form-control" id="quanitty" name="quantity" aria-describedby="textHelp" value="">
@@ -83,9 +119,19 @@
 
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
-                        <label for="quanitity" class="form-label">Unit Price</label><span style="color:red">&#42;</span>
-                        <input type="text" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
+                        <label for="quantity" class="form-label">Batch No</label><span style="color:red">&#42;</span>
+                        <input type="number" class="form-control" id="quanitty" name="quantity" aria-describedby="textHelp" value="">
                         @error('quantity')
+                        <span style="color: red"></span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="input_wrap mb-4">
+                        <label for="quanitity" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
+                        <input type="text" class="form-control" id="quantity" name="price" aria-describedby="textHelp" value="">
+                        @error('price')
                         <span style="color: red"></span>
                         @enderror
                     </div>
@@ -98,72 +144,17 @@
                     </div>
                 </div>
                 
-            </div>  
-            
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                    <label class="form-label">Product Category</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="user_type">
-                        <option value="">Select</option>
-                            <option> Category 1</option>
-                            <option> Category 2</option>
-                    </select>
-                    </div>
-                </div>
+            </div> 
+            </div> 
 
-                <div class="col-md-3">
-                    <div class="input_wrap mb-4">
-                    <label class="form-label">Product Name</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="user_type">
-                        <option value="">Select</option>
-                            <option> Name 1</option>
-                            <option> Name 2</option>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
-                        <input type="number" class="form-control" id="quanitty" name="quantity" aria-describedby="textHelp" value="">
-                        @error('quantity')
-                        <span style="color: red"></span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quanitity" class="form-label">Unit Price</label><span style="color:red">&#42;</span>
-                        <input type="text" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
-                        @error('quantity')
-                        <span style="color: red"></span>
-                        @enderror
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quanitity" class="form-label">Total Price</label>
-                        <input disabled type="text" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
-                    </div>
-                </div>
-                <div class="col-md-1">
-                <button class="btn btn-danger btn-plus py-8 fs-4 mb-4 rounded-2 mt-4"> - </button>
-                </div>
-            </div>
-
-            <div class="d-flex flex-row-reverse">
+            <div class="d-flex ">
                 <div class="add-more-wrap">
-                    <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2"> + Add more </button>
+                    <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2" wire:click="addrow"> + Add more </button>
                 </div>
             </div>
 
 
             </div>
-
-            
 
             <div class="row">
                 <div class="col-md-12">

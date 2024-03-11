@@ -13,7 +13,7 @@
 {{--                </a>--}}
 
                 @if(Auth::user()->role_user->role_id==2)
-                     <h4>User Type: {{Auth::user()->userType->name}} user</h4>
+                     {{-- <h4>User Type: {{Auth::user()->userType->name}} user</h4> --}}
 
                 @endif
             </li>

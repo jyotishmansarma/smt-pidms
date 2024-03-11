@@ -14,7 +14,8 @@ class Division extends Model
         'circle_id'
     ];
     protected $with = ['circle','zone'];
-
+    
+    protected $table = 'division_master';
 
     public function circle(){
         return $this->belongsTo(Circle::class,'circle_id','id');
