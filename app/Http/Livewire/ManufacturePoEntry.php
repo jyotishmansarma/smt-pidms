@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Contractor;
 use App\Models\Division;
+use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Schemes;
 use App\Models\WorkAllotment;
@@ -17,6 +18,7 @@ class ManufacturePoEntry extends Component
     public $schemes;
     public $contractors;
     public $product_types;
+    public $products;
 
     public $selectedDivision;
     public $selectedScheme;
@@ -35,15 +37,30 @@ class ManufacturePoEntry extends Component
 
     }
 
-    
+    public function addRow()
+    {
+        $this->product_items[] = ['seleactedProductType' => '', 'selectedProduct' => '', 'selectedDealer' => '', 'quantity' => '', 'batchno' => '', 'price' => '', 'totalprice' => '' ];
+    }
 
-    public function addrow() {
-       
+    public function removeRow($index)
+    {
+        unset($this->product_items[$index]);
+        $this->product_items = array_values($this->product_items);
+    }
+
+    public function updatedProductItems()
+    {
+        if (empty($this->product_items)) {
+            $this->addRow();
+        }
     }
 
     public function mount()
 
     {
+
+        $this->addRow();
+
         if ($this->selectedDivision) {
             $this->schemes = Schemes::where("division", $this->selectedDivision)->get();
         }
@@ -53,11 +70,8 @@ class ManufacturePoEntry extends Component
             $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $this->selectedScheme)->first();
 
             if($work_allotment)
-            $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
-           
-        }
-
-      
+                $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+            }
     }
 
     public function toggleClick()
@@ -69,6 +83,7 @@ class ManufacturePoEntry extends Component
     {
         $this->divisions = Division::all();
         $this->product_types =  ProductType::all();
+        $this->products = Product::all();
         return view('livewire.manufacture-po-entry');
     }
 }

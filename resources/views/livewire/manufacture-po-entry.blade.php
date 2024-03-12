@@ -8,9 +8,9 @@
 
         <div class="container-fluid">
         <div class="form_wrap p-2">
-        <form method="post" action="">
+        {{-- <form method="post" action="">
             @csrf
-            
+             --}}
             <div class="row">
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
@@ -67,89 +67,100 @@
             </div>
 
             <div class="products_wrap p-4 mb-4">
-            <div class="product-row">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                    <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="product_type">
-                        @if($product_types)
-                            @foreach ($product_types as $product_type)
-                                <option> {{ $product_type }}</option>
+
+            @foreach($product_items as $index => $row)
+                <div class="product-row" wire:key="row-{{ $index }}">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="input_wrap mb-4">
+                        <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
+                        <select class="form-select" name="product_type"  wire:model="product_items.{{ $index }}.seleactedProductType">
+                            @if($product_types)
+                                @foreach ($product_types as $product_type)
+                                    <option> {{ $product_type->name }}</option>
+                                @endforeach
+                            @else
+                            <option> Select Type </option>
+                            @endif
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input_wrap mb-4">
+                        <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
+                        <select class="form-select" name="user_type" wire:model="product_items.{{ $index }}.selectedProduct">
+                            @if($products)
+                            @foreach ($products as $product)
+                                <option> {{ $product->prod_name }}</option>
                             @endforeach
-                        @else
-                        <option> Select Type </option>
-                        @endif
-                    </select>
+                            @else
+                            <option> Select Product Dimensions </option>
+                            @endif
+                        </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-3">
-                    <div class="input_wrap mb-4">
-                    <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="user_type">
-                        <option value="">Select</option>
-                            <option> Name 1</option>
-                            <option> Name 2</option>
-                    </select>
+                    <div class="col-md-3">
+                        <div class="input_wrap mb-4">
+                        <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
+                        <select class="form-select" name="user_type" wire:model="product_items.{{ $index }}.selectedDealer">
+                            <option value="">Select</option>
+                                <option> Name 1</option>
+                                <option> Name 2</option>
+                        </select>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="input_wrap mb-4">
-                    <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="user_type">
-                        <option value="">Select</option>
-                            <option> Name 1</option>
-                            <option> Name 2</option>
-                    </select>
-                    </div>
-                </div>
 
 
-                <div class="col-md-1">
-                    <div class="input_wrap mb-4">
-                        <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
-                        <input type="number" class="form-control" id="quanitty" name="quantity" aria-describedby="textHelp" value="">
-                        @error('quantity')
-                        <span style="color: red"></span>
-                        @enderror
+                    <div class="col-md-1">
+                        <div class="input_wrap mb-4">
+                            <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
+                            <input wire:model="product_items.{{ $index }}.quantity" type="number" class="form-control" id="quanitty" name="quantity"  value="">
+                            @error('quantity')
+                            <span style="color: red"></span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quantity" class="form-label">Batch No</label><span style="color:red">&#42;</span>
-                        <input type="number" class="form-control" id="quanitty" name="quantity" aria-describedby="textHelp" value="">
-                        @error('quantity')
-                        <span style="color: red"></span>
-                        @enderror
+                    <div class="col-md-2">
+                        <div class="input_wrap mb-4">
+                            <label for="batch" class="form-label">Batch No</label><span style="color:red">&#42;</span>
+                            <input wire:model="product_items.{{ $index }}.batchno" type="number" class="form-control" id="batch" name="batchno"  value="">
+                            @error('quantity')
+                            <span style="color: red"></span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quanitity" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
-                        <input type="text" class="form-control" id="quantity" name="price" aria-describedby="textHelp" value="">
-                        @error('price')
-                        <span style="color: red"></span>
-                        @enderror
+                    <div class="col-md-2">
+                        <div class="input_wrap mb-4">
+                            <label for="price" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
+                            <input wire:model="product_items.{{ $index }}.price" type="text" class="form-control" id="price" name="price"  >
+                            @error('price')
+                            <span style="color: red"></span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-2">
-                    <div class="input_wrap mb-4">
-                        <label for="quanitity" class="form-label">Total Price</label>
-                        <input disabled type="text" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
+                    <div class="col-md-2">
+                        <div class="input_wrap mb-4">
+                            <label for="totalprice" class="form-label">Total Price</label>
+                            <input wire:model="product_items.{{ $index }}.totalprice"  disabled type="text" class="form-control" id="totalprice" name="quantity"  value="">
+                        </div>
                     </div>
-                </div>
-                
-            </div> 
-            </div> 
+
+                    <div class="col-md-1">
+                    <button class="btn btn-danger w-20 py-8 fs-4 mt-4 rounded-2" wire:click="removeRow({{ $index }})"> <i class="fas fa-trash"></i></button>
+                    </div>
+                </div> 
+                </div> 
+            @endforeach
+
 
             <div class="d-flex ">
                 <div class="add-more-wrap">
-                    <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2" wire:click="addrow"> + Add more </button>
+                    <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2" wire:click="addRow"> + Add more </button>
                 </div>
             </div>
 
@@ -179,7 +190,7 @@
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
                         <label for="batch_no" class="form-label">Batch No.</label><span style="color:red">&#42;</span>
-                        <input type="text" class="form-control" id="batch_no" name="batch_no" aria-describedby="textHelp" value="">
+                        <input type="text" class="form-control" id="batch_no" name="batch_no"  value="">
                         @error('batch_no')
                         <span style="color: red"></span>
                         @enderror
@@ -197,7 +208,7 @@
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
                             <label for="quanitity" class="form-label">PO Number</label><span style="color:red">&#42;</span>
-                            <input type="text" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
+                            <input type="text" class="form-control" id="quantity" name="quantity"  value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
@@ -207,7 +218,7 @@
                     <div class="col-md-4">
                         <div class="input_wrap mb-4">
                             <label for="quanitity" class="form-label">Upload PO</label><span style="color:red">&#42;</span>
-                            <input type="file" class="form-control" id="quantity" name="quantity" aria-describedby="textHelp" value="">
+                            <input type="file" class="form-control" id="quantity" name="quantity"  value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
@@ -228,7 +239,7 @@
                 <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Upload Order</button>
                 </div>
             </div>
-        </form>
+        {{-- </form> --}}
         </div>
         </div>
 </div>
