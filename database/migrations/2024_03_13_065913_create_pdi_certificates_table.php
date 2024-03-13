@@ -15,10 +15,12 @@ class CreatePdiCertificatesTable extends Migration
     {
         Schema::create('pdi_certificates', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('purchase_order_id');
             $table->string('agency_name');
             $table->string('certificate_no');
-            $table->string('certificate_date');
+            $table->timestamp('certificate_date');
             $table->string('certificate_file');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
             $table->timestamps();
         });
     }
