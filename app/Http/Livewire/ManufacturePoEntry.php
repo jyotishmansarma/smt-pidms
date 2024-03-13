@@ -10,10 +10,12 @@ use App\Models\ProductType;
 use App\Models\Schemes;
 use App\Models\WorkAllotment;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class ManufacturePoEntry extends Component
 {
-
+    use WithFileUploads;
+    
     public $divisions;
     public $searchDivision;
     public $schemes;

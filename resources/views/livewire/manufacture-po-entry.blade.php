@@ -73,11 +73,11 @@
                     
                 <div class="row">
                     <div class="col-md-12">
-                        Are the suppliers routed through dealer?
+                        <label class="form-label">Are the suppliers routed through dealer?</label>
                         <label> YES </label> <input wire:click="toggleClick( {{ $index }})" type="checkbox" value="" /> 
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
                         <select class="form-select " name="product_type"  wire:model="product_items.{{ $index }}.seleactedProductType">
@@ -108,7 +108,7 @@
                     </div>
 
                     @if($row['showSelect']) 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
                         <select class="form-select" name="selectedDealer" wire:model="product_items.{{ $index }}.selectedDealer">
@@ -126,6 +126,16 @@
                     </div>
                     @endif
 
+                    <div class="col-md-1">
+                        <div class="input_wrap mb-4">
+                            <label for="batch" class="form-label">Batch No.</label><span style="color:red">&#42;</span>
+                            <input wire:model="product_items.{{ $index }}.batchno" type="text" class="form-control" name="batchno"  value="">
+                            @error('batchno')
+                            <span style="color: red"></span>
+                            @enderror
+                        </div>
+                    </div>
+
 
                     <div class="col-md-1">
                         <div class="input_wrap mb-4">
@@ -137,17 +147,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
-                        <div class="input_wrap mb-4">
-                            <label for="batch" class="form-label">Batch No.</label><span style="color:red">&#42;</span>
-                            <input wire:model="product_items.{{ $index }}.batchno" type="text" class="form-control" name="batchno"  value="">
-                            @error('batchno')
-                            <span style="color: red"></span>
-                            @enderror
-                        </div>
-                    </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="input_wrap mb-4">
                             <label for="price" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
                             <input wire:model="product_items.{{ $index }}.price" type="number" step="0.01" min="0" class="form-control" name="price">
@@ -174,7 +175,7 @@
 
             <div class="d-flex ">
                 <div class="add-more-wrap">
-                    <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2" wire:click="addRow"> + Add more </button>
+                    <button class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click="addRow"> + Add more </button>
                 </div>
             </div>
 
@@ -183,21 +184,28 @@
 
 
             <div class="PO_wrap p-4 mb-4">
+                @foreach($certificates as $index => $row)
                 <div class="row">
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
-                            <label for="quanitity" class="form-label">PDI Agency Name</label><span style="color:red">&#42;</span>
-                            <input type="text" class="form-control" name="quantity"  value="">
+                            <label for="agency" class="form-label">PDI Agency Name</label><span style="color:red">&#42;</span>
+                            
+                            <select class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
+                            
+                                <option value="0"> Select dealer </option>
+                                <option value="">AGENCY 1</option>
+                            </select>
+
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
                             <label for="quanitity" class="form-label">Certificate No.</label><span style="color:red">&#42;</span>
-                            <input type="text" class="form-control" name="certicate_no"  value="">
+                            <input type="text" class="form-control" name="certicate_no"  wire:model="certificates.{{ $index }}.certicate_no" value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
@@ -207,32 +215,38 @@
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                             <label for="quanitity" class="form-label">Date</label><span style="color:red">&#42;</span>
-                            <input type="date" class="form-control"  name="certifcate_date"  value="">
+                            <input type="date" class="form-control"  name="certifcate_date"  wire:model="certificates.{{ $index }}.certifcate_date" value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="input_wrap mb-4">
                             <label for="quanitity" class="form-label">Upload Certificate</label><span style="color:red">&#42;</span>
-                            <input type="file" class="form-control" name="Certificate_file"  value="">
+                            <input type="file" class="form-control" name="Certificate_file"  wire:model="certificates.{{ $index }}.Certificate_file" value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
                         </div>
                     </div>
 
-                    <div class="float-right">
-                        <button class="btn btn-warning w-20 py-8 fs-4 mb-4 rounded-2"> + Add more </button>
+                    <div class="col-md-1">
+                        <button class="btn btn-danger w-20 py-2 fs-4 mt-4 rounded-2" wire:click="removeCertificate({{ $index }})"> <i class="fas fa-trash"></i></button>
                     </div>
                 </div>
+                @endforeach
+
+                <div class="float-right">
+                    <button class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click='addCertificate'> + Add more </button>
+                </div>
+
             </div>
     
             <div class="row">
                 <div class="col-md-3">
-                <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">Submit</button>
+                <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Submit</button>
                 </div>
             </div>
         {{-- </form> --}}

@@ -15,6 +15,15 @@ class CreatePurchaseOrdersTable extends Migration
     {
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('division_id');
+            $table->unsignedBigInteger('scheme_id');
+            $table->unsignedBigInteger('contractor_id');
+            $table->string('wordorder_no');
+            $table->string('status');
+            $table->string('remarks');
+            $table->foreign('division_id')->references('id')->on('division_master');
+            $table->foreign('scheme_id')->references('scheme_id')->on('schemes');
+            $table->foreign('contractor_id')->references('id')->on('contractors');
             $table->timestamps();
         });
     }
