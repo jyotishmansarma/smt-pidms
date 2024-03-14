@@ -18,7 +18,7 @@ class CreatePurchaseOrderItemsTable extends Migration
             $table->unsignedBigInteger('purchase_order_id');
             $table->unsignedBigInteger('producttype_id');
             $table->Integer('product_id');
-            $table->Integer('dealer_id');
+            $table->Integer('dealer_id')->nullable();
             $table->string('batchno')->nullable();
             $table->double('quantity');
             $table->double('price');

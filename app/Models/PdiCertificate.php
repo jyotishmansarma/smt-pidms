@@ -10,9 +10,9 @@ class PdiCertificate extends Model
     use HasFactory;
     protected $fillable = [
         'purchase_order_id',
-        'agency_name',
+        'pdi_agency_id',
         'certificate_no',
         'certificate_date',
         'certificate_file'
-    ]
+    ];
 }

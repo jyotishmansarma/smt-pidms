@@ -8,14 +8,14 @@
 
         <div class="container-fluid">
         <div class="form_wrap p-2">
-        {{-- <form method="post" action="">
+        
+        <form method="post" action="{{ route('purchase.store')}}">
             @csrf
-             --}}
             <div class="row">
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Division</label><span style="color:red">&#42;</span>
-                        <select id="select2-selection" class="form-select" name="division" wire:model='selectedDivision'>
+                        <select id="select2-selection" class="form-select" name="division_id" wire:model='selectedDivision'>
                             @if($divisions)
                                 @foreach ($divisions as $division)
                                 <option value="{{ $division->id }}"> {{ $division->division_name }}</option>
@@ -30,7 +30,7 @@
                     <div class="col-md-4">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Scheme</label><span style="color:red">&#42;</span>
-                        <select class="form-select " name="scheme" wire:model='selectedScheme'>
+                        <select class="form-select " name="scheme_id" wire:model='selectedScheme'>
                             @if($schemes)
                             @foreach ($schemes as $scheme)
                                 <option value="{{ $scheme->scheme_id }} ">{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
@@ -46,7 +46,7 @@
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Contractor</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="user_type">
+                        <select class="form-select" name="contractor_id">
                             @if($contractors)
                             @foreach ($contractors as $contractor)
                                 <option value="{{ $contractor->id }} ">{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
@@ -74,19 +74,19 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label class="form-label">Are the suppliers routed through dealer?</label>
-                        <label> YES </label> <input wire:click="toggleClick( {{ $index }})" type="checkbox" value="" /> 
+                        <label> YES </label> <input name="is_through_dealer[]" wire:click="toggleClick( {{ $index }})" type="checkbox" value="" /> 
                     </div>
 
                     <div class="col-md-1">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
-                        <select class="form-select " name="product_type"  wire:model="product_items.{{ $index }}.seleactedProductType">
+                        <select class="form-select " name="product_type[]"  wire:model="product_items.{{ $index }}.seleactedProductType">
                             @if($product_types)
                                 @foreach ($product_types as $product_type)
                                     <option value={{ $product_type->id }} > {{ $product_type->name }}</option>
                                 @endforeach
                             @else
-                            <option value="0"> Select Type </option>
+                            <option value="0"> Select Product Type </option>
                             @endif
                         </select>
                         </div>
@@ -95,7 +95,7 @@
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="user_type" wire:model="product_items.{{ $index }}.selectedProduct">
+                        <select class="form-select" name="product[]" wire:model="product_items.{{ $index }}.selectedProduct">
                             @if($products)
                             @foreach ($products as $product)
                                 <option value="{{ $product->prod_id }}"> {{ $product->prod_name }}</option>
@@ -111,25 +111,27 @@
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="selectedDealer" wire:model="product_items.{{ $index }}.selectedDealer">
+                        <select class="form-select" name="dealer[]" wire:model="product_items.{{ $index }}.selectedDealer">
                             
                             @if($dealers)
                                 @foreach ($dealers as $dealer)
                                     <option value="{{ $dealer->id }}"> {{ $dealer->d_name }}</option>
                                 @endforeach
                                 @else
-                                <option value="0"> Select dealer </option>
+                                <option value=""> Select dealer </option>
                             @endif
 
                         </select>
                         </div>
                     </div>
+                    @else
+                        <input type="hidden" name="dealer[]" value="" >
                     @endif
 
                     <div class="col-md-1">
                         <div class="input_wrap mb-4">
                             <label for="batch" class="form-label">Batch No.</label><span style="color:red">&#42;</span>
-                            <input wire:model="product_items.{{ $index }}.batchno" type="text" class="form-control" name="batchno"  value="">
+                            <input name="batchno[]" wire:model="product_items.{{ $index }}.batchno" type="text" class="form-control" value="">
                             @error('batchno')
                             <span style="color: red"></span>
                             @enderror
@@ -140,7 +142,7 @@
                     <div class="col-md-1">
                         <div class="input_wrap mb-4">
                             <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
-                            <input wire:model="product_items.{{ $index }}.quantity" min="0" step="1" class="form-control" name="quantity"  value="">
+                            <input name='quantity[]' wire:model="product_items.{{ $index }}.quantity" min="0" step="1" class="form-control"  value="">
                             @error('quantity')
                             <span style="color: red"></span>
                             @enderror
@@ -151,7 +153,7 @@
                     <div class="col-md-1">
                         <div class="input_wrap mb-4">
                             <label for="price" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
-                            <input wire:model="product_items.{{ $index }}.price" type="number" step="0.01" min="0" class="form-control" name="price">
+                            <input name='price[]' wire:model="product_items.{{ $index }}.price" type="number" step="0.01" min="0" class="form-control" >
                             @error('price')
                             <span style="color: red"></span>
                             @enderror
@@ -161,12 +163,12 @@
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                             <label for="totalprice" class="form-label">Total Price</label>
-                            <input wire:model="product_items.{{ $index }}.totalprice"  disabled type="number"  step="0.01" min="0" class="form-control" name="totalprice"  value="">
+                            <input name="totalprice[]" wire:model="product_items.{{ $index }}.totalprice" type="number"  step="0.01" min="0" class="form-control" value="">
                         </div>
                     </div>
 
                     <div class="col-md-1">
-                    <button class="btn btn-danger w-20 py-8 fs-4 mt-4 rounded-2" wire:click="removeRow({{ $index }})"> <i class="fas fa-trash"></i></button>
+                        <a class="btn btn-danger w-20 py-8 fs-4 mt-4 rounded-2" wire:click="removeRow({{ $index }})"> <i class="fas fa-trash"></i></a>
                     </div>
                 </div> 
                 </div> 
@@ -175,7 +177,7 @@
 
             <div class="d-flex ">
                 <div class="add-more-wrap">
-                    <button class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click="addRow"> + Add more </button>
+                    <a class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click="addRow"> + Add more </a>
                 </div>
             </div>
 
@@ -190,13 +192,19 @@
                         <div class="input_wrap mb-4">
                             <label for="agency" class="form-label">PDI Agency Name</label><span style="color:red">&#42;</span>
                             
-                            <select class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
-                            
-                                <option value="0"> Select dealer </option>
-                                <option value="">AGENCY 1</option>
+                            <select name="selectedAgency[]" class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
+                                
+                                @if($pdiagencies)
+                                @foreach ($pdiagencies as $pdiagency)
+                                    <option value="{{ $pdiagency->id }}"> {{ $pdiagency->name }}</option>
+                                @endforeach
+                                @else
+                                <option value="0"> Select PDI Agency </option>
+                                @endif
+                           
                             </select>
 
-                            @error('quantity')
+                            @error('selectedAgency')
                             <span style="color: red"></span>
                             @enderror
                         </div>
@@ -204,9 +212,9 @@
 
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
-                            <label for="quanitity" class="form-label">Certificate No.</label><span style="color:red">&#42;</span>
-                            <input type="text" class="form-control" name="certicate_no"  wire:model="certificates.{{ $index }}.certicate_no" value="">
-                            @error('quantity')
+                            <label for="certicate_no" class="form-label">Certificate No.</label><span style="color:red">&#42;</span>
+                            <input type="text" class="form-control" name="certicate_no[]"  wire:model="certificates.{{ $index }}.certicate_no" value="">
+                            @error('certicate_no')
                             <span style="color: red"></span>
                             @enderror
                         </div>
@@ -214,9 +222,9 @@
 
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
-                            <label for="quanitity" class="form-label">Date</label><span style="color:red">&#42;</span>
-                            <input type="date" class="form-control"  name="certifcate_date"  wire:model="certificates.{{ $index }}.certifcate_date" value="">
-                            @error('quantity')
+                            <label for="certifcate_date" class="form-label">Date</label><span style="color:red">&#42;</span>
+                            <input type="date" class="form-control"  name="certifcate_date[]"  wire:model="certificates.{{ $index }}.certifcate_date" value="">
+                            @error('certifcate_date')
                             <span style="color: red"></span>
                             @enderror
                         </div>
@@ -224,22 +232,22 @@
 
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
-                            <label for="quanitity" class="form-label">Upload Certificate</label><span style="color:red">&#42;</span>
-                            <input type="file" class="form-control" name="Certificate_file"  wire:model="certificates.{{ $index }}.Certificate_file" value="">
-                            @error('quantity')
+                            <label for="certificate_file" class="form-label">Upload Certificate</label><span style="color:red">&#42;</span>
+                            <input type="file" class="form-control" name="certificate_file[]"  wire:model="certificates.{{ $index }}.Certificate_file" value="">
+                            @error('certificate_file')
                             <span style="color: red"></span>
                             @enderror
                         </div>
                     </div>
 
                     <div class="col-md-1">
-                        <button class="btn btn-danger w-20 py-2 fs-4 mt-4 rounded-2" wire:click="removeCertificate({{ $index }})"> <i class="fas fa-trash"></i></button>
+                        <a class="btn btn-danger w-20 py-2 fs-4 mt-4 rounded-2" wire:click="removeCertificate({{ $index }})"> <i class="fas fa-trash"></i></a>
                     </div>
                 </div>
                 @endforeach
 
                 <div class="float-right">
-                    <button class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click='addCertificate'> + Add more </button>
+                    <a class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click='addCertificate'> + Add more </a>
                 </div>
 
             </div>
@@ -249,7 +257,7 @@
                 <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Submit</button>
                 </div>
             </div>
-        {{-- </form> --}}
+        </form>
         </div>
         </div>
 </div>

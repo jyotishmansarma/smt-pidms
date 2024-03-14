@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Contractor;
 use App\Models\Dealer;
 use App\Models\Division;
+use App\Models\PdiAgency;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\Schemes;
@@ -15,7 +16,7 @@ use Livewire\WithFileUploads;
 class ManufacturePoEntry extends Component
 {
     use WithFileUploads;
-    
+
     public $divisions;
     public $searchDivision;
     public $schemes;
@@ -23,6 +24,7 @@ class ManufacturePoEntry extends Component
     public $product_types;
     public $products;
     public $dealers;
+    public $pdiagencies;
 
     public $selectedDivision;
     public $selectedScheme;
@@ -109,6 +111,7 @@ class ManufacturePoEntry extends Component
         $this->product_types =  ProductType::all();
         $this->products = Product::all();
         $this->dealers = Dealer::all();
+        $this->pdiagencies = PdiAgency::all();
         return view('livewire.manufacture-po-entry');
     }
 }
