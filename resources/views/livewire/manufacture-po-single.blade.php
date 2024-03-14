@@ -13,6 +13,10 @@
                         </div>
                     @endif
 
+                    <div class="purchase-info info-box mb-4">
+
+                    <h4> Order Information</h4>
+
                     <div class="row">
 
                         <div class="col-md-3">
@@ -37,6 +41,7 @@
                            
                      
                     </div>
+
 
                     <div class="row">
 
@@ -66,24 +71,11 @@
                             }}
                         </div> 
                     </div>
+                    </div>
 
-                    
+                    <div class="product_wrapper info-box mb-4">
 
-                   
-
-                    
-
-                    
-        
-                    
-
-                   
-
-                   
-
-                   
-
-                <br/>
+                        <h4>Products </h4>
 
                     <table class="table table-bordered table-responsive">
                         <thead>
@@ -126,15 +118,49 @@
                     <td>{{ $item->price }} </td>
                     <td>{{ $item->totalprice }} </td>
                     </tr>
-                  
-
                     @endforeach
                     </tbody>
                 </table>
+                    </div>
+
+                    <div class="certificate_wrapper info-box">
+
+                        <h4>Certificate </h4>
+
+                        <table class="table table-bordered table-responsive">
+                            <thead>
+                            <th>
+                                SL
+                            </th>
+                            <th>
+                                PDI Agency
+                            </th>
+                            <th>
+                                Certificate No.
+                            </th>
+                            <th>
+                                Certificate Date
+                            </th>
+                            <th>
+                                View Certificate
+                            </th>
+                            <thead>
+                        <tbody>
+                        @foreach ($purchaseorder->pdi_certificate as $index=> $item)
+    
+                        <tr>
+                        <td>{{ $index+1 }} </td>
+                        <td>{{ $item->pdiagency->name }} </td>
+                        <td>{{ $item->certificate_no }} </td> 
+                        <td>{{ $item->certificate_date ?? '' }} </td>
+                        <td>{{ $item->certificate_file }} </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
 
 
-                  
-                   
+                    </div>
                 </div>
             </div>
     </div>

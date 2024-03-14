@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\Models\PurchaseOrder;
 use Livewire\Component;
-use Ramsey\Uuid\Type\Integer;
 
 class ManufacturePoSingle extends Component
 

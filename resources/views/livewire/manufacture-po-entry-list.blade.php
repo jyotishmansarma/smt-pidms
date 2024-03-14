@@ -25,7 +25,6 @@
                         <th >#</th>
                     </tr>
                     </thead>
-                    {{ $purchaseorders }}
                     <tbody>
                         @foreach ($purchaseorders as $purchaseorders_item)
                         <tr>

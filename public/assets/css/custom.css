@@ -47,4 +47,9 @@
 	font-size: 13px;
 }
 
+.info-box {
+	border: 1px solid #d7d7d7;
+	padding: 20px 15px;
+}
+
 /** End of Purchase Order CSS ***/

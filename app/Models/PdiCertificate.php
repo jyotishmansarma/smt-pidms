@@ -15,4 +15,10 @@ class PdiCertificate extends Model
         'certificate_date',
         'certificate_file'
     ];
+
+    protected $with = ['pdiagency'];
+
+    public function pdiagency() {
+        return $this->belongsTo(PdiAgency::class, 'pdi_agency_id','id');
+    }
 }
