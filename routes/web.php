@@ -20,7 +20,12 @@ Route::get('/', function () {
 Route::get('register', [\App\Http\Controllers\RegisterController::class, 'create'])->name('register');
 Route::post('register', [\App\Http\Controllers\RegisterController::class, 'store'])->name('register');
 
-Route::resource('purchase', \App\Http\Controllers\PurchaseOrderController::class);
+Route::get('purchase/', [\App\Http\Controllers\PurchaseOrderController::class, 'index'])->name('purchase.index');
+Route::get('purchase/create', [\App\Http\Controllers\PurchaseOrderController::class, 'create'])->name('purchase.create');
+Route::post('purchase/store', [\App\Http\Controllers\PurchaseOrderController::class, 'store'])->name('purchase.store');
+Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');
+
+
 
 
 Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
@@ -40,7 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/issue_update/{id}', [ \App\Http\Controllers\IssueTrackingController::class, 'delete'])->name('delete');
     Route::get('/my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'get_myprofile'])->name('get_myprofile');
     Route::post('/update-my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'update_myprofile'])->name('update_myprofile');
-
 
 
 });

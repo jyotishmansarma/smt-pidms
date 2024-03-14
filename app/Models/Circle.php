@@ -12,6 +12,8 @@ class Circle extends Model
         'circle_name'
     ];
     protected $with = ['zone'];
+    
+    protected $table = 'circle_master';
 
     public function zone(){
         return $this->belongsTo(Zone::class,'zone_id','id');

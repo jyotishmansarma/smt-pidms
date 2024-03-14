@@ -5,12 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model
+class Product extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'zone_name'
-    ];
-    
-    protected $table = 'zone_master';
+    protected $fillable = [ 'name'] ;
+    protected $table = 'ipet_prod_master';
+    protected $primaryKey = 'prod_id';
 }

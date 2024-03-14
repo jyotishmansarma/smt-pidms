@@ -5,12 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model
+class WorkAllotment extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'zone_name'
-    ];
-    
-    protected $table = 'zone_master';
+    protected $table = 'work_allotment';
 }

@@ -25,9 +25,11 @@ class DashboardController extends Controller
 //        }else {
 //            $schemeCompletion = SchemeCompletion::where("created_at", '>', $sessionStart)->where("created_at", '<', $sessionEnd)->get();
 //        }
-
+        
         $user = Auth::user();
-        $user_type=userType::select('name')->where('id',$user->user_type)->first();
+       
+        //$user_type=userType::select('name')->where('id',$user->user_type)->first();
+
         if ($user->hasAnyRole(['TO-IT']) || $user->hasAnyRole(['SPS'])){
 
             $my_issues = \App\Models\AssignHistory::where('to_user_id',auth()->user()->id)->where('active',1)->get();
@@ -35,7 +37,7 @@ class DashboardController extends Controller
             $resolved_issue = $my_issues->where('status',3)-> count();
             $accept_issue = $my_issues->where('status',4)-> count();
 
-        }else{
+        }  else {
             $my_issues = \App\Models\IssueTracking::where('users_id',auth()->user()->id)->get();
             $pending_issue = $my_issues->where('application_status',1)->where('users_id',auth()->user()->id)-> count();
             $resolved_issue = $my_issues->where('application_status',3)->where('users_id',auth()->user()->id)-> count();
@@ -44,6 +46,6 @@ class DashboardController extends Controller
         }
         $total_issue = $my_issues->count();
 
-        return view('dashboard',compact('total_issue','pending_issue','resolved_issue','accept_issue','user_type') );
+        return view('dashboard',compact('total_issue','pending_issue','resolved_issue','accept_issue') );
     }
 }
