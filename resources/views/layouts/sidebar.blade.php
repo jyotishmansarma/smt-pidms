@@ -25,27 +25,29 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Purches</span>
-                </li>
+                @can('purches')
+                    <li class="nav-small-cap">
+                        <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                        <span class="hide-menu">Purches</span>
+                    </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('purchase.create') }}" aria-expanded="false">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('purchase.create') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                        <span class="hide-menu">Create Purches</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('purchase.index') }}" aria-expanded="false">
+                            <span class="hide-menu">Create Purches</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('purchase.index') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                        <span class="hide-menu">Purches Lisr</span>
-                    </a>
-                </li>
+                            <span class="hide-menu">Purches Lisr</span>
+                        </a>
+                    </li>
+                @endcan
 {{--                <li class="sidebar-item">--}}
 {{--                    <a class="sidebar-link" href="./ui-card.html" aria-expanded="false">--}}
 {{--                <span>--}}

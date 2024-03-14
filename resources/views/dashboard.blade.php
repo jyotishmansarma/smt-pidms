@@ -10,7 +10,7 @@
                             <div class="position-relative"></div>
                             <div class="card-body pt-3 p-4">
                                 <h6 class="fw-semibold fs-4">Total Order</h6>
-                                <h3> {{$total_issue}}</h3>
+                                <h3> </h3>
                                 <div class="d-flex align-items-center justify-content-between">
 
                                 </div>
@@ -22,7 +22,7 @@
                             <div class="position-relative"></div>
                             <div class="card-body pt-3 p-4">
                                 <h6 class="fw-semibold fs-4">Pending Order</h6>
-                                <h3>  {{$pending_issue}}</h3>
+                                <h3>  </h3>
                                 <div class="d-flex align-items-center justify-content-between">
 
                                 </div>
@@ -35,7 +35,7 @@
                             <div class="position-relative"></div>
                             <div class="card-body pt-3 p-4">
                                 <h6 class="fw-semibold fs-4">Accept Order</h6>
-                                <h3>  {{$accept_issue}}</h3>
+                                <h3>  </h3>
                                 <div class="d-flex align-items-center justify-content-between">
 
                                 </div>
