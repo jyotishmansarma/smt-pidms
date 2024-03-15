@@ -14,6 +14,7 @@ use App\Models\PurchaseOrderItem;
 use App\Models\Schemes;
 use App\Models\WorkAllotment;
 use DB;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Log;
@@ -107,20 +108,23 @@ class ManufacturePoEntry extends Component
 
             if($work_allotment)
                 $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
-            }
+        }
     }
 
 
     public function submitForm() {
 
+        Log::debug('log',[$this->product_items]);
 
+        //dd($this->product_items);
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
             'selectedScheme' => 'required|integer',
             'selectedContractor' => 'required|integer',
             'product_items.*.selectedProductType' => 'required|integer',
             'product_items.*.selectedProduct' => 'required|integer',
-            'product_items.*.selectedDealer' => 'nullable|integer',
+            'product_items.*.is_dealer_exist' => 'nullable|boolean',
+            'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
             'product_items.*.batchno' => 'required|string',
             'product_items.*.quantity' => 'required|integer|min:1',
             'product_items.*.price' => 'required|numeric|min:0',
@@ -155,22 +159,24 @@ class ManufacturePoEntry extends Component
 
         $grandtotal = 0.00;
 
-        
 
         foreach($this->product_items as $index => $product_item){
 
-
-            Log::debug('Dumping variable:', ['someVariable' => $product_item]);
-
             $total_price = $product_item['price'] * $product_item['quantity'];
             $grandtotal = $grandtotal + $total_price;
+
+            if(!$product_item['is_dealer_exist']){
+                $selected_dealer_id = NULL;
+            }else {
+                $selected_dealer_id = $product_item['selectedDealer'] ;
+            }
 
             PurchaseOrderItem::create([
                 'purchase_order_id' => $order_created->id,
                 'producttype_id' => $product_item['selectedProductType'],
                 'product_id' => $product_item['selectedProduct'],
                 'is_dealer_exist' => $product_item['is_dealer_exist'] ? $product_item['is_dealer_exist'] : false,
-                'dealer_id' => $product_item['selectedDealer'] ? $product_item['selectedDealer']: 0,
+                'dealer_id' => $selected_dealer_id,
                 'batchno' =>  $product_item['batchno'],
                 'quantity' =>  $product_item['quantity'],
                 'price' =>  $product_item['price'],
@@ -205,7 +211,6 @@ class ManufacturePoEntry extends Component
         DB::commit();
     }
 
-   
 
     public function render()
     {

@@ -12,6 +12,7 @@ class PurchaseOrderItem extends Model
         'purchase_order_id',
         'producttype_id',
         'product_id',
+        'is_dealer_exist',
         'dealer_id',
         'batchno',
         'quantity',

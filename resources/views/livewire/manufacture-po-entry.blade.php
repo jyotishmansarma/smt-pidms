@@ -144,7 +144,7 @@
                         <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
                         <select class="form-select" name="dealer[]" wire:model="product_items.{{ $index }}.selectedDealer">
                             
-                            <option value=""> Select dealer </option>
+                                <option value=""> Select dealer </option>
                                 @if($dealers)
                                 @foreach ($dealers as $dealer)
                                     <option value="{{ $dealer->id }}"> {{ $dealer->d_name }}</option>
@@ -152,10 +152,17 @@
                             @endif
 
                         </select>
+
+                        @error('product_items.'.$index.'.selectedDealer')
+                            
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+
+                            @enderror
+
                         </div>
                     </div>
-                    {{-- @else
-                        <input type="hidden" name="dealer[]" value="" > --}}
                     @endif
 
                     <div class="col-md-1">
@@ -209,9 +216,11 @@
                         </div>
                     </div>
 
+                    @if($index!=0)
                     <div class="col-md-1">
                         <a class="btn btn-danger w-20 py-8 fs-4 mt-4 rounded-2" wire:click="removeRow({{ $index }})"> <i class="fas fa-trash"></i></a>
                     </div>
+                    @endif
                 </div> 
                 </div> 
             @endforeach
@@ -296,9 +305,11 @@
                         </div>
                     </div>
 
+                    @if($index!=0)
                     <div class="col-md-1">
                         <a class="btn btn-danger w-20 py-2 fs-4 mt-4 rounded-2" wire:click="removeCertificate({{ $index }})"> <i class="fas fa-trash"></i></a>
                     </div>
+                    @endif
                 </div>
                 @endforeach
 
