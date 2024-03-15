@@ -45,20 +45,53 @@ class PurchaseOrderController extends Controller
             'contractor_id' => 'required|integer',
         ]);
 
+        // if(!$validated) {
+        //     return redirect()->back()->withInput();
+        // }
+
         DB::beginTransaction();
 
         try {
 
+        $timestamp = time();
+        $currentDate = date('Y-m-d ', $timestamp);
+        $lastRecord = PurchaseOrder::latest()->first();
+        $lastRecord ? $lastRecord->id+1 : 1;
+            
+        //$order_id = 'ORD'.$request->scheme_id.$currentDate.$lastRecord;
+        
         $order_created =  PurchaseOrder::create( [
             'division_id' => $request->division_id,
             'scheme_id' => $request->scheme_id,
             'contractor_id' => $request->contractor_id,
-            'wordorder_no' => '',
-            'status' => '1',
+            'workorder_no' => 'workorder_no',
+            'order_grand_total' => 0.00,
+            'is_verified' => false,
+            'is_completed' => false,
+            'status' => 'created',
             'remarks' => '']
         );
 
+        $grandtotal = 0.00;
+
+
+        $validatedData = $request->validate([
+            'product.*' => 'required|integer', 
+            'product_type.*' => 'required|integer', 
+            'dealer.*' => 'integer',
+            'batchno.*' => 'required|string', 
+            'quantity.*' => 'required|integer|min:1', 
+            'price.*' => 'required|numeric|min:0',
+        ]);
+
+        // if(!$validatedData){
+        //     return redirect()->back()->withInput();
+        // }
+
         foreach($request->product as $index => $product_item){
+
+            $total_price = $request->price[$index] * $request->quantity[$index];
+            $grandtotal = $grandtotal + $total_price;
 
             PurchaseOrderItem::create([
                 'purchase_order_id' => $order_created->id,
@@ -68,19 +101,27 @@ class PurchaseOrderController extends Controller
                 'batchno' => $request->batchno[$index],
                 'quantity' => $request->quantity[$index],
                 'price' => $request->price[$index],
-                'totalprice' => $request->totalprice[$index]
+                'totalprice' => $total_price
             ]);
+
+
         }
 
-        foreach($request->selectedAgency as $index => $agency) {
-            PdiCertificate::create([
-                'purchase_order_id' => $order_created->id,
-                'pdi_agency_id' =>  $agency,
-                'certificate_no' => $request->certicate_no[$index],
-                'certificate_date' => $request->certifcate_date[$index],
-                'certificate_file' => 'file'
-            ]
-            );
+        $order_created->refresh();
+        $order_created->order_grand_total  = $grandtotal;
+        $order_created->save();
+
+        if ($request->hasFile('certificate_file')) {
+            foreach ($request->file('certificate_file') as $index => $certificate) {
+                $file_path = $certificate->store('/uploads/certificates', 'public');
+                PdiCertificate::create([
+                    'purchase_order_id' => $order_created->id,
+                    'pdi_agency_id' =>  $request->selectedAgency[$index],
+                    'certificate_no' => $request->certificate_no[$index],
+                    'certificate_date' => $request->certificate_date[$index],
+                    'certificate_file' => $file_path
+                ]);
+            }
         }
 
         } catch (\Exception $e) {

@@ -12,8 +12,11 @@ class PurchaseOrder extends Model
     protected $fillable = [ 'division_id',
                 'scheme_id',
                 'contractor_id',
-                'wordorder_no',
+                'workorder_no',
+                'order_grand_total',
                 'status',
+                'is_verified',
+                'is_completed',
                 'remarks'];
 
     protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate'];

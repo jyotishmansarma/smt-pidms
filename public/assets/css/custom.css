@@ -52,4 +52,8 @@
 	padding: 20px 15px;
 }
 
+.invalid-feedback {
+	display: block;
+}
+
 /** End of Purchase Order CSS ***/

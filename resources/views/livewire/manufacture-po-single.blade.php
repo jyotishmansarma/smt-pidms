@@ -15,7 +15,7 @@
 
                     <div class="purchase-info info-box mb-4">
 
-                    <h4> Order Information</h4>
+                    <h4>Order Information</h4>
 
                     <div class="row">
 
@@ -25,24 +25,25 @@
                                 $purchaseorder->division->division_name;
                             }}  
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label class="form-label">Scheme ID : </label>
                             {{
                                 $purchaseorder->scheme->scheme_id;
                             }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Scheme name : </label>
                             {{
                                 $purchaseorder->scheme->scheme_name;
                             }}
                         </div>
-                       
-                           
-                     
+                        <div class="col-md-3">
+                            <label class="form-label">Submitted on </label>
+                            {{
+                                $purchaseorder->created_at;
+                            }}
+                        </div>
                     </div>
-
-
                     <div class="row">
 
                         <div class="col-md-3">
@@ -52,7 +53,7 @@
                             }}
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label class="form-label">Contractor Bid No :</label>
                             {{
                                 $purchaseorder->contractor->bid_no;
@@ -65,9 +66,9 @@
                         </div> 
 
                         <div class="col-md-3">
-                            <label class="form-label">Status :</label>
+                            <label class="form-label">Verification status: </label>
                             {{
-                                $purchaseorder->status;
+                                $purchaseorder->is_verified ? 'Verified' : 'Not verified'
                             }}
                         </div> 
                     </div>
@@ -153,7 +154,9 @@
                         <td>{{ $item->pdiagency->name }} </td>
                         <td>{{ $item->certificate_no }} </td> 
                         <td>{{ $item->certificate_date ?? '' }} </td>
-                        <td>{{ $item->certificate_file }} </td>
+                        <td>
+                            <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
+                        </td>
                         </tr>
                         @endforeach
                         </tbody>
