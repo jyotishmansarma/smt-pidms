@@ -36,4 +36,32 @@ class Helpers
        $dropped_mapping_status= SlsscDropedMapping::where('slssc_scheme_id',$smt_id)->first();
        return $dropped_mapping_status;
     }
+
+
+    public static function  niceDate($date)
+        {
+            if ($date) {
+                return date('d-m-Y', strtotime($date));
+            }
+        }
+    public static function  niceTime($date)
+        {
+            if ($date) {
+                return date('h:i A', strtotime($date));
+            }
+        }
+
+    public static function orderStatus(): array
+        {
+            return [
+                "delivered",
+                "cancelled",
+                "refunded",
+            ];
+        }
+
+    public static function convertToDecimal($number, $place = 2) 
+        {
+            return number_format($number, $place, ".", "");
+        }
 }

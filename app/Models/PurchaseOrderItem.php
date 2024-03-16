@@ -12,6 +12,7 @@ class PurchaseOrderItem extends Model
         'purchase_order_id',
         'producttype_id',
         'product_id',
+        'is_dealer_exist',
         'dealer_id',
         'batchno',
         'quantity',
@@ -22,7 +23,7 @@ class PurchaseOrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class,'product_id', 'prod_id');
+        return $this->belongsTo(Product::class,'product_id', 'id');
     }
 
     public function product_type(){
