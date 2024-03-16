@@ -1,10 +1,16 @@
 <div>
-   
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-
     <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+               
+            </div>
+        </div>
+        
             <div class="card">
                 <div class="card-body">
                     @if(session('success'))
@@ -15,7 +21,7 @@
 
                     <div class="purchase-info info-box mb-4">
 
-                    <h4> Order Information</h4>
+                    <h4>Order Information</h4>
 
                     <div class="row">
 
@@ -25,24 +31,28 @@
                                 $purchaseorder->division->division_name;
                             }}  
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label class="form-label">Scheme ID : </label>
                             {{
                                 $purchaseorder->scheme->scheme_id;
                             }}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Scheme name : </label>
                             {{
                                 $purchaseorder->scheme->scheme_name;
                             }}
                         </div>
-                       
-                           
-                     
+                        <div class="col-md-3">
+                            <label class="form-label">Submitted on </label>
+                            {{
+                                App\Helper\Helpers::niceDate($purchaseorder->created_at) 
+                            }}
+                            {{
+                                 App\Helper\Helpers::niceTime($purchaseorder->created_at)
+                            }}
+                        </div>
                     </div>
-
-
                     <div class="row">
 
                         <div class="col-md-3">
@@ -52,7 +62,7 @@
                             }}
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label class="form-label">Contractor Bid No :</label>
                             {{
                                 $purchaseorder->contractor->bid_no;
@@ -65,10 +75,11 @@
                         </div> 
 
                         <div class="col-md-3">
-                            <label class="form-label">Status :</label>
+                            <label class="form-label">Verification status: </label>
                             {{
-                                $purchaseorder->status;
+                                $purchaseorder->is_verified ? 'Verified' : 'Not verified'
                             }}
+
                         </div> 
                     </div>
                     </div>
@@ -77,7 +88,7 @@
 
                         <h4>Products </h4>
 
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-striped  table-bordered table-responsive">
                         <thead>
                         <th>
                             SL
@@ -95,14 +106,13 @@
                             Batch No.
                         </th>
                         <th>
-                            Quantity
+                            Quantity (In R.M.)
                         </th>
                         <th>
-                            Price per unit
+                            Price per unit (IN INR)
                         </th>
-
                         <th>
-                            Total price
+                            Total price (IN INR)
                         </th>
                         <thead>
                     <tbody>
@@ -111,7 +121,7 @@
                     <tr>
                     <td>{{ $index+1 }} </td>
                     <td>{{ $item->product_type->name }} </td>
-                    <td>{{ $item->product->prod_name }} </td> 
+                    <td>{{ $item->product->name }} </td> 
                     <td>{{ $item->dealer->d_name ?? '' }} </td>
                     <td>{{ $item->batchno }} </td>
                     <td>{{ $item->quantity }} </td>
@@ -127,7 +137,7 @@
 
                         <h4>Certificate </h4>
 
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-striped table-bordered table-responsive">
                             <thead>
                             <th>
                                 SL
@@ -152,8 +162,10 @@
                         <td>{{ $index+1 }} </td>
                         <td>{{ $item->pdiagency->name }} </td>
                         <td>{{ $item->certificate_no }} </td> 
-                        <td>{{ $item->certificate_date ?? '' }} </td>
-                        <td>{{ $item->certificate_file }} </td>
+                        <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
+                        <td>
+                            <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
+                        </td>
                         </tr>
                         @endforeach
                         </tbody>

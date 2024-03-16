@@ -12,23 +12,23 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <table class="table">
+                <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th >Sl no</th>
-                        <th >Order Id</th>
+                        <th >SL. no</th>
+                        <th >Order Number</th>
                         <th >Scheme Id</th>
                         <th >Scheme Name</th>
                         <th >Contractor Name</th>
-                        <th >Contractor Bid no</th>
+                        <th >Contractor Bid No</th>
                         <th >Order Status</th>
                         <th >#</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($purchaseorders as $purchaseorders_item)
+                        @foreach ($purchaseorders as $index => $purchaseorders_item)
                         <tr>
-                            <td >Sl no</td>
+                            <td >{{ $index+1 }}</td>
                             <td >Order Id</td>
                             <td >{{ $purchaseorders_item->scheme->scheme_id }}</td>
                             <td >{{ $purchaseorders_item->scheme->scheme_name }}</td>
@@ -36,7 +36,7 @@
                             <td >{{ $purchaseorders_item->contractor->bid_no }}</td>
                             <td >{{ $purchaseorders_item->status }}</td>
                             <td> 
-                                <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 mt-4 rounded-2">
+                                <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
                                     <i class="fas fa-eye"></i>
                                 </a>                                    
                             </td>

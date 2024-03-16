@@ -18,7 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->Integer('division_id');
             $table->Integer('scheme_id');
             $table->Integer('contractor_id');
-            $table->string('wordorder_no');
+            $table->string('workorder_no');
             $table->string('status');
             $table->string('remarks');
             $table->foreign('division_id')->references('id')->on('division_master');
