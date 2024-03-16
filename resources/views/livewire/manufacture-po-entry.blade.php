@@ -1,12 +1,22 @@
 
 
 <div>
-
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-
         <div class="container-fluid">
+
+
+            <div class="card">
+                <div class="card-body">
+                    @if(session('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                   
+                </div>
+            </div>
+        <div class="card">
+        <div class="card-body">
+
         <div class="form_wrap p-2">
         
         <form method="post" wire:submit.prevent="submitForm" action="{{ route('purchase.store')}}" enctype="multipart/form-data">
@@ -95,7 +105,7 @@
                         <label> YES </label> <input type="checkbox"  name="is_through_dealer[]" wire:click="toggleClick( {{ $index }})" wire:model="product_items.{{ $index }}.is_dealer_exist" value="" /> 
                     </div>
 
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
                         <select class="form-select " name="product_type[]"  @error('product_type') is-invalid @enderror wire:model="product_items.{{ $index }}.selectedProductType">
@@ -124,7 +134,7 @@
                             <option value=""> Select Product Dimensions </option>
                             @if($products)
                             @foreach ($products as $product)
-                                <option value="{{ $product->prod_id }}"> {{ $product->prod_name }}</option>
+                                <option value="{{ $product->id }}"> {{ $product->name }}</option>
                             @endforeach
                             @endif
                         </select>
@@ -165,7 +175,7 @@
                     </div>
                     @endif
 
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
                             <label for="batch" class="form-label">Batch No.</label><span style="color:red">&#42;</span>
                             <input name="batchno[]" wire:model="product_items.{{ $index }}.batchno" type="text" class="form-control" value="">
@@ -181,10 +191,10 @@
                     </div>
 
 
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
-                            <label for="quantity" class="form-label">Quantity</label><span style="color:red">&#42;</span>
-                            <input type="number" name='quantity[]' @error('quantity') is-invalid @enderror  wire:model="product_items.{{ $index }}.quantity" min="0" step="1" class="form-control"  value="">
+                            <label for="quantity" class="form-label">Quantity (In R.M.)</label><span style="color:red">&#42;</span>
+                            <input type="text" name='quantity[]' @error('quantity') is-invalid @enderror  wire:model="product_items.{{ $index }}.quantity" min="0" step="1" class="form-control"  value="">
                             
                             @error('product_items.'.$index.'.quantity')
                             <span class="invalid-feedback" role="alert">
@@ -195,10 +205,10 @@
                     </div>
 
 
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="input_wrap mb-4">
-                            <label for="price" class="form-label">Price per unit</label><span style="color:red">&#42;</span>
-                            <input name='price[]' @error('price') is-invalid @enderror wire:model="product_items.{{ $index }}.price" type="number" step="0.01" min="0" class="form-control" >
+                            <label for="price" class="form-label">Unit price per R.M. (In INR)</label><span style="color:red">&#42;</span>
+                            <input type="text" name='price[]' @error('price') is-invalid @enderror wire:model="product_items.{{ $index }}.price" step="0.01" min="0" class="form-control" oninput="validateInput(this)">
                             
                             @error('product_items.'.$index.'.price')
                                 <span class="invalid-feedback" role="alert">
@@ -211,8 +221,8 @@
 
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
-                            <label for="totalprice" class="form-label">Total Price</label>
-                            <input disabled ="totalprice[]" wire:model="product_items.{{ $index }}.totalprice" type="number"  step="0.01" min="0" class="form-control" value="">
+                            <label for="totalprice" class="form-label">Total Price (In INR)</label>
+                            <input disabled ="totalprice[]" wire:model="product_items.{{ $index }}.totalprice" type="text" class="form-control" value="">
                         </div>
                     </div>
 
@@ -325,6 +335,8 @@
                 </div>
             </div>
         </form>
+        </div>
+        </div>
         </div>
         </div>
 </div>

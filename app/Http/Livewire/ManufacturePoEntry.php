@@ -50,12 +50,51 @@ class ManufacturePoEntry extends Component
 
     }
 
-    public function updated($propertyName)
+    public function updated($propertyName, $value)
     {
         if (strpos($propertyName, 'product_items.') === 0) {
+            
             $index = explode('.', $propertyName)[1];
-            $this->calculateTotalPrice($index);
+            $field = explode('.', $propertyName)[2];
+
+            if($field=='quantity'){
+
+                $sanitizedValue = preg_replace('/[^0-9]/', '', $value);
+                if ($sanitizedValue === '') {
+                    $this->product_items[$index]['quantity'] = null;
+                    $this->product_items[$index]['totalprice'] = 0; 
+                    return;
+                }
+                $this->product_items[$index]['quantity'] = intval($sanitizedValue);
+                $this->calculateTotalPrice($index);
+            }
+            if($field=='price'){
+
+                $sanitizedValue = preg_replace('/[^0-9.]/', '', $value);
+                if ($sanitizedValue === '') {
+                    $this->product_items[$index]['price'] = null;
+                    $this->product_items[$index]['totalprice'] = 0 ; 
+                    return;
+                }
+                if ($sanitizedValue === '.') {
+                    $this->product_items[$index]['totalprice'] = 0 ; 
+                    return;
+                }
+
+                $parts = explode('.', $sanitizedValue);
+                if (count($parts) > 1) {
+                    $decimalPart = substr($parts[1], 0, 2);
+                    $sanitizedValue = $parts[0] . '.' . $decimalPart;
+                }
+                $this->product_items[$index]['price'] = $sanitizedValue;
+                $this->calculateTotalPrice($index);
+            }
+
+            if($field=='selectedProductType'){
+                $this->products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
+            }
         }
+
     }
 
     private function calculateTotalPrice($index) {
@@ -114,9 +153,8 @@ class ManufacturePoEntry extends Component
 
     public function submitForm() {
 
-        Log::debug('log',[$this->product_items]);
+        //Log::debug('log',[$this->product_items]);
 
-        //dd($this->product_items);
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
             'selectedScheme' => 'required|integer',
@@ -127,7 +165,7 @@ class ManufacturePoEntry extends Component
             'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
             'product_items.*.batchno' => 'required|string',
             'product_items.*.quantity' => 'required|integer|min:1',
-            'product_items.*.price' => 'required|numeric|min:0',
+            'product_items.*.price' => 'required|numeric|min:0|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'certificates.*.selectedAgency' => 'required|integer',
             'certificates.*.certificate_no' => 'required|string',
             'certificates.*.certificate_date' => 'required|date',
@@ -183,7 +221,6 @@ class ManufacturePoEntry extends Component
                 'totalprice' => $total_price
             ]);
 
-
         }
 
         $order_created->refresh();
@@ -216,7 +253,7 @@ class ManufacturePoEntry extends Component
     {
         $this->divisions = Division::where('division_name', 'like', '%' . $this->searchDivision . '%')->get();;
         $this->product_types =  ProductType::all();
-        $this->products = Product::all();
+        //$this->products = Product::all();
         $this->dealers = Dealer::all();
         $this->pdiagencies = PdiAgency::all();
         return view('livewire.manufacture-po-entry');

@@ -1,10 +1,16 @@
 <div>
-   
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-    <div class="pb-4"></div>
-
     <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+               
+            </div>
+        </div>
+        
             <div class="card">
                 <div class="card-body">
                     @if(session('success'))
@@ -40,7 +46,10 @@
                         <div class="col-md-3">
                             <label class="form-label">Submitted on </label>
                             {{
-                                $purchaseorder->created_at;
+                                App\Helper\Helpers::niceDate($purchaseorder->created_at) 
+                            }}
+                            {{
+                                 App\Helper\Helpers::niceTime($purchaseorder->created_at)
                             }}
                         </div>
                     </div>
@@ -70,6 +79,7 @@
                             {{
                                 $purchaseorder->is_verified ? 'Verified' : 'Not verified'
                             }}
+
                         </div> 
                     </div>
                     </div>
@@ -78,7 +88,7 @@
 
                         <h4>Products </h4>
 
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-striped  table-bordered table-responsive">
                         <thead>
                         <th>
                             SL
@@ -96,14 +106,13 @@
                             Batch No.
                         </th>
                         <th>
-                            Quantity
+                            Quantity (In R.M.)
                         </th>
                         <th>
-                            Price per unit
+                            Price per unit (IN INR)
                         </th>
-
                         <th>
-                            Total price
+                            Total price (IN INR)
                         </th>
                         <thead>
                     <tbody>
@@ -112,7 +121,7 @@
                     <tr>
                     <td>{{ $index+1 }} </td>
                     <td>{{ $item->product_type->name }} </td>
-                    <td>{{ $item->product->prod_name }} </td> 
+                    <td>{{ $item->product->name }} </td> 
                     <td>{{ $item->dealer->d_name ?? '' }} </td>
                     <td>{{ $item->batchno }} </td>
                     <td>{{ $item->quantity }} </td>
@@ -128,7 +137,7 @@
 
                         <h4>Certificate </h4>
 
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-striped table-bordered table-responsive">
                             <thead>
                             <th>
                                 SL
@@ -153,7 +162,7 @@
                         <td>{{ $index+1 }} </td>
                         <td>{{ $item->pdiagency->name }} </td>
                         <td>{{ $item->certificate_no }} </td> 
-                        <td>{{ $item->certificate_date ?? '' }} </td>
+                        <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
                         <td>
                             <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
                         </td>

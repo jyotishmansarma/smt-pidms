@@ -35,7 +35,7 @@
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                        <span class="hide-menu">Create Purches</span>
+                        <span class="hide-menu">Create Purchase </span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -43,7 +43,7 @@
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                        <span class="hide-menu">Purches Lisr</span>
+                        <span class="hide-menu">Purchase List</span>
                     </a>
                 </li>
 {{--                <li class="sidebar-item">--}}
