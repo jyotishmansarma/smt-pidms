@@ -1,9 +1,8 @@
 /** Purchase Order CSS***/
 
 .products_wrap {
-	background-color: #eaeaea;
-	border-radius: 9px;
-	border: 1px solid #a29f9e;
+	background-color: #EAEFF4;
+	border: 1px solid #d5d5d5;
 }
 
 .product-row {
@@ -12,9 +11,8 @@
 }
 
 .PO_wrap {
-    background-color: #eaeaea;
-	border-radius: 9px;
-	border: 1px solid #a29f9e;
+    background-color: #EAEFF4;
+	border: 1px solid #d5d5d5;
 }
 .add_btn_wrap {
     vertical-align: bottom;

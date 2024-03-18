@@ -11,12 +11,27 @@
             </div>
         </div>
         <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-4">
+    
+                    </div>
+                    <div class="col-md-4">
+    
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Search </label>
+                        <input class="form-control" type="text" wire:model="searchTerm" />
+                    </div>
+                </div>
+            </div>
+
             <div class="card-body">
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th >SL. no</th>
-                        <th >Order Number</th>
+                        <th >Order ID</th>
                         <th >Scheme Id</th>
                         <th >Scheme Name</th>
                         <th >Contractor Name</th>
@@ -29,7 +44,7 @@
                         @foreach ($purchaseorders as $index => $purchaseorders_item)
                         <tr>
                             <td >{{ $index+1 }}</td>
-                            <td >Order Id</td>
+                            <td >{{ $purchaseorders_item->order_id }}</td>
                             <td >{{ $purchaseorders_item->scheme->scheme_id }}</td>
                             <td >{{ $purchaseorders_item->scheme->scheme_name }}</td>
                             <td >{{ $purchaseorders_item->contractor->name }}</td>

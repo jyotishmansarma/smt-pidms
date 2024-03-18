@@ -9,7 +9,9 @@ use Schema;
 class PurchaseOrder extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'division_id',
+    protected $fillable = [ 
+                'order_id',
+                'division_id',
                 'scheme_id',
                 'contractor_id',
                 'workorder_no',
@@ -17,9 +19,10 @@ class PurchaseOrder extends Model
                 'status',
                 'is_verified',
                 'is_completed',
-                'remarks'];
+                'remarks',
+                'pidms_user_id'];
 
-    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate'];
+    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user'];
 
     public function division()
     {
@@ -44,6 +47,10 @@ class PurchaseOrder extends Model
     public function pdi_certificate()
     {
         return $this->hasMany(PdiCertificate::class);
+    }
+
+    public function pidms_user() {
+        return $this->belongsTo(User::class,'pidms_user_id','id');
     }
 
     

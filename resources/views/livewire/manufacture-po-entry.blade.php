@@ -36,7 +36,7 @@
                         
                         @error('selectedDivision')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Division required </strong>
                             </span>
                         @enderror
 
@@ -45,7 +45,7 @@
 
                     <div class="col-md-4">
                         <div class="input_wrap mb-4">
-                        <label class="form-label">Select Scheme</label><span style="color:red">&#42;</span>
+                        <label class="form-label">Scheme Details</label><span style="color:red">&#42;</span>
                         <select class="form-select " name="scheme_id" wire:model='selectedScheme' @error('scheme_id') is-invalid @enderror>
                             <option value=""> Select scheme</option>
                             @if($schemes)
@@ -57,7 +57,7 @@
 
                         @error('selectedScheme')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Scheme details required </strong>
                             </span>
                         @enderror
 
@@ -67,7 +67,7 @@
 
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
-                        <label class="form-label">Select Contractor</label><span style="color:red">&#42;</span>
+                        <label class="form-label">Contractor Details</label><span style="color:red">&#42;</span>
                         <select class="form-select" name="contractor_id" wire:model='selectedContractor' @error('contractor_id') is-invalid @enderror>
                             <option value=""> Select Contractor</option>
                             @if($contractors)
@@ -79,7 +79,7 @@
 
                         @error('selectedContractor')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong> Contractor details required </strong>
                         </span>
                         @enderror
 
@@ -101,8 +101,8 @@
                     
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="form-label">Are the suppliers routed through dealer?</label>
-                        <label> YES </label> <input type="checkbox"  name="is_through_dealer[]" wire:click="toggleClick( {{ $index }})" wire:model="product_items.{{ $index }}.is_dealer_exist" value="" /> 
+                        <label class="form-label">Are the suppliers routed through dealer? </label>
+                        <label class="form-label">&nbsp;&nbsp; YES </label> &nbsp;&nbsp; <input type="checkbox"  name="is_through_dealer[]" wire:click="toggleClick( {{ $index }})" wire:model="product_items.{{ $index }}.is_dealer_exist" value="" /> 
                     </div>
 
                     <div class="col-md-2">
@@ -119,7 +119,7 @@
 
                         @error('product_items.'.$index.'.selectedProductType')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong> Product type required  </strong>
                         </span>
                         @enderror
 
@@ -141,7 +141,7 @@
 
                         @error('product_items.'.$index.'.selectedProduct')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong> Product dimensions required </strong>
                         </span>
                         @enderror
 
@@ -166,7 +166,7 @@
                         @error('product_items.'.$index.'.selectedDealer')
                             
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Dealer details required </strong>
                             </span>
 
                             @enderror
@@ -183,7 +183,7 @@
                             @error('product_items.'.$index.'.batchno')
                             
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong>Batch no. required</strong>
                             </span>
 
                             @enderror
@@ -198,7 +198,7 @@
                             
                             @error('product_items.'.$index.'.quantity')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Quantity required </strong>
                             </span>
                             @enderror
                         </div>
@@ -212,7 +212,7 @@
                             
                             @error('product_items.'.$index.'.price')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <strong> Price required </strong>
                                 </span>
                             @enderror
 
@@ -266,7 +266,7 @@
 
                             @error('certificates.'.$index.'.selectedAgency')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> PDI agency details required </strong>
                             </span>
                             @enderror
 
@@ -281,7 +281,7 @@
 
                             @error('certificates.'.$index.'.certificate_no')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Certificate no. required</strong>
                             </span>
                             @enderror
                         </div>
@@ -294,7 +294,7 @@
                             
                             @error('certificates.'.$index.'.certificate_date')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong> Certificate date required</strong>
                             </span>
                             @enderror
 
@@ -309,7 +309,7 @@
 
                             @error('certificates.'.$index.'.certificate_file')
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong>Upload certificate file in PDF</strong>
                             </span>
                             @enderror
                         </div>
@@ -330,6 +330,19 @@
             </div>
     
             <div class="row">
+                <div class="col-md-12">
+                    <div class="declaration my-2 px-2">
+                    <input type="checkbox" wire:model="acceptDeclaration" value="" /> 
+                    <label class="form-label">&nbsp;&nbsp;I confirm the accuracy of the information provided to the best of my knowledge. Any discrepancies found will be my responsibility.</label>
+                    
+                    @error('acceptDeclaration')
+                            <span class="invalid-feedback" role="alert">
+                                <strong> Required </strong>
+                            </span>
+                    @enderror
+                
+                </div>
+                </div>
                 <div class="col-md-3">
                 <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Submit</button>
                 </div>

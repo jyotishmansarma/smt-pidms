@@ -13,11 +13,11 @@ use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use App\Models\Schemes;
 use App\Models\WorkAllotment;
+use Auth;
 use DB;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Log;
+
 
 class ManufacturePoEntry extends Component
 {
@@ -31,6 +31,7 @@ class ManufacturePoEntry extends Component
     public $products;
     public $dealers;
     public $pdiagencies;
+    public $acceptDeclaration;
 
     public $selectedDivision;
     public $selectedScheme;
@@ -159,6 +160,7 @@ class ManufacturePoEntry extends Component
             'selectedDivision' => 'required|integer',
             'selectedScheme' => 'required|integer',
             'selectedContractor' => 'required|integer',
+            'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',
             'product_items.*.selectedProduct' => 'required|integer',
             'product_items.*.is_dealer_exist' => 'nullable|boolean',
@@ -177,13 +179,14 @@ class ManufacturePoEntry extends Component
         try {
 
         $timestamp = time();
-        $currentDate = date('Y-m-d ', $timestamp);
+        $currentDate = date('Ymd ', $timestamp);
         $lastRecord = PurchaseOrder::latest()->first();
-        $lastRecord ? $lastRecord->id+1 : 1;
+        $serial =$lastRecord ? $lastRecord->id+1 : 1;
             
-        //$order_id = 'ORD'.$request->scheme_id.$currentDate.$lastRecord;
+        $order_id = 'ORD/'.$currentDate.'/'.$this->selectedScheme.'/'.$serial;
         
         $order_created =  PurchaseOrder::create( [
+            'order_id' => $order_id,
             'division_id' => $this->selectedDivision,
             'scheme_id' => $this->selectedScheme,
             'contractor_id' => $this->selectedContractor,
@@ -192,7 +195,8 @@ class ManufacturePoEntry extends Component
             'is_verified' => false,
             'is_completed' => false,
             'status' => 'created',
-            'remarks' => '']
+            'remarks' => '',
+            'pidms_user_id' => Auth::user()->id]
         );
 
         $grandtotal = 0.00;

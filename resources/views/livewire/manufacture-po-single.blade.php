@@ -21,7 +21,9 @@
 
                     <div class="purchase-info info-box mb-4">
 
-                    <h4>Order Information</h4>
+                    <h4 class="mb-4">Order Information</h4>
+
+                    <label class="form-label">Order ID : </label>  <b> {{ $purchaseorder->order_id; }} </b>
 
                     <div class="row">
 

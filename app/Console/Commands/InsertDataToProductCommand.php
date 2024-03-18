@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\TempProduct;
 use Illuminate\Console\Command;
@@ -13,14 +14,14 @@ class InsertDataToProductCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'insert:products';
+    protected $signature = 'insert:manufacturer';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fill products table';
+    protected $description = 'Fill manufacturer table';
 
     /**
      * Create a new command instance.
@@ -40,12 +41,16 @@ class InsertDataToProductCommand extends Command
     public function handle()
     {
 
-        $data =  Product::all();
+        $data =  TempProduct::all();
         
         foreach($data as $data_item) {
-            TempProduct::create([
-                'name' => $data_item->prod_name,
-                'product_type_id' => 1
+            Manufacturer::create([
+                'name' => $data_item->v_name,
+                'phone' => $data_item->v_phone,
+                'email' => $data_item->v_email,
+                'address' => $data_item->v_address,
+                'cmlno' => $data_item->cml_no,
+                'pidms_user_id' => 2
             ]);
         }
 
