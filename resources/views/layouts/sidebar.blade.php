@@ -28,7 +28,7 @@
                 @can('purchase')
                     <li class="nav-small-cap">
                         <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                        <span class="hide-menu">Purches</span>
+                        <span class="hide-menu">Purchase</span>
                     </li>
 
                     <li class="sidebar-item">
@@ -36,7 +36,7 @@
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Create Purches</span>
+                            <span class="hide-menu">Create Purchase</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -44,7 +44,7 @@
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                            <span class="hide-menu">Purches Lisr</span>
+                            <span class="hide-menu">Purchase List</span>
                         </a>
                     </li>
                 @endcan
