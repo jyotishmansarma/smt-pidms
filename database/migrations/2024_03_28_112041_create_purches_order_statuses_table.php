@@ -13,7 +13,7 @@ class CreatePurchesOrderStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purches_order_statuses', function (Blueprint $table) {
+        Schema::create('purchase_order_statuses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_id');
             $table->integer('created_by');
@@ -33,6 +33,6 @@ class CreatePurchesOrderStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purches_order_statuses');
+        Schema::dropIfExists('purchase_order_statuses');
     }
 }
