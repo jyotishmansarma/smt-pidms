@@ -12,6 +12,7 @@ use App\Models\ProductType;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use App\Models\Schemes;
+use App\Models\User;
 use App\Models\WorkAllotment;
 use DB;
 use Illuminate\Validation\Rule;
@@ -256,6 +257,11 @@ class ManufacturePoEntry extends Component
         //$this->products = Product::all();
         $this->dealers = Dealer::all();
         $this->pdiagencies = PdiAgency::all();
+        $this->pdiagencies=User::with(['role_user' => function ($query) {
+            $query->where('role_id',2);
+        }])->get();
+
+
         return view('livewire.manufacture-po-entry');
     }
 }

@@ -21,4 +21,8 @@ class PdiCertificate extends Model
     public function pdiagency() {
         return $this->belongsTo(PdiAgency::class, 'pdi_agency_id','id');
     }
+
+    public function user() {
+        return $this->belongsTo(User::class, 'pdi_agency_id','id');
+    }
 }

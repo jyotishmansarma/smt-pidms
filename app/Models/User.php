@@ -101,4 +101,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(RoleUser::class,'id','user_id');
     }
+
 }

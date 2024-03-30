@@ -160,7 +160,7 @@
     
                         <tr>
                         <td>{{ $index+1 }} </td>
-                        <td>{{ $item->pdiagency->name }} </td>
+                        <td>{{ $item->user->name }} </td>
                         <td>{{ $item->certificate_no }} </td> 
                         <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
                         <td>
