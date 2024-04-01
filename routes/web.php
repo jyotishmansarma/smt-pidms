@@ -20,10 +20,10 @@ Route::get('/', function () {
 Route::get('register', [\App\Http\Controllers\RegisterController::class, 'create'])->name('register');
 Route::post('register', [\App\Http\Controllers\RegisterController::class, 'store'])->name('register');
 
-Route::get('purchase/', [\App\Http\Controllers\PurchaseOrderController::class, 'index'])->name('purchase.index');
-Route::get('purchase/create', [\App\Http\Controllers\PurchaseOrderController::class, 'create'])->name('purchase.create');
-Route::post('purchase/store', [\App\Http\Controllers\PurchaseOrderController::class, 'store'])->name('purchase.store');
-Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');
+//Route::get('purchase/', [\App\Http\Controllers\PurchaseOrderController::class, 'index'])->name('purchase.index');
+//Route::get('purchase/create', [\App\Http\Controllers\PurchaseOrderController::class, 'create'])->name('purchase.create');
+//Route::post('purchase/store', [\App\Http\Controllers\PurchaseOrderController::class, 'store'])->name('purchase.store');
+//Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');
 
 
 
@@ -33,6 +33,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 });
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('purchase/', [\App\Http\Controllers\PurchaseOrderController::class, 'index'])->name('purchase.index');
+    Route::get('purchase/create', [\App\Http\Controllers\PurchaseOrderController::class, 'create'])->name('purchase.create');
+    Route::post('purchase/store', [\App\Http\Controllers\PurchaseOrderController::class, 'store'])->name('purchase.store');
+    Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');
+    
     Route::resource('issue', \App\Http\Controllers\IssueTrackingController::class);
     Route::resource('users', \App\Http\Controllers\UserCreateController::class);
     Route::get('/get-issue-types', [ \App\Http\Controllers\IssueTrackingController::class, 'getIssueTypes'])->name('get_issue_types');
