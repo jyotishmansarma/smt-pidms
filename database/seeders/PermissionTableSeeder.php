@@ -16,12 +16,16 @@ class PermissionTableSeeder extends Seeder
     {
         $permissions = [
             [
-                'id'    => 1,
-                'title' => 'user_access',
+                'title' => 'create_purchase',
             ],
             [
-                'id'    => 2,
-                'title' => 'division_access',
+                'title' => 'list_purchase',
+            ],
+            [
+                'title' => 'purchase',
+            ],
+            [
+                'title' => 'edit_purchase',
             ],
         ];
 

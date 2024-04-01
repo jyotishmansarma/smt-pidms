@@ -64,7 +64,7 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-    protected $with = ['division_users'];
+//    protected $with = ['division_users'];
 //    public function __construct(array $attributes=[]){
 //        parent::__construct($attributes);
 //        self::created(function (User $user){
@@ -77,15 +77,15 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany(Role::class);
     }
-    public function division_users(){
-        return $this->belongsTo(DivisionUser::class,'id','user_id');
-    }
-    public function circle_users(){
-        return $this->belongsTo(CircleUser::class,'id','user_id');
-    }
-    public function zone_users(){
-        return $this->belongsTo(ZoneUser::class,'id','user_id');
-    }
+//    public function division_users(){
+//        return $this->belongsTo(DivisionUser::class,'id','user_id');
+//    }
+//    public function circle_users(){
+//        return $this->belongsTo(CircleUser::class,'id','user_id');
+//    }
+//    public function zone_users(){
+//        return $this->belongsTo(ZoneUser::class,'id','user_id');
+//    }
 
     public function hasAnyRole($roles)
     {
@@ -101,4 +101,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(RoleUser::class,'id','user_id');
     }
+
 }

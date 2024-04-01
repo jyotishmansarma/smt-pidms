@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductType;
 use Illuminate\Database\Seeder;
-use App\Models\Role;
 
-class RoleTableSeeder extends Seeder
+class ProductTypesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,18 +14,25 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
+        $productTypes = [
             [
-                'title' => 'Admin',
+                'name' => 'UPVC'
+
             ],
             [
-                'title' => 'TPIA',
+                'name' => 'PPR'
+
             ],
+
             [
-                'title' => 'Manufacture',
+                'name' => 'HDPE'
+
             ],
+
+
         ];
 
-        Role::insert($roles);
+        ProductType::insert($productTypes);
+
     }
 }

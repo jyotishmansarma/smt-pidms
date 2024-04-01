@@ -256,9 +256,11 @@
                             <select name="selectedAgency[]" @error('selectedAgency') is-invalid @enderror  class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
                                 
                                 <option value=""> Select PDI Agency </option>
-                                    @if($pdiagencies)
+                                    @if($pdiagencies )
                                     @foreach ($pdiagencies as $pdiagency)
-                                        <option value="{{ $pdiagency->id }}"> {{ $pdiagency->name }}</option>
+                                        @if($pdiagency->role_user != NULL)
+                                            <option value="{{ $pdiagency->id }}"> {{ $pdiagency->name }}</option>
+                                        @endif
                                     @endforeach                    
                                 @endif
                            

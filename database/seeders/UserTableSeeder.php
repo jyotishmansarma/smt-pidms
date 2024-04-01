@@ -14,25 +14,44 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $users = [
-            [
-                'id'             => 1,
+        $user = [
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
                 'username'          => 'admin',
                 'password'       => bcrypt('password'),
                 'remember_token' => null,
-            ],
-            [
-                'id'             => 2,
-                'name'           => 'User',
-                'email'          => 'user@user.com',
-                'username'          => 'user',
-                'password'       => bcrypt('password'),
-                'remember_token' => null,
-            ],
+
+
         ];
 
-        User::insert($users);
+        $user = User::create($user);
+        User::findOrFail($user->id)->roles()->sync(1);
+        //TPIA
+  $user = [
+                'name'           => 'Cipet',
+                'email'          => 'cipet@admin.com',
+                'username'          => 'cipet',
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+
+
+        ];
+
+        $user = User::create($user);
+        User::findOrFail($user->id)->roles()->sync(2);
+      //Manufacture
+  $user = [
+                'name'           => 'CHARU TECHNOLOGY PVT. LIMITED',
+                'email'          => 'charu_technology@admin.com',
+                'username'          => 'charu_technology',
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+
+
+        ];
+
+        $user = User::create($user);
+        User::findOrFail($user->id)->roles()->sync(3);
+
     }
 }
