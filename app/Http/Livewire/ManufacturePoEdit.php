@@ -20,6 +20,7 @@ class ManufacturePoEdit extends Component
 {
 
     public $purchaseorder_id;
+    public $purchase_order;
 
     public $divisions;
     public $searchDivision;
@@ -36,15 +37,6 @@ class ManufacturePoEdit extends Component
 
     public $product_items =[];
     public $certificates = [];
-
-    public function updatedSelectedDivision($value) {
-        $this->schemes = Schemes::where("division", $value)->get();
-}
-
-    public function updatedSelectedScheme($value) {
-        $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
-        $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
-    }
 
 public function updated($propertyName, $value)
 {
@@ -128,8 +120,8 @@ public function toggleClick($index)
     public function mount($purchaseorder_id)
     {
         $this->purchaseorder_id = $purchaseorder_id;
+        $this->purchase_order = PurchaseOrder::find($purchaseorder_id);
 
-        $purchase_order = PurchaseOrder::find($purchaseorder_id);
         $purchaseorder_items =  PurchaseOrderItem::where('purchase_order_id',$purchaseorder_id)->get();
         $pdi_certificates =  PdiCertificate::where('purchase_order_id', $purchaseorder_id)->get();
 
@@ -141,20 +133,19 @@ public function toggleClick($index)
             $this->certificates[] = [ 'selectedAgency' => $pdi_certificate->pdi_agency_id, 'certificate_no'=> $pdi_certificate->certificate_no, 'certificate_date' => $pdi_certificate->certificate_date, 'certificate_file' => $pdi_certificate->certificate_file ];
         }
 
-        $this->selectedDivision = $purchase_order->division_id;
-        $this->selectedScheme = $purchase_order->scheme_id;
-        $this->selectedContractor =  $purchase_order->contractor_id;
-
+        $this->selectedDivision = $this->purchase_order->division_id;
+    
         if ($this->selectedDivision) {
             $this->schemes = Schemes::where("division", $this->selectedDivision)->get();
+            $this->selectedScheme = $this->purchase_order->scheme_id;
         }
 
         if ($this->selectedScheme) {
             $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $this->selectedScheme)->first();
             if($work_allotment)
                 $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
-            }
-    
+                $this->selectedContractor =  $this->purchase_order->contractor_id;
+        }
     }
 
     public function render()
@@ -168,4 +159,15 @@ public function toggleClick($index)
         }])->get();
         return view('livewire.manufacture-po-edit');
     }
+
+
+    public function updatedSelectedDivision($value) {
+        $this->schemes = Schemes::where("division", $value)->get();
+    }
+
+    public function updatedSelectedScheme($value) {
+        $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
+        $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+    }
+
 }
