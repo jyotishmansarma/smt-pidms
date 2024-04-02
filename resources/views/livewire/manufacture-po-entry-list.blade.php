@@ -53,7 +53,11 @@
                             <td> 
                                 <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
                                     <i class="fas fa-eye"></i>
-                                </a>                                    
+                                </a>
+                                
+                                <a href="{{ route('purchase.edit', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
+                                    <i class="fas fa-pen"></i>
+                                </a> 
                             </td>
                         </tr>
                         @endforeach

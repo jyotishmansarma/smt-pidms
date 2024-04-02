@@ -153,7 +153,7 @@ class PurchaseOrderController extends Controller
      */
     public function edit(PurchaseOrder $purchaseOrder)
     {
-        //
+        return view('purchaseorder.edit', compact('purchaseOrder') );
     }
 
     /**
