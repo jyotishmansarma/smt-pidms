@@ -27,10 +27,9 @@ class ManufacturePoEdit extends Component
     public $schemes;
     public $contractors;
     public $product_types;
-    public $products;
+    public $products = [];
     public $dealers;
     public $pdiagencies;
-
     public $selectedDivision;
     public $selectedScheme;
     public $selectedContractor;
@@ -79,7 +78,8 @@ public function updated($propertyName, $value)
         }
 
         if($field=='selectedProductType'){
-            $this->products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
+            $this->products[$index] = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
+            dd($this->products[$index]);
         }
     }
 
@@ -125,8 +125,10 @@ public function toggleClick($index)
         $purchaseorder_items =  PurchaseOrderItem::where('purchase_order_id',$purchaseorder_id)->get();
         $pdi_certificates =  PdiCertificate::where('purchase_order_id', $purchaseorder_id)->get();
 
-        foreach($purchaseorder_items as $purchaseorder_item) {
+        foreach($purchaseorder_items as $index => $purchaseorder_item) {
             $this->product_items[] = [ 'showSelect'=>$purchaseorder_item->is_dealer_exist, 'selectedProductType' => $purchaseorder_item->producttype_id, 'selectedProduct' => $purchaseorder_item->product_id, 'is_dealer_exist'=>$purchaseorder_item->is_dealer_exist, 'selectedDealer' => $purchaseorder_item->dealer_id, 'quantity' => $purchaseorder_item->quantity , 'batchno' => $purchaseorder_item->batchno, 'price' => $purchaseorder_item->price , 'totalprice' => $purchaseorder_item->totalprice ];
+            $this->products[$index] = Product::where('product_type_id',$purchaseorder_item->producttype_id)->get();
+            
         }
 
         foreach($pdi_certificates as $pdi_certificate) {

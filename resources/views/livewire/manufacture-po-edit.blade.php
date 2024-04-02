@@ -130,9 +130,10 @@
                     <select class="form-select" name="product[]" @error('product') is-invalid @enderror  wire:model="product_items.{{ $index }}.selectedProduct">
                         
                         <option value=""> Select Product Dimensions </option>
-                        @if($products)
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}" wire:key="{{ $product->id }}"> {{ $product->name }}</option>
+
+                        @if(!is_null($products[$index]))
+                        @foreach ($products[$index] as $product_item)
+                            <option value="{{ $product_item->id }}" wire:key="{{ $product_item->id }}"> {{ $product_item->name }}</option>
                         @endforeach
                         @endif
                     </select>
