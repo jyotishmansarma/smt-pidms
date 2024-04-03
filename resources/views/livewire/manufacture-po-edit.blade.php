@@ -17,7 +17,7 @@
 
     <div class="form_wrap p-2">
     
-    <form method="post" wire:submit.prevent="submitForm" action="{{ route('purchase.store')}}" enctype="multipart/form-data">
+    <form method="post" wire:submit.prevent="updateForm" action="{{ route('purchase.update') }}" enctype="multipart/form-data">
         @csrf
         <div class="row">
                 <div class="col-md-2">
@@ -27,7 +27,7 @@
                         <option value="">Select Division </option>
                         @if($divisions)
                             @foreach ($divisions as $division)
-                            <option value="{{ $division->id }}" wire:key="{{ $division->id }}"> {{ $division->division_name }}</option>
+                            <option value="{{ $division->id }}" wire:key="{{ "division".$division->id }}"> {{ $division->division_name }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -48,7 +48,7 @@
                         <option value=""> Select scheme</option>
                         @if($schemes)
                         @foreach ($schemes as $scheme)
-                            <option value="{{ $scheme->scheme_id }}" wire:key="{{ $scheme->scheme_id }}">{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
+                            <option value="{{ $scheme->scheme_id }}" wire:key="{{ "scheme".$scheme->scheme_id }}">{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
                         @endforeach
                         @endif
                     </select>
@@ -70,7 +70,7 @@
                         <option value=""> Select Contractor</option>
                         @if($contractors)
                         @foreach ($contractors as $contractor)
-                            <option value="{{ $contractor->id }}" wire:key="{{ $contractor->id }}" >{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
+                            <option value="{{ $contractor->id }}" wire:key="{{ "contractor".$contractor->id }}" >{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
                         @endforeach
                         @endif
                     </select>
@@ -106,11 +106,11 @@
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
                     <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
-                    <select class="form-select " name="product_type[]"  @error('product_type') is-invalid @enderror wire:model="product_items.{{ $index }}.selectedProductType">
+                    <select class="form-select" wire:model="product_items.{{ $index }}.selectedProductType">
                         <option value=""> Select Product Type </option>
                         @if($product_types)
                             @foreach ($product_types as $product_type)
-                                <option value={{ $product_type->id }} wire:key="{{ $product_type->id }}"> {{ $product_type->name }}</option>
+                                <option value={{ $product_type->id }} wire:key="{{ "product_type".$index.$product_type->id }}"> {{ $product_type->name }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -127,12 +127,12 @@
                 <div class="col-md-3">
                     <div class="input_wrap mb-4">
                     <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="product[]" @error('product') is-invalid @enderror  wire:model="product_items.{{ $index }}.selectedProduct">
+                    <select class="form-select" wire:model="product_items.{{ $index }}.selectedProduct">
                         
                         <option value=""> Select Product Dimensions </option>
                         @if(isset($products[$index]) && !is_null($products[$index]) && is_array($products[$index]))
                         @foreach ($products[$index] as $product_item)
-                            <option value="{{ $product_item['id'] }}" wire:key="{{ $product_item['id'] }}"> {{ $product_item['name'] }}</option>
+                            <option value="{{ $product_item['id'] }}" wire:key="{{ "product".$index.$product_item['id'] }}"> {{ $product_item['name'] }}</option>
                         @endforeach
                         @endif
                     </select>
@@ -150,12 +150,12 @@
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
                     <label class="form-label">Select Dealer</label><span style="color:red">&#42;</span>
-                    <select class="form-select" name="dealer[]" wire:model="product_items.{{ $index }}.selectedDealer">
+                    <select class="form-select"  wire:model="product_items.{{ $index }}.selectedDealer">
                         
                             <option value=""> Select dealer </option>
                             @if($dealers)
                             @foreach ($dealers as $dealer)
-                                <option value="{{ $dealer->id }}" wire:key="{{ $dealer->id }}"> {{ $dealer->d_name }}</option>
+                                <option value="{{ $dealer->id }}" wire:key="{{ "dealer".$index.$dealer->id }}"> {{ $dealer->d_name }}</option>
                             @endforeach
                         @endif
 
@@ -251,13 +251,13 @@
                     <div class="input_wrap mb-4">
                         <label for="agency" class="form-label">PDI Agency Name</label><span style="color:red">&#42;</span>
                         
-                        <select name="selectedAgency[]" @error('selectedAgency') is-invalid @enderror  class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
+                        <select class="form-select" wire:model="certificates.{{ $index }}.selectedAgency">
                             
                             <option value=""> Select PDI Agency </option>
                                 @if($pdiagencies )
                                 @foreach ($pdiagencies as $pdiagency)
                                     @if($pdiagency->role_user != NULL)
-                                        <option value="{{ $pdiagency->id }}" wire:key="{{ $pdiagency->id }}"> {{ $pdiagency->name }}</option>
+                                        <option value="{{ $pdiagency->id }}" wire:key="{{ "agency".$index.$pdiagency->id }}"> {{ $pdiagency->name }}</option>
                                     @endif
                                 @endforeach                    
                             @endif
@@ -330,6 +330,20 @@
         </div>
 
         <div class="row">
+            <div class="col-md-12">
+                <div class="declaration my-2 px-2">
+                <input type="checkbox" wire:model="acceptDeclaration" value="" /> 
+                <label class="form-label">&nbsp;&nbsp;I confirm the accuracy of the information provided to the best of my knowledge. Any discrepancies found will be my responsibility.</label>
+                
+                @error('acceptDeclaration')
+                        <span class="invalid-feedback" role="alert">
+                            <strong> Required </strong>
+                        </span>
+                @enderror
+            
+            </div>
+            </div>
+
             <div class="col-md-3">
             <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Submit</button>
             </div>

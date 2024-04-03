@@ -93,10 +93,7 @@ class ManufacturePoEntry extends Component
             }
 
             if($field=='selectedProductType'){
-                $this->products[$index] = null;
-                $this->products = array_values($this->products);
-                $updated_products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get()->toArray();
-                $this->products[$index] = $updated_products;
+                $this->products[$index] = Product::where('product_type_id', $value)->get()->toArray();
                 $this->products = array_values($this->products);
             }
         }
@@ -117,6 +114,8 @@ class ManufacturePoEntry extends Component
     public function removeRow($index)
     {
         unset($this->product_items[$index]);
+        unset($this->products[$index]);
+        $this->products = array_values($this->products);
         $this->product_items = array_values($this->product_items);
     }
 
@@ -255,6 +254,7 @@ class ManufacturePoEntry extends Component
         }
 
         DB::commit();
+        redirect()->route('purchase.index');
     }
 
 
@@ -262,7 +262,6 @@ class ManufacturePoEntry extends Component
     {
         $this->divisions = Division::where('division_name', 'like', '%' . $this->searchDivision . '%')->get();;
         $this->product_types =  ProductType::all();
-        //$this->products = Product::all();
         $this->dealers = Dealer::all();
         $this->pdiagencies = PdiAgency::all();
         $this->pdiagencies=User::with(['role_user' => function ($query) {
