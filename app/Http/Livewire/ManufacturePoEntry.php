@@ -29,7 +29,7 @@ class ManufacturePoEntry extends Component
     public $schemes;
     public $contractors;
     public $product_types;
-    public $products;
+    public $products = [];
     public $dealers;
     public $pdiagencies;
     public $acceptDeclaration;
@@ -93,7 +93,11 @@ class ManufacturePoEntry extends Component
             }
 
             if($field=='selectedProductType'){
-                $this->products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
+                $this->products[$index] = null;
+                $this->products = array_values($this->products);
+                $updated_products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get()->toArray();
+                $this->products[$index] = $updated_products;
+                $this->products = array_values($this->products);
             }
         }
 

@@ -28,6 +28,7 @@ class ManufacturePoEdit extends Component
     public $contractors;
     public $product_types;
     public $products = [];
+    public $products_new = [];
     public $dealers;
     public $pdiagencies;
     public $selectedDivision;
@@ -78,8 +79,14 @@ public function updated($propertyName, $value)
         }
 
         if($field=='selectedProductType'){
-            $this->products[$index] = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
-            dd($this->products[$index]);
+            
+            $this->products[$index] = null;
+            $this->products = array_values($this->products);
+            $updated_products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get()->toArray();
+            
+            $this->products_new[$index] = $updated_products ;
+            $this->products_new = array_values($this->products_new);
+            
         }
     }
 
@@ -127,7 +134,7 @@ public function toggleClick($index)
 
         foreach($purchaseorder_items as $index => $purchaseorder_item) {
             $this->product_items[] = [ 'showSelect'=>$purchaseorder_item->is_dealer_exist, 'selectedProductType' => $purchaseorder_item->producttype_id, 'selectedProduct' => $purchaseorder_item->product_id, 'is_dealer_exist'=>$purchaseorder_item->is_dealer_exist, 'selectedDealer' => $purchaseorder_item->dealer_id, 'quantity' => $purchaseorder_item->quantity , 'batchno' => $purchaseorder_item->batchno, 'price' => $purchaseorder_item->price , 'totalprice' => $purchaseorder_item->totalprice ];
-            $this->products[$index] = Product::where('product_type_id',$purchaseorder_item->producttype_id)->get();
+            $this->products[$index] = Product::where('product_type_id',$purchaseorder_item->producttype_id)->get()->toArray();
             
         }
 
