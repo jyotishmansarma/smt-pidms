@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\PurchesOrderStatus;
 use App\Models\Schemes;
 use App\Models\User;
 use App\Models\WorkAllotment;
@@ -196,9 +197,7 @@ class ManufacturePoEntry extends Component
             'contractor_id' => $this->selectedContractor,
             'workorder_no' => 'workorder_no',
             'order_grand_total' => 0.00,
-            'is_verified' => false,
-            'is_completed' => false,
-            'status' => 'created',
+            'status' => 2,
             'remarks' => '',
             'pidms_user_id' => Auth::user()->id]
         );
@@ -247,6 +246,20 @@ class ManufacturePoEntry extends Component
                 ]);
             }
         }
+
+        PurchesOrderStatus::create([
+            'purchase_id' => $order_created->id,
+            'created_by' => Auth::user()->id,
+            'remarks' => '',
+            'status' => 1
+        ]);
+
+        PurchesOrderStatus::create([
+            'purchase_id' => $order_created->id,
+            'created_by' => Auth::user()->id,
+            'remarks' => '',
+            'status' => 2
+        ]);
 
         } catch (\Exception $e) {
             DB::rollBack();

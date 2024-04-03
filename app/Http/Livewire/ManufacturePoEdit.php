@@ -248,9 +248,7 @@ class ManufacturePoEdit extends Component
                 'contractor_id' => $this->selectedContractor,
                 'workorder_no' => 'workorder_no',
                 'order_grand_total' => $grandtotal,
-                'is_verified' => false,
-                'is_completed' => false,
-                'status' => 'created',
+                'status' => 1,
                 'remarks' => '',
             ];
 
