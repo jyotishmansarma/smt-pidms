@@ -24,18 +24,18 @@ class DashboardController extends Controller
             $total_order_count = PurchaseOrder::count();
             $pending_order_count = PurchaseOrder::where('status', 2)->count();
             $rejected_order_count = PurchaseOrder::where('status', 4)->count();
-            $accepted_order_count = PurchaseOrder::where('status', 8)->count();
+            $verified_order_count = PurchaseOrder::where('status', 3)->count();
             $resubmitted_order_count = PurchaseOrder::where('status', 9)->count();
             return view('dashboard', compact('total_order_count', 'pending_order_count', 'rejected_order_count',
-                'accepted_order_count', 'resubmitted_order_count'));
+                'verified_order_count', 'resubmitted_order_count'));
         } else {
             $total_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->count();
             $pending_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->where('status', 2)->count();
             $rejected_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->where('status', 4)->count();
-            $accepted_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->where('status', 8)->count();
+            $verified_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->where('status', 3)->count();
             $resubmitted_order_count = PurchaseOrder::where('pidms_user_id',$user->id)->where('status', 9)->count();
             return view('dashboard', compact('total_order_count', 'pending_order_count', 'rejected_order_count',
-                'accepted_order_count', 'resubmitted_order_count'));
+                'verified_order_count', 'resubmitted_order_count'));
         }
     }
 }
