@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderStatus;
 use App\Models\Schemes;
 use App\Models\User;
 use App\Models\WorkAllotment;
@@ -250,7 +251,7 @@ class ManufacturePoEdit extends Component
                 'order_grand_total' => $grandtotal,
                 'is_verified' => false,
                 'is_completed' => false,
-                'status' => 'created',
+                'status' => 9,
                 'remarks' => '',
             ];
 
@@ -271,6 +272,14 @@ class ManufacturePoEdit extends Component
                     ]);
                 }
             }
+
+            PurchaseOrderStatus::create([
+                [
+                    'purchase_id'=>$this->purchaseorder_id,
+                    'created_by'=> Auth::user()->id,
+                    'status'=>9
+                ]
+            ]);
 
             DB::commit();
             return redirect()->route('purchase.index');
