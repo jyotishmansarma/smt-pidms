@@ -70,7 +70,7 @@ class ManufacturePoEdit extends Component
             $this->certificates[] = [
                 'selectedAgency' => $pdi_certificate->pdi_agency_id,
                 'certificate_no' => $pdi_certificate->certificate_no,
-                'certificate_date' => $pdi_certificate->certificate_date,
+                'certificate_date' => \Carbon\Carbon::parse($pdi_certificate->certificate_date)->format('Y-m-d'),
                 'certificate_file' => $pdi_certificate->certificate_file
             ];
         }
@@ -201,6 +201,8 @@ class ManufacturePoEdit extends Component
 
     public function updateForm()
     {
+
+
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
             'selectedScheme' => 'required|integer',
@@ -209,14 +211,14 @@ class ManufacturePoEdit extends Component
             'product_items.*.selectedProductType' => 'required|integer',
             'product_items.*.selectedProduct' => 'required|integer',
             'product_items.*.is_dealer_exist' => 'nullable|boolean',
-            'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
+           // 'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
             'product_items.*.batchno' => 'required|string',
             'product_items.*.quantity' => 'required|integer|min:1',
             'product_items.*.price' => 'required|numeric|min:0|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'certificates.*.selectedAgency' => 'required|integer',
             'certificates.*.certificate_no' => 'required|string',
-            'certificates.*.certificate_date' => 'required|date',
-            'certificates.*.certificate_file' => 'required|file|mimes:pdf'
+            'certificates.*.certificate_date' => 'required',
+            'certificates.*.certificate_file' => 'file|mimes:pdf'
         ]);
 
         DB::beginTransaction();
@@ -249,8 +251,6 @@ class ManufacturePoEdit extends Component
                 'contractor_id' => $this->selectedContractor,
                 'workorder_no' => 'workorder_no',
                 'order_grand_total' => $grandtotal,
-                'is_verified' => false,
-                'is_completed' => false,
                 'status' => 9,
                 'remarks' => '',
             ];
@@ -273,12 +273,11 @@ class ManufacturePoEdit extends Component
                 }
             }
 
+
             PurchaseOrderStatus::create([
-                [
                     'purchase_id'=>$this->purchaseorder_id,
                     'created_by'=> Auth::user()->id,
                     'status'=>9
-                ]
             ]);
 
             DB::commit();
