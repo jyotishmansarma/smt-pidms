@@ -8,14 +8,15 @@
 <!-- Include Select2 JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    @if (Request::is('dashboard'))
     var ctx = document.getElementById('ordersChart').getContext('2d');
     var ordersChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Pending PO','Rejected PO', 'Accepted PO','Resubmitted PO'],
+            labels: ['Pending PO','Rejected PO', 'Verified PO','Resubmitted PO'],
             datasets: [{
                 label: 'PO',
-                data: [ {{ $pending_order_count }},{{ $rejected_order_count }}, {{ $accepted_order_count }},{{$resubmitted_order_count}}],
+                data: [ {{ $pending_order_count }},{{ $rejected_order_count }}, {{ $verified_order_count }},{{$resubmitted_order_count}}],
                 backgroundColor: [
                     'rgba(245, 121, 39, 0.7)',
                     'rgba(255, 0, 0, 0.7)',
@@ -41,6 +42,7 @@
             }
         }
     });
+    @endif
 </script>
 @livewireScripts
 
