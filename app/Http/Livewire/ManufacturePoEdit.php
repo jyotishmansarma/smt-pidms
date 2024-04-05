@@ -188,15 +188,24 @@ class ManufacturePoEdit extends Component
         $this->product_items[$index]['showSelect'] = !$this->product_items[$index]['showSelect'];
     }
 
-    public function updatedSelectedDivision($value)
-    {
-        $this->schemes = Schemes::where("division", $value)->get();
+    public function updatedSelectedDivision($value) {
+        if($value=='') {
+            $this->schemes = null;
+        }else {
+            $this->schemes = Schemes::where("division", $value)->get();
+        }
+        $this->contractors = null;
     }
 
-    public function updatedSelectedScheme($value)
-    {
-        $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
-        $this->contractors  = Contractor::where('id', $work_allotment->contractor_id)->get();
+    public function updatedSelectedScheme($value) {
+        if($value=='') {
+            $this->contractors = null;
+        } else {
+            $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
+            $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+        }
+        
+
     }
 
     public function updateForm()
@@ -205,7 +214,7 @@ class ManufacturePoEdit extends Component
 
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
-            'selectedScheme' => 'required|integer',
+            'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id,' . $this->purchase_order->scheme_id . ',scheme_id',
             'selectedContractor' => 'required|integer',
             'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',
