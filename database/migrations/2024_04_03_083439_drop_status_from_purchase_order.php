@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusColumnToPurchaseOrder extends Migration
+class DropStatusFromPurchaseOrder extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +14,10 @@ class AddStatusColumnToPurchaseOrder extends Migration
     public function up()
     {
         Schema::table('purchase_orders', function (Blueprint $table) {
-            $table->double('order_grand_total')->after('workorder_no');
-            $table->boolean('is_verified')->after('status');
-            $table->boolean('is_completed')->after('is_verified');
+            
+            $table->dropColumn('is_verified','is_completed');
+//            $table->unsignedBigInteger('status')->after('order_grand_total')->default(1);
+//            $table->foreign('status')->references('id')->on('statuses');
 
         });
     }
@@ -30,7 +31,6 @@ class AddStatusColumnToPurchaseOrder extends Migration
     {
         Schema::table('purchase_orders', function (Blueprint $table) {
             //
-            $table->dropColumn('order_grand_total','is_verified','is_completed');
         });
     }
 }

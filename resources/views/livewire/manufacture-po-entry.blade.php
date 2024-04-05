@@ -29,7 +29,7 @@
                             <option value="">Select Division </option>
                             @if($divisions)
                                 @foreach ($divisions as $division)
-                                <option value="{{ $division->id }}"> {{ $division->division_name }}</option>
+                                <option value="{{ $division->id }}" wire:key={{ "division".$division->id }}> {{ $division->division_name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -50,7 +50,7 @@
                             <option value=""> Select scheme</option>
                             @if($schemes)
                             @foreach ($schemes as $scheme)
-                                <option value="{{ $scheme->scheme_id }} ">{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
+                                <option value="{{ $scheme->scheme_id }}" wire:key={{ "scheme".$scheme->scheme_id }} >{{ $scheme->scheme_name }} Scheme ID : {{ $scheme->scheme_id }}</option>
                             @endforeach
                             @endif
                         </select>
@@ -72,7 +72,7 @@
                             <option value=""> Select Contractor</option>
                             @if($contractors)
                             @foreach ($contractors as $contractor)
-                                <option value="{{ $contractor->id }} ">{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
+                                <option value="{{ $contractor->id }}" wire:key="{{ "contractor".$contractor->id }}">{{ $contractor->name }} || Bid No : {{ $contractor->bid_no }}</option>
                             @endforeach
                             @endif
                         </select>
@@ -108,11 +108,11 @@
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
-                        <select class="form-select " name="product_type[]"  @error('product_type') is-invalid @enderror wire:model="product_items.{{ $index }}.selectedProductType">
+                        <select class="form-select" wire:model="product_items.{{ $index }}.selectedProductType">
                             <option value=""> Select Product Type </option>
                             @if($product_types)
                                 @foreach ($product_types as $product_type)
-                                    <option value={{ $product_type->id }} > {{ $product_type->name }}</option>
+                                    <option value="{{ $product_type->id }}"  wire:key="{{ "product_type".$index.$product_type->id }}"> {{ $product_type->name }}</option>
                                 @endforeach
                             @endif
                         </select>
@@ -129,12 +129,12 @@
                     <div class="col-md-3">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Dimensions</label><span style="color:red">&#42;</span>
-                        <select class="form-select" name="product[]" @error('product') is-invalid @enderror  wire:model="product_items.{{ $index }}.selectedProduct">
+                        <select class="form-select"  wire:model="product_items.{{ $index }}.selectedProduct">
                             
                             <option value=""> Select Product Dimensions </option>
-                            @if($products)
-                            @foreach ($products as $product)
-                                <option value="{{ $product->id }}"> {{ $product->name }}</option>
+                            @if(isset($products[$index]) && !is_null($products[$index]) && is_array($products[$index]))
+                            @foreach ($products[$index] as $product_item)
+                                <option value="{{ $product_item['id'] }}" wire:key="{{ "product".$index.$product_item['id'] }}"> {{ $product_item['name'] }}</option>
                             @endforeach
                             @endif
                         </select>
@@ -157,7 +157,7 @@
                                 <option value=""> Select dealer </option>
                                 @if($dealers)
                                 @foreach ($dealers as $dealer)
-                                    <option value="{{ $dealer->id }}"> {{ $dealer->d_name }}</option>
+                                    <option value="{{ $dealer->id }}" wire:key="{{ "dealer".$index.$dealer->id }}"> {{ $dealer->d_name }}</option>
                                 @endforeach
                             @endif
 
@@ -259,7 +259,7 @@
                                     @if($pdiagencies )
                                     @foreach ($pdiagencies as $pdiagency)
                                         @if($pdiagency->role_user != NULL)
-                                            <option value="{{ $pdiagency->id }}"> {{ $pdiagency->name }}</option>
+                                            <option value="{{ $pdiagency->id }}" wire:key="{{ "agency".$index.$pdiagency->id }}"> {{ $pdiagency->name }}</option>
                                         @endif
                                     @endforeach                    
                                 @endif

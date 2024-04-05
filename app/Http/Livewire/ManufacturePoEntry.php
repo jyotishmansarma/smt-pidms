@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderStatus;
 use App\Models\Schemes;
 use App\Models\User;
 use App\Models\WorkAllotment;
@@ -29,7 +30,7 @@ class ManufacturePoEntry extends Component
     public $schemes;
     public $contractors;
     public $product_types;
-    public $products;
+    public $products = [];
     public $dealers;
     public $pdiagencies;
     public $acceptDeclaration;
@@ -93,7 +94,8 @@ class ManufacturePoEntry extends Component
             }
 
             if($field=='selectedProductType'){
-                $this->products = Product::where('product_type_id',$this->product_items[$index]['selectedProductType'])->get();
+                $this->products[$index] = Product::where('product_type_id', $value)->get()->toArray();
+                $this->products = array_values($this->products);
             }
         }
 
@@ -113,6 +115,8 @@ class ManufacturePoEntry extends Component
     public function removeRow($index)
     {
         unset($this->product_items[$index]);
+        unset($this->products[$index]);
+        $this->products = array_values($this->products);
         $this->product_items = array_values($this->product_items);
     }
 
@@ -193,9 +197,7 @@ class ManufacturePoEntry extends Component
             'contractor_id' => $this->selectedContractor,
             'workorder_no' => 'workorder_no',
             'order_grand_total' => 0.00,
-            'is_verified' => false,
-            'is_completed' => false,
-            'status' => 'created',
+            'status' => 2,
             'remarks' => '',
             'pidms_user_id' => Auth::user()->id]
         );
@@ -244,6 +246,17 @@ class ManufacturePoEntry extends Component
                 ]);
             }
         }
+            PurchaseOrderStatus::insert([
+                [
+                    'purchase_id'=>$order_created->id,
+                    'created_by'=> Auth::user()->id,
+                    'status'=>1
+                ],
+
+                ['purchase_id'=>$order_created->id,
+                    'created_by'=> Auth::user()->id,
+                    'status'=>2]
+            ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -251,6 +264,7 @@ class ManufacturePoEntry extends Component
         }
 
         DB::commit();
+        redirect()->route('purchase.index');
     }
 
 
@@ -258,7 +272,6 @@ class ManufacturePoEntry extends Component
     {
         $this->divisions = Division::where('division_name', 'like', '%' . $this->searchDivision . '%')->get();;
         $this->product_types =  ProductType::all();
-        //$this->products = Product::all();
         $this->dealers = Dealer::all();
         $this->pdiagencies = PdiAgency::all();
         $this->pdiagencies=User::with(['role_user' => function ($query) {
