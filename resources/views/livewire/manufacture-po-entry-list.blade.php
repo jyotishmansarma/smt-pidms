@@ -51,13 +51,14 @@
                             <td >{{ $purchaseorders_item->contractor->bid_no }}</td>
                             <td >{{ $purchaseorders_item->status }}</td>
                             <td> 
-                                <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                
-                                <a href="{{ route('purchase.edit', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
-                                    <i class="fas fa-pen"></i>
-                                </a> 
+                                <div class="d-flex">
+                                    <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-success w-20 py-8 fs-4 gap-1 rounded-2">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="{{ route('purchase.edit', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
+                                        <i class="fas fa-pen"></i>
+                                    </a> 
+                                </div>
                             </td>
                         </tr>
                         @endforeach

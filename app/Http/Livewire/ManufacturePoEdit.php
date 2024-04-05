@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderStatus;
 use App\Models\Schemes;
 use App\Models\User;
 use App\Models\WorkAllotment;
@@ -69,7 +70,7 @@ class ManufacturePoEdit extends Component
             $this->certificates[] = [
                 'selectedAgency' => $pdi_certificate->pdi_agency_id,
                 'certificate_no' => $pdi_certificate->certificate_no,
-                'certificate_date' => $pdi_certificate->certificate_date,
+                'certificate_date' => \Carbon\Carbon::parse($pdi_certificate->certificate_date)->format('Y-m-d'),
                 'certificate_file' => $pdi_certificate->certificate_file
             ];
         }
@@ -187,35 +188,46 @@ class ManufacturePoEdit extends Component
         $this->product_items[$index]['showSelect'] = !$this->product_items[$index]['showSelect'];
     }
 
-    public function updatedSelectedDivision($value)
-    {
-        $this->schemes = Schemes::where("division", $value)->get();
+    public function updatedSelectedDivision($value) {
+        if($value=='') {
+            $this->schemes = null;
+        }else {
+            $this->schemes = Schemes::where("division", $value)->get();
+        }
+        $this->contractors = null;
     }
 
-    public function updatedSelectedScheme($value)
-    {
-        $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
-        $this->contractors  = Contractor::where('id', $work_allotment->contractor_id)->get();
+    public function updatedSelectedScheme($value) {
+        if($value=='') {
+            $this->contractors = null;
+        } else {
+            $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
+            $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+        }
+        
+
     }
 
     public function updateForm()
     {
+
+
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
-            'selectedScheme' => 'required|integer',
+            'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id,' . $this->purchase_order->scheme_id . ',scheme_id',
             'selectedContractor' => 'required|integer',
             'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',
             'product_items.*.selectedProduct' => 'required|integer',
             'product_items.*.is_dealer_exist' => 'nullable|boolean',
-            'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
+           // 'product_items.*.selectedDealer' => 'integer|required_if:product_items.*.is_dealer_exist,true',
             'product_items.*.batchno' => 'required|string',
             'product_items.*.quantity' => 'required|integer|min:1',
             'product_items.*.price' => 'required|numeric|min:0|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'certificates.*.selectedAgency' => 'required|integer',
             'certificates.*.certificate_no' => 'required|string',
-            'certificates.*.certificate_date' => 'required|date',
-            'certificates.*.certificate_file' => 'required|file|mimes:pdf'
+            'certificates.*.certificate_date' => 'required',
+            'certificates.*.certificate_file' => 'file|mimes:pdf'
         ]);
 
         DB::beginTransaction();
@@ -248,9 +260,7 @@ class ManufacturePoEdit extends Component
                 'contractor_id' => $this->selectedContractor,
                 'workorder_no' => 'workorder_no',
                 'order_grand_total' => $grandtotal,
-                'is_verified' => false,
-                'is_completed' => false,
-                'status' => 'created',
+                'status' => 9,
                 'remarks' => '',
             ];
 
@@ -271,6 +281,13 @@ class ManufacturePoEdit extends Component
                     ]);
                 }
             }
+
+
+            PurchaseOrderStatus::create([
+                    'purchase_id'=>$this->purchaseorder_id,
+                    'created_by'=> Auth::user()->id,
+                    'status'=>9
+            ]);
 
             DB::commit();
             return redirect()->route('purchase.index');

@@ -57,7 +57,7 @@
 
                         @error('selectedScheme')
                             <span class="invalid-feedback" role="alert">
-                                <strong> Scheme details required </strong>
+                                <strong> {{ $message }} </strong>
                             </span>
                         @enderror
 

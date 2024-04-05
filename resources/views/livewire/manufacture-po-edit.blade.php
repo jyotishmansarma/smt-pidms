@@ -289,6 +289,8 @@
 
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
+                        
+
                         <label for="certifcate_date" class="form-label">Date</label><span style="color:red">&#42;</span>
                         <input type="date" class="form-control"  @error('certificate_date') is-invalid @enderror name="certificate_date[]"  wire:model="certificates.{{ $index }}.certificate_date" value="">
                         
@@ -305,7 +307,11 @@
                     <div class="input_wrap mb-4">
                         <label for="certificate_file" class="form-label">Upload Certificate</label><span style="color:red">&#42;</span>
                         <input type="file" class="form-control" name="certificate_file[]"  @error('certificate_file') is-invalid @enderror  wire:model="certificates.{{ $index }}.certificate_file" value="">
-                       
+                    
+                        @if($row['certificate_file'])
+                            <a target="_blank" class="badge bg-success mt-2"  href="{{ asset('storage/'.$row['certificate_file'] )}}" > View previous Certificate</a> 
+                        @endif 
+                         
 
                         @error('certificates.'.$index.'.certificate_file')
                         <span class="invalid-feedback" role="alert">

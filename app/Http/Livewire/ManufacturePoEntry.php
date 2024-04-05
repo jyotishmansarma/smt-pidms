@@ -43,13 +43,22 @@ class ManufacturePoEntry extends Component
     public $certificates = [];
 
     public function updatedSelectedDivision($value) {
-            $this->schemes = Schemes::where("division", $value)->get();
+            if($value=='') {
+                $this->schemes = null;
+            }else {
+                $this->schemes = Schemes::where("division", $value)->get();
+            }
+            $this->contractors = null;
     }
 
     public function updatedSelectedScheme($value) {
-       
-        $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
-        $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+        if($value=='') {
+            $this->contractors = null;
+        } else {
+            $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
+            $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+        }
+        
 
     }
 
@@ -163,7 +172,7 @@ class ManufacturePoEntry extends Component
 
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
-            'selectedScheme' => 'required|integer|unique:purchase_orders,id',
+            'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id',
             'selectedContractor' => 'required|integer',
             'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',
