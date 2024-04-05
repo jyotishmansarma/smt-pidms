@@ -42,6 +42,7 @@ class ManufacturePoEdit extends Component
 
     public $product_items =[];
     public $certificates = [];
+    public $certificatess = [];
 
     public function mount($purchaseorder_id)
     {
@@ -68,6 +69,7 @@ class ManufacturePoEdit extends Component
 
         foreach ($pdi_certificates as $pdi_certificate) {
             $this->certificates[] = [
+                'id' => $pdi_certificate->id,
                 'selectedAgency' => $pdi_certificate->pdi_agency_id,
                 'certificate_no' => $pdi_certificate->certificate_no,
                 'certificate_date' => \Carbon\Carbon::parse($pdi_certificate->certificate_date)->format('Y-m-d'),
@@ -227,7 +229,7 @@ class ManufacturePoEdit extends Component
             'certificates.*.selectedAgency' => 'required|integer',
             'certificates.*.certificate_no' => 'required|string',
             'certificates.*.certificate_date' => 'required',
-            'certificates.*.certificate_file' => 'file|mimes:pdf'
+//            'certificates.*.certificate_file' => 'file|mimes:pdf'
         ]);
 
         DB::beginTransaction();
@@ -267,20 +269,34 @@ class ManufacturePoEdit extends Component
             $this->purchase_order->fill($data); 
             $this->purchase_order->save();
 
-            PdiCertificate::where('purchase_order_id', $this->purchaseorder_id)->delete();
+//            PdiCertificate::where('purchase_order_id', $this->purchaseorder_id)->delete();
 
-            foreach ($this->certificates as $certificate) {
+            foreach ($this->certificatess as $key=>$certificate) {
+//                dd($certificate['certificate_file']);
                 if (isset($certificate['certificate_file'])) {
+                                PdiCertificate::where('id', $this->certificates[$key]['id'])->delete();
+
                     $file_path = $certificate['certificate_file']->store('/uploads/certificates', 'public');
                     PdiCertificate::create([
                         'purchase_order_id' => $this->purchaseorder_id,
-                        'pdi_agency_id' =>  $certificate['selectedAgency'],
-                        'certificate_no' => $certificate['certificate_no'],
-                        'certificate_date' => $certificate['certificate_date'],
+                        'pdi_agency_id' =>  $this->certificates[$key]['selectedAgency'],
+                        'certificate_no' => $this->certificates[$key]['certificate_no'],
+                        'certificate_date' => $this->certificates[$key]['certificate_date'],
                         'certificate_file' => $file_path
                     ]);
                 }
             }
+            foreach ($this->certificates as $certificate) {
+//                dd($certificate['certificate_file']);
+                    PdiCertificate::where('id',$certificate['id'])->update([
+                        'pdi_agency_id' =>  $certificate['selectedAgency'],
+                        'certificate_no' => $certificate['certificate_no'],
+                        'certificate_date' => $certificate['certificate_date'],
+                    ]);
+
+
+                }
+
 
 
             PurchaseOrderStatus::create([
