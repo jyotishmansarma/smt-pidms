@@ -36,7 +36,7 @@
                 <span>
                   <i class="ti ti-article"></i>
                 </span>
-                            <span class="hide-menu">Create Purchase</span>
+                            <span class="hide-menu">Create PO</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
@@ -44,7 +44,7 @@
                 <span>
                   <i class="ti ti-alert-circle"></i>
                 </span>
-                            <span class="hide-menu">Purchase List</span>
+                            <span class="hide-menu">PO List</span>
                         </a>
                     </li>
                 @endcan
