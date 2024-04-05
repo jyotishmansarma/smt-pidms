@@ -19,8 +19,9 @@ class CreatePurchaseOrdersTable extends Migration
             $table->Integer('scheme_id');
             $table->Integer('contractor_id');
             $table->string('workorder_no');
-            $table->string('status');
             $table->string('remarks');
+            $table->unsignedBigInteger('status')->default(1);
+            $table->foreign('status')->references('id')->on('statuses');
             $table->foreign('division_id')->references('id')->on('division_master');
             $table->foreign('scheme_id')->references('scheme_id')->on('schemes');
             $table->foreign('contractor_id')->references('id')->on('contractors');

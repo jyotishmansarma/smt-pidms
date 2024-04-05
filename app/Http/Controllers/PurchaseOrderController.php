@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PdiCertificate;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
+use App\Models\PurchaseOrderStatus;
 use DB;
 use Illuminate\Http\Request;
 
@@ -53,10 +54,10 @@ class PurchaseOrderController extends Controller
 
         try {
 
-        $timestamp = time();
-        $currentDate = date('Y-m-d ', $timestamp);
-        $lastRecord = PurchaseOrder::latest()->first();
-        $lastRecord ? $lastRecord->id+1 : 1;
+//        $timestamp = time();
+//        $currentDate = date('Y-m-d ', $timestamp);
+//        $lastRecord = PurchaseOrder::latest()->first();
+//        $lastRecord ? $lastRecord->id+1 : 1;
             
         //$order_id = 'ORD'.$request->scheme_id.$currentDate.$lastRecord;
         
@@ -66,9 +67,7 @@ class PurchaseOrderController extends Controller
             'contractor_id' => $request->contractor_id,
             'workorder_no' => 'workorder_no',
             'order_grand_total' => 0.00,
-            'is_verified' => false,
-            'is_completed' => false,
-            'status' => 'created',
+            'status' => 2,
             'remarks' => '']
         );
 
@@ -123,6 +122,17 @@ class PurchaseOrderController extends Controller
                 ]);
             }
         }
+        PurchaseOrderStatus::insert([
+            [
+            'purchase_id'=>$order_created->id,
+                'created_by'=> Auth::user()->id,
+                'status'=>1
+                ],
+
+            ['purchase_id'=>$order_created->id,
+                'created_by'=> Auth::user()->id,
+                'status'=>2]
+        ]);
 
         } catch (\Exception $e) {
             DB::rollBack();

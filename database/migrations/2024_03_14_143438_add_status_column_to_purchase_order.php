@@ -17,6 +17,7 @@ class AddStatusColumnToPurchaseOrder extends Migration
             $table->double('order_grand_total')->after('workorder_no');
             $table->boolean('is_verified')->after('status');
             $table->boolean('is_completed')->after('is_verified');
+
         });
     }
 
