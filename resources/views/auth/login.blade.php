@@ -42,8 +42,8 @@
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Contact Number</label>
-                                    <input type="text" name="username" :value="old('username')" required class="form-control"  aria-describedby="emailHelp">
+                                    <label for="exampleInputEmail1" class="form-label">Username</label>
+                                    <input type="text" name="username" value="{{old('username')}}" required class="form-control"  aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-4">
                                     <label for="exampleInputPassword1" class="form-label">Password</label>

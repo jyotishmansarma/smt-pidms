@@ -9,9 +9,49 @@
                         <div class="card overflow-hidden rounded-2">
                             <div class="position-relative"></div>
                             <div class="card-body pt-3 p-4">
-                                <h6 class="fw-semibold fs-4">Total Order</h6>
+                                <h6 class="fw-semibold fs-4">Total PO</h6>
                                 <h3> </h3>
                                 <div class="d-flex align-items-center justify-content-between">
+{{$total_order_count}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card overflow-hidden rounded-2">
+                            <div class="position-relative"></div>
+                            <div class="card-body pt-3 p-4">
+                                <h6 class="fw-semibold fs-4">Pending PO</h6>
+                                <h3>  </h3>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    {{$pending_order_count}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ <div class="col-sm-6 col-xl-3">
+                        <div class="card overflow-hidden rounded-2">
+                            <div class="position-relative"></div>
+                            <div class="card-body pt-3 p-4">
+                                <h6 class="fw-semibold fs-4">Rejected PO</h6>
+                                <h3>  </h3>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    {{$rejected_order_count}}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="card overflow-hidden rounded-2">
+                            <div class="position-relative"></div>
+                            <div class="card-body pt-3 p-4">
+                                <h6 class="fw-semibold fs-4">Accepted PO</h6>
+                                <h3>  </h3>
+                                <div class="d-flex align-items-center justify-content-between">
+                                    {{$accepted_order_count}}
 
                                 </div>
                             </div>
@@ -21,23 +61,10 @@
                         <div class="card overflow-hidden rounded-2">
                             <div class="position-relative"></div>
                             <div class="card-body pt-3 p-4">
-                                <h6 class="fw-semibold fs-4">Pending Order</h6>
-                                <h3>  </h3>
+                                <h6 class="fw-semibold fs-4">Resubmitted PO</h6>
+                                <h3> </h3>
                                 <div class="d-flex align-items-center justify-content-between">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="card overflow-hidden rounded-2">
-                            <div class="position-relative"></div>
-                            <div class="card-body pt-3 p-4">
-                                <h6 class="fw-semibold fs-4">Accept Order</h6>
-                                <h3>  </h3>
-                                <div class="d-flex align-items-center justify-content-between">
-
+                                    {{$resubmitted_order_count}}
                                 </div>
                             </div>
                         </div>
@@ -45,5 +72,6 @@
                 </div>
             </div>
         </div>
+        <canvas id="ordersChart" style="max-width: 400px; max-height: 400px;"></canvas>
     </div>
 @endsection
