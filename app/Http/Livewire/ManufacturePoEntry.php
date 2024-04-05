@@ -163,7 +163,7 @@ class ManufacturePoEntry extends Component
 
         $validated = $this->validate([
             'selectedDivision' => 'required|integer',
-            'selectedScheme' => 'required|integer',
+            'selectedScheme' => 'required|integer|unique:purchase_orders,id',
             'selectedContractor' => 'required|integer',
             'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',

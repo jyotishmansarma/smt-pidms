@@ -23,7 +23,7 @@
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
                     <label class="form-label">Select Division</label><span style="color:red">&#42;</span>
-                    <select id="select2-selection" class="form-select" name="division_id" wire:model='selectedDivision' @error('division_id') is-invalid @enderror> 
+                    <select disabled id="select2-selection" class="form-select" name="division_id" wire:model='selectedDivision' @error('division_id') is-invalid @enderror> 
                         <option value="">Select Division </option>
                         @if($divisions)
                             @foreach ($divisions as $division)
