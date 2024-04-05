@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use JeroenG\Explorer\Application\Explored;
+use Laravel\Scout\Searchable;
 
-class Division extends Model
+class Division extends Model implements Explored
 {
     use HasFactory;
+    use Searchable;
     protected $fillable=[
         'division_name',
         'zone_id',
@@ -28,4 +31,8 @@ class Division extends Model
         return $this->belongsTo(DivisionDistrict::class,'id','division_id');
     }
 
+    public function mappableAs(): array
+    {
+        // TODO: Implement mappableAs() method.
+    }
 }

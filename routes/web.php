@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use JeroenG\Explorer\Domain\Syntax\Matching;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/update-my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'update_myprofile'])->name('update_myprofile');
 
 
+});
+
+Route::get('/{name}', function ($name) {
+    $client = App\Models\Schemes::where('scheme_name','LIKE',$name)
+//        ->must(new Matching('scheme_name', 'Misibailamssss'))
+        ->get();
+
+//        ::
+//    search('Misibailam')->get();
+
+    var_dump($client[0]->scheme_name);
 });
 
 
