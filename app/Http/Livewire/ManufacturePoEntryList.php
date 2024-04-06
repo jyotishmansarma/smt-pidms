@@ -6,6 +6,7 @@ use App\Models\Division;
 use App\Models\Panchayat;
 use App\Models\PurchaseOrder;
 use App\Models\Schemes;
+use App\Models\Status;
 use Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -22,7 +23,9 @@ class ManufacturePoEntryList extends Component
     public $tableStatus = "";
     public $sortField = "created_at";
     public $sortAsc = false;
-    // public $order_status = "";
+    public $statuses;
+    public $filterStatus;
+
     // public $status = [
     //     "confirmed" => "confirmed",
     //     "cancelled" => "cancelled",
@@ -45,6 +48,8 @@ class ManufacturePoEntryList extends Component
     public function render()
     {
         $user = Auth::user();
+        $this->statuses = Status::all();
+
         if ($user->hasAnyRole(['Manufacture'])) {
 
         $purchaseorders = PurchaseOrder::query()
@@ -53,12 +58,14 @@ class ManufacturePoEntryList extends Component
                 // ->orWhere("contractor_id", "LIKE", "%{$this->search}%")
                 // ->where('status','==','1');
             })
-
-        // ->when($this->tableStatus !== "", function($query){
-        //     $query->where("status", $this->tableStatus)
-        //     ->where('status','==','1');
-        // })
-       ->where('pidms_user_id', $user->id)->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+            ->when($this->filterStatus, function ($query) {
+                $query->where('status',$this->filterStatus);
+            })
+            // ->when($this->tableStatus !== "", function($query){
+            //     $query->where("status", $this->tableStatus)
+            //     ->where('status','==','1');
+            // })
+            ->where('pidms_user_id', $user->id)->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
             ->paginate($this->perPage);
         return view('livewire.manufacture-po-entry-list', compact('purchaseorders'));
 
@@ -70,7 +77,10 @@ class ManufacturePoEntryList extends Component
                     // ->orWhere("contractor_id", "LIKE", "%{$this->search}%")
                     // ->where('status','==','1');
                 })
-               ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+                ->when($this->filterStatus, function ($query) {
+                    $query->where('status',$this->filterStatus);
+                })
+                ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage);
             return view('livewire.manufacture-po-entry-list', compact('purchaseorders'));
         }

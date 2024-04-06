@@ -17,11 +17,20 @@
     
                     </div>
                     <div class="col-md-4">
+                        <label class="form-label">Filter </label>
+                        <select class="form-select" wire:model='filterStatus'> 
+                            <option value="">Select Status </option>
+                            @if($statuses)
+                                @foreach ($statuses as $status)
+                                    <option value="{{ $status->id }}" wire:key={{ "filter".$status->id }}> {{ $status->name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
     
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Search </label>
-                        <input class="form-control" type="text" wire:model="searchTerm" />
+                        <input class="form-control" type="text" wire:model="searchTerm" placeholder="Enter Scheme id / OrderId "/>
                     </div>
                 </div>
             </div>
