@@ -44,6 +44,12 @@ class ManufacturePoEdit extends Component
     public $certificates = [];
     public $certificatess = [];
 
+     // dealer
+     public $name;
+     public $phone_number;
+     public $address;
+     public $gst_no;
+
     public function mount($purchaseorder_id)
     {
         $this->purchaseorder_id = $purchaseorder_id;
@@ -311,6 +317,33 @@ class ManufacturePoEdit extends Component
             DB::rollBack();
             throw $e;
         }
+    }
+
+    public function showModal()
+    {
+        $this->emit('showModal');
+    }
+
+    public function closeModal()
+    {
+        $this->emit('closeModal');
+    }
+
+    public function saveDealer()
+    {
+        $dealer_created =  Dealer::create($this->validate([
+            'name' => 'required',
+            'phone_number' => 'required|regex:/^[0-9]{10}$/',
+            'address' => 'required',
+            'gst_no' => 'required|unique:dealers,gst_no',
+        ]));
+
+        if($dealer_created) {
+            $this->reset(['name', 'phone_number', 'address', 'gst_no']);
+            $this->emit('closeModal');
+            $this->dealers = Dealer::all();
+        }
+
     }
 
     public function render()

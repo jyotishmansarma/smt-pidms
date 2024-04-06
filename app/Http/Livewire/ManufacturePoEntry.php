@@ -42,6 +42,15 @@ class ManufacturePoEntry extends Component
     public $product_items =[];
     public $certificates = [];
 
+    // public $grand_total_value;
+
+
+    // dealer
+    public $name;
+    public $phone_number;
+    public $address;
+    public $gst_no;
+
     public function updatedSelectedDivision($value) {
             if($value=='') {
                 $this->schemes = null;
@@ -79,6 +88,7 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['quantity'] = intval($sanitizedValue);
                 $this->calculateTotalPrice($index);
+                $this->calculateGrandTotal();
             }
             if($field=='price'){
 
@@ -100,6 +110,7 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['price'] = $sanitizedValue;
                 $this->calculateTotalPrice($index);
+                $this->calculateGrandTotal();
             }
 
             if($field=='selectedProductType'){
@@ -115,6 +126,13 @@ class ManufacturePoEntry extends Component
         if($this->product_items[$index]['quantity'] && $this->product_items[$index]['price'])
             $this->product_items[$index]['totalprice'] = $this->product_items[$index]['quantity'] * $this->product_items[$index]['price'];
     }
+    
+    // private function calculateGrandTotal() {
+    //     $grand_total_value = 0;
+    //     foreach($this->product_items as $product_item) {
+    //         $grand_total_value += $product_item['quantity'] * $product_item['price'];
+    //     }
+    // }
 
     public function addRow()
     {
@@ -275,6 +293,34 @@ class ManufacturePoEntry extends Component
         DB::commit();
         redirect()->route('purchase.index');
     }
+
+    public function showModal()
+    {
+        $this->emit('showModal');
+    }
+
+    public function closeModal()
+    {
+        $this->emit('closeModal');
+    }
+
+    public function saveDealer()
+    {
+        $dealer_created =  Dealer::create($this->validate([
+            'name' => 'required',
+            'phone_number' => 'required|regex:/^[0-9]{10}$/',
+            'address' => 'required',
+            'gst_no' => 'required|unique:dealers,gst_no',
+        ]));
+
+        if($dealer_created) {
+            $this->reset(['name', 'phone_number', 'address', 'gst_no']);
+            $this->emit('closeModal');
+            $this->dealers = Dealer::all();
+        }
+
+    }
+
 
 
     public function render()

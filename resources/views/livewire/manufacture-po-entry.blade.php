@@ -157,11 +157,12 @@
                                 <option value=""> Select dealer </option>
                                 @if($dealers)
                                 @foreach ($dealers as $dealer)
-                                    <option value="{{ $dealer->id }}" wire:key="{{ "dealer".$index.$dealer->id }}"> {{ $dealer->d_name }}</option>
+                                    <option value="{{ $dealer->id }}" wire:key="{{ "dealer".$index.$dealer->id }}"> {{ $dealer->name }}</option>
                                 @endforeach
                             @endif
 
                         </select>
+                        <a wire:click="showModal">Not in the list? Add one</a>
 
                         @error('product_items.'.$index.'.selectedDealer')
                             
@@ -354,4 +355,67 @@
         </div>
         </div>
         </div>
+
+        <!-- 
+            Dealer Entry Modal
+        -->
+
+        <div class="modal fade" id="dealerModal" tabindex="-1" role="dialog" aria-labelledby="dealerModalLabel" aria-hidden="true" wire:ignore.self>
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="dealerModalLabel">Add Dealer Information</h5>
+                  <a class="btn btn-danger" wire:click="closeModal" >
+                    <span aria-hidden="true">&times;</span>
+                  </a>
+                </div>
+                <div class="modal-body">
+                  <form wire:submit.prevent="saveDealer">
+                    <div class="form-group mb2">
+                      <label class="form-label" for="name">Name <span style="color:red">&#42;</span></label>
+                      <input type="text" class="form-control" wire:model="name" id="name" placeholder="Enter Dealer name">
+                      @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong> {{ $message }} </strong>
+                            </span>
+                      @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="phone">Phone Number <span style="color:red">&#42;</span></label>
+                      <input type="text" class="form-control" wire:model="phone_number" id="phone_number" placeholder="Enter phone number">
+                      @error('phone_number')
+                      <span class="invalid-feedback" role="alert">
+                          <strong> {{ $message }} </strong>
+                      </span>
+                      @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="address">Dealer Address <span style="color:red">&#42;</span></label>
+                      <input type="text" class="form-control" wire:model="address" id="address" placeholder="Enter address">
+                      @error('address')
+                      <span class="invalid-feedback" role="alert">
+                          <strong> {{ $message }} </strong>
+                      </span>
+                      @enderror
+                    </div>
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="gst_no">GST Number <span style="color:red">&#42;</span></label>
+                      <input type="text" class="form-control" wire:model="gst_no" id="gst_no" placeholder="Enter GST number">
+                      @error('gst_no')
+                      <span class="invalid-feedback" role="alert">
+                          <strong> {{ $message }} </strong>
+                      </span>
+                      @enderror
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mt-4 py-2 fs-4 mb-4 rounded-2">Save Dealer</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+
 </div>

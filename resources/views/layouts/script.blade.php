@@ -46,4 +46,18 @@
 </script>
 @livewireScripts
 
+<script>
+    document.addEventListener('livewire:load', function () {
+        
+        Livewire.on('showModal', function () {
+            $('#dealerModal').modal('show');
+        });
+
+        Livewire.on('closeModal', function () {
+            $('#dealerModal').modal('hide');
+        });
+
+    });
+</script>
+
 

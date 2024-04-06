@@ -79,7 +79,7 @@
                         <div class="col-md-3">
                             <label class="form-label">Verification status: </label>
                             {{
-                                $purchaseorder->is_verified ? 'Verified' : 'Not verified'
+                                $purchaseorder->postatus->name;
                             }}
 
                         </div> 

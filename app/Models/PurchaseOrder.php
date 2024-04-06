@@ -22,7 +22,7 @@ class PurchaseOrder extends Model
                 'remarks',
                 'pidms_user_id'];
 
-    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user'];
+    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus'];
 
     public function division()
     {
@@ -51,6 +51,10 @@ class PurchaseOrder extends Model
 
     public function pidms_user() {
         return $this->belongsTo(User::class,'pidms_user_id','id');
+    }
+
+    public function postatus() {
+        return $this->hasOne(Status::class,'id','status');
     }
 
     
