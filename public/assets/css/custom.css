@@ -54,4 +54,8 @@
 	display: block;
 }
 
+.remark ol {
+	font-weight: bold;
+}
+
 /** End of Purchase Order CSS ***/

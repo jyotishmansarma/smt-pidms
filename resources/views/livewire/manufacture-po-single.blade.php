@@ -137,45 +137,63 @@
                 </table>
                     </div>
 
-                    <div class="certificate_wrapper info-box">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="certificate_wrapper info-box">
 
-                        <h4>Certificate </h4>
+                                <h4>Certificate </h4>
+        
+                                <table class="table table-striped table-bordered table-responsive">
+                                    <thead>
+                                    <th>
+                                        SL
+                                    </th>
+                                    <th>
+                                        PDI Agency
+                                    </th>
+                                    <th>
+                                        Certificate No.
+                                    </th>
+                                    <th>
+                                        Certificate Date
+                                    </th>
+                                    <th>
+                                        View Certificate
+                                    </th>
+                                    <thead>
+                                <tbody>
+                                @foreach ($purchaseorder->pdi_certificate as $index=> $item)
+            
+                                <tr>
+                                <td>{{ $index+1 }} </td>
+                                <td>{{ $item->user->name }} </td>
+                                <td>{{ $item->certificate_no }} </td> 
+                                <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
+                                <td>
+                                    <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
+                                </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                            </div>
+                        </div>
 
-                        <table class="table table-striped table-bordered table-responsive">
-                            <thead>
-                            <th>
-                                SL
-                            </th>
-                            <th>
-                                PDI Agency
-                            </th>
-                            <th>
-                                Certificate No.
-                            </th>
-                            <th>
-                                Certificate Date
-                            </th>
-                            <th>
-                                View Certificate
-                            </th>
-                            <thead>
-                        <tbody>
-                        @foreach ($purchaseorder->pdi_certificate as $index=> $item)
-    
-                        <tr>
-                        <td>{{ $index+1 }} </td>
-                        <td>{{ $item->user->name }} </td>
-                        <td>{{ $item->certificate_no }} </td> 
-                        <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
-                        <td>
-                            <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
-                        </td>
-                        </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                        <div class="col-md-4">
 
+                            <div class="remark info-box text-danger">
+                                <h4>Remarks from division </h4>
+                                <ol class="mt-3">
+                                    @foreach ( $purchaseorder->purchase_order_statuses as $purchase_order_status) 
+                                        @if($purchase_order_status->status==4 && !($purchase_order_status->remarks==null) ) 
+                                            <li>{{ $purchase_order_status->remarks }}</li>
+                                        @endif
+                                    @endforeach
 
+                                </ol>
+                            </div>
+                             
+                        </div>
                     </div>
                 </div>
             </div>
