@@ -78,9 +78,11 @@
 
                         <div class="col-md-3">
                             <label class="form-label">Verification status: </label>
-                            {{
-                                $purchaseorder->postatus->name;
-                            }}
+                            
+                               <span class="badge bg-{{ $purchaseorder->postatus->getStatusColor($purchaseorder->postatus->name)}}">
+                                    {{ $purchaseorder->postatus->name; }}   
+                               </span>
+                            
 
                         </div> 
                     </div>

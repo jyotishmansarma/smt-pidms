@@ -49,7 +49,11 @@
                             <td >{{ $purchaseorders_item->scheme->scheme_name }}</td>
                             <td >{{ $purchaseorders_item->contractor->name }}</td>
                             <td >{{ $purchaseorders_item->contractor->bid_no }}</td>
-                            <td >{{ $purchaseorders_item->postatus->name }}</td>
+                            <td >
+                                <span class="badge bg-{{ $purchaseorders_item->postatus->getStatusColor($purchaseorders_item->postatus->name) }}">
+                                     {{ $purchaseorders_item->postatus->name }}
+                                </span>
+                            </td>
                             <td> 
                                 <div class="d-flex">
                                     <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-success w-20 py-8 fs-4 gap-1 rounded-2">

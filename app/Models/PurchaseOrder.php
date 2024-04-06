@@ -17,8 +17,6 @@ class PurchaseOrder extends Model
                 'workorder_no',
                 'order_grand_total',
                 'status',
-                'is_verified',
-                'is_completed',
                 'remarks',
                 'pidms_user_id'];
 
