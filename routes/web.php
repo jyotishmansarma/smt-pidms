@@ -33,7 +33,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 });
 Route::group(['middleware' => 'auth'], function () {
+
     Route::get('purchase/', [\App\Http\Controllers\PurchaseOrderController::class, 'index'])->name('purchase.index');
+    Route::get('purchase-rejected', [\App\Http\Controllers\PurchaseOrderController::class, 'rejectedlist'])->name('purchase.rejected');
     Route::get('purchase/create', [\App\Http\Controllers\PurchaseOrderController::class, 'create'])->name('purchase.create');
     Route::post('purchase/store', [\App\Http\Controllers\PurchaseOrderController::class, 'store'])->name('purchase.store');
     Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');

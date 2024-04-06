@@ -51,6 +51,12 @@
                             <span class="hide-menu">PO List</span>
                         </a>
                     </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="{{ route('purchase.rejected') }}" aria-expanded="false">
+                            <span> <i class="ti ti-alert-circle"></i> </span>
+                            <span class="hide-menu">Rejected PO List</span>
+                        </a>
+                    </li>
                 @endcan
     
                    

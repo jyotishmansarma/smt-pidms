@@ -22,6 +22,11 @@ class PurchaseOrderController extends Controller
         return view('purchaseorder.index');
     }
 
+    public function rejectedlist()
+    {
+        return view('purchaseorder.rejectedlist');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
