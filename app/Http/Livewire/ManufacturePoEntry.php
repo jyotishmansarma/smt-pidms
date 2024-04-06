@@ -88,7 +88,7 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['quantity'] = intval($sanitizedValue);
                 $this->calculateTotalPrice($index);
-                $this->calculateGrandTotal();
+
             }
             if($field=='price'){
 
@@ -110,7 +110,6 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['price'] = $sanitizedValue;
                 $this->calculateTotalPrice($index);
-                $this->calculateGrandTotal();
             }
 
             if($field=='selectedProductType'){

@@ -13,10 +13,10 @@
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
     
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Filter </label>
                         <select class="form-select" wire:model='filterStatus'> 
                             <option value="">Select Status </option>
@@ -28,7 +28,7 @@
                         </select>
     
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Search </label>
                         <input class="form-control" type="text" wire:model="searchTerm" placeholder="Enter Scheme id / OrderId "/>
                     </div>
