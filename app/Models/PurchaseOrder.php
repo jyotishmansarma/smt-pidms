@@ -20,7 +20,7 @@ class PurchaseOrder extends Model
                 'remarks',
                 'pidms_user_id'];
 
-    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus'];
+    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus', 'purchase_order_statuses'];
 
     public function division()
     {
@@ -54,6 +54,12 @@ class PurchaseOrder extends Model
     public function postatus() {
         return $this->hasOne(Status::class,'id','status');
     }
+
+    public function purchase_order_statuses() {
+        return $this->hasMany(PurchaseOrderStatus::class,'purchase_id','id');
+    }
+
+    
 
     
 

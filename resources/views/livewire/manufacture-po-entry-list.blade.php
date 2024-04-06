@@ -68,9 +68,19 @@
                                     <a href="{{ route('purchase.show', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-success w-20 py-8 fs-4 gap-1 rounded-2">
                                         <i class="fas fa-eye"></i>
                                     </a>
+                                    
+                    
+                                    
+                                    @php $rejection_count =  $purchaseorders_item->purchase_order_statuses->filter(function ($po_status) {
+                                        return $po_status->status == 4;
+                                    })->count()
+                                    @endphp
+
+                                    @if( Auth::user()->hasAnyRole(['Manufacture']) && $purchaseorders_item->status == 4 && $rejection_count <2)
                                     <a href="{{ route('purchase.edit', ['purchaseOrder' => $purchaseorders_item]) }}" class="btn btn-warning w-20 py-8 fs-4 rounded-2">
                                         <i class="fas fa-pen"></i>
-                                    </a> 
+                                    </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
