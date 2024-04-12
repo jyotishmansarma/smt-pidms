@@ -34,7 +34,7 @@
                         @endif
                         <div class="card-body">
 
-                            <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                            <a class="text-nowrap logo-img text-center d-block py-3 w-100">
                                 <img src="{{asset('assets/images/logos/logo-jjm.svg')}}" width="80" alt="">
                             </a>
                             <p class="text-center">SMT PIDMS</p>

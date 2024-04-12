@@ -41,8 +41,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('purchase/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'show'])->name('purchase.show');
     Route::get('purchase/edit/{purchaseOrder}', [\App\Http\Controllers\PurchaseOrderController::class, 'edit'])->name('purchase.edit');
     Route::post('purchase/update', [\App\Http\Controllers\PurchaseOrderController::class, 'update'])->name('purchase.update');
-
-
     
     Route::resource('issue', \App\Http\Controllers\IssueTrackingController::class);
     Route::resource('users', \App\Http\Controllers\UserCreateController::class);

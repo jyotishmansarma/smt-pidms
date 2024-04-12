@@ -126,7 +126,7 @@
                     <td>{{ $index+1 }} </td>
                     <td>{{ $item->product_type->name }} </td>
                     <td>{{ $item->product->name }} </td> 
-                    <td>{{ $item->dealer->d_name ?? '' }} </td>
+                    <td>{{ $item->dealer->name ?? '' }} </td>
                     <td>{{ $item->batchno }} </td>
                     <td>{{ $item->quantity }} </td>
                     <td>{{ $item->price }} </td>
@@ -169,6 +169,7 @@
                                 <td>{{ $item->user->name }} </td>
                                 <td>{{ $item->certificate_no }} </td> 
                                 <td>{{ App\Helper\Helpers::niceDate($item->certificate_date) }} </td>
+
                                 <td>
                                     <a target="_blank" class="btn btn-warning w-20 py-2 fs-4 rounded-2"  href="{{ asset('storage/'.$item->certificate_file) }}" > View </a>  
                                 </td>

@@ -235,13 +235,15 @@
         @endforeach
 
 
-        <div class="d-flex ">
+        <div class="d-flex justify-content-between">
             <div class="add-more-wrap">
                 <a class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click="addRow"> + Add more </a>
             </div>
+
+            <div class="total">
+                <h4> Grand Total : {{ $grand_total_value }} </h4> 
+             </div>
         </div>
-
-
         </div>
 
 

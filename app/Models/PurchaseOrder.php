@@ -34,7 +34,7 @@ class PurchaseOrder extends Model
 
     public function contractor()
     {
-        return $this->belongsTo(contractor::class);
+        return $this->belongsTo(Contractor::class);
     }
 
     public function purchase_item()

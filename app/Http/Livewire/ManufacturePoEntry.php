@@ -41,6 +41,8 @@ class ManufacturePoEntry extends Component
 
     public $product_items =[];
     public $certificates = [];
+    public $grand_total_value = 0.00;
+
 
     // public $grand_total_value;
 
@@ -66,9 +68,8 @@ class ManufacturePoEntry extends Component
         } else {
             $work_allotment =  WorkAllotment::select('contractor_id')->where("scheme_id", $value)->first();
             $this->contractors  = Contractor::where('id',$work_allotment->contractor_id)->get();
+           
         }
-        
-
     }
 
     public function updated($propertyName, $value)
@@ -88,6 +89,8 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['quantity'] = intval($sanitizedValue);
                 $this->calculateTotalPrice($index);
+
+                $this->calculateGrandTotal();
 
             }
             if($field=='price'){
@@ -110,6 +113,7 @@ class ManufacturePoEntry extends Component
                 }
                 $this->product_items[$index]['price'] = $sanitizedValue;
                 $this->calculateTotalPrice($index);
+                $this->calculateGrandTotal();
             }
 
             if($field=='selectedProductType'){
@@ -126,12 +130,12 @@ class ManufacturePoEntry extends Component
             $this->product_items[$index]['totalprice'] = $this->product_items[$index]['quantity'] * $this->product_items[$index]['price'];
     }
     
-    // private function calculateGrandTotal() {
-    //     $grand_total_value = 0;
-    //     foreach($this->product_items as $product_item) {
-    //         $grand_total_value += $product_item['quantity'] * $product_item['price'];
-    //     }
-    // }
+    private function calculateGrandTotal() {
+        $this->grand_total_value = 0;
+        foreach($this->product_items as $product_item) {
+            $this->grand_total_value += $product_item['quantity'] * $product_item['price'];
+        }
+    }
 
     public function addRow()
     {

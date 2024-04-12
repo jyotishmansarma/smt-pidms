@@ -21,6 +21,7 @@
         
         <form method="post" wire:submit.prevent="submitForm" action="{{ route('purchase.store')}}" enctype="multipart/form-data">
             @csrf
+            <div class="scheme-info-wrap mx-2">
             <div class="row">
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
@@ -93,6 +94,7 @@
                         </div>
                     </div>
             </div>
+            </div>
 
             <div class="products_wrap p-4 mb-4">
 
@@ -159,10 +161,9 @@
                                 @foreach ($dealers as $dealer)
                                     <option value="{{ $dealer->id }}" wire:key="{{ "dealer".$index.$dealer->id }}"> {{ $dealer->name }}</option>
                                 @endforeach
-                            @endif
-
+                                @endif
                         </select>
-                        <a wire:click="showModal">Not in the list? Add one</a>
+                        <a style="color:red; cursor:pointer" wire:click="showModal">Not in the list? Add one</a>
 
                         @error('product_items.'.$index.'.selectedDealer')
                             
@@ -237,17 +238,20 @@
             @endforeach
 
 
-            <div class="d-flex ">
+            <div class="d-flex justify-content-between">
                 <div class="add-more-wrap">
                     <a class="btn btn-success w-20 py-2 fs-4 rounded-2" wire:click="addRow"> + Add more </a>
                 </div>
+                <div class="total">
+                   <h4> Grand Total : {{ $grand_total_value }} </h4> 
+                </div> 
             </div>
 
 
             </div>
 
 
-            <div class="PO_wrap p-4 mb-4">
+            <div class="PO_wrap p-4 mb-2">
                 @foreach($certificates as $index => $row)
                 <div class="row">
                     <div class="col-md-3">
@@ -331,6 +335,8 @@
                 </div>
 
             </div>
+
+            <div class="declaration-wrap mx-2">
     
             <div class="row">
                 <div class="col-md-12">
@@ -340,7 +346,7 @@
                     
                     @error('acceptDeclaration')
                             <span class="invalid-feedback" role="alert">
-                                <strong> Required </strong>
+                                <strong> Please confirm to proceed </strong>
                             </span>
                     @enderror
                 
@@ -349,6 +355,7 @@
                 <div class="col-md-3">
                 <button type="submit" class="btn btn-primary w-100 py-2 fs-4 mb-4 rounded-2">Submit</button>
                 </div>
+            </div>
             </div>
         </form>
         </div>

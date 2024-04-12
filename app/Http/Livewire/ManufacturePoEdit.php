@@ -44,11 +44,14 @@ class ManufacturePoEdit extends Component
     public $certificates = [];
     public $certificatess = [];
 
+    public $grand_total_value =0;
+
      // dealer
      public $name;
      public $phone_number;
      public $address;
      public $gst_no;
+
 
     public function mount($purchaseorder_id)
     {
@@ -84,6 +87,7 @@ class ManufacturePoEdit extends Component
         }
 
         $this->selectedDivision = $this->purchase_order->division_id;
+        $this->grand_total_value = $this->purchase_order->order_grand_total;
 
         if ($this->selectedDivision) {
             $this->schemes = Schemes::where("division", $this->selectedDivision)->get();
@@ -118,6 +122,7 @@ class ManufacturePoEdit extends Component
                 }
                 $this->product_items[$index]['quantity'] = intval($sanitizedValue);
                 $this->calculateTotalPrice($index);
+                $this->calculateGrandTotal();
             }
             if($field=='price'){
 
@@ -139,6 +144,7 @@ class ManufacturePoEdit extends Component
                 }
                 $this->product_items[$index]['price'] = $sanitizedValue;
                 $this->calculateTotalPrice($index);
+                $this->calculateGrandTotal();
             }
 
             if ($field === 'selectedProductType') {
@@ -151,6 +157,13 @@ class ManufacturePoEdit extends Component
     {
         if ($this->product_items[$index]['quantity'] && $this->product_items[$index]['price']) {
             $this->product_items[$index]['totalprice'] = $this->product_items[$index]['quantity'] * $this->product_items[$index]['price'];
+        }
+    }
+
+    private function calculateGrandTotal() {
+        $this->grand_total_value = 0;
+        foreach($this->product_items as $product_item) {
+            $this->grand_total_value += $product_item['quantity'] * $product_item['price'];
         }
     }
 
