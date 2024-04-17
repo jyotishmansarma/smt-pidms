@@ -22,6 +22,10 @@ class PurchaseOrder extends Model
 
     protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus', 'purchase_order_statuses'];
 
+    protected $casts = [
+        'order_grand_total' => 'decimal:2'
+    ];
+    
     public function division()
     {
         return $this->belongsTo(Division::class);
