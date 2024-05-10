@@ -133,6 +133,12 @@
                     <td>{{ $item->totalprice }} </td>
                     </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="6"></td>
+                        <td> <h4>Grand Total :</h4> </td>
+                        <td> <h4>{{ $purchaseorder->order_grand_total }} </h4> </td>
+                    </tr>
+
                     </tbody>
                 </table>
                     </div>

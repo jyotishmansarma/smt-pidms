@@ -114,13 +114,24 @@ class ManufacturePoEdit extends Component
 
             if($field=='quantity'){
 
-                $sanitizedValue = preg_replace('/[^0-9]/', '', $value);
+                $sanitizedValue = preg_replace('/[^0-9.]/', '', $value);
                 if ($sanitizedValue === '') {
                     $this->product_items[$index]['quantity'] = null;
                     $this->product_items[$index]['totalprice'] = 0; 
                     return;
                 }
-                $this->product_items[$index]['quantity'] = intval($sanitizedValue);
+                if ($sanitizedValue === '.') {
+                    $this->product_items[$index]['totalprice'] = 0 ; 
+                    return;
+                }
+
+                $parts = explode('.', $sanitizedValue);
+                if (count($parts) > 1) {
+                    $decimalPart = substr($parts[1], 0, 2);
+                    $sanitizedValue = $parts[0] . '.' . $decimalPart;
+                }
+                $this->product_items[$index]['quantity'] = $sanitizedValue;
+                
                 $this->calculateTotalPrice($index);
                 $this->calculateGrandTotal();
             }
