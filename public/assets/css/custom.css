@@ -1,5 +1,6 @@
 /** Purchase Order CSS***/
 
+
 .products_wrap {
 	background-color: #EAEFF4;
 	border: 1px solid #d5d5d5;
@@ -58,6 +59,10 @@
 
 .remark ol {
 	font-weight: bold;
+}
+
+.padding-2px {
+	padding: 2px !important;
 }
 
 /** End of Purchase Order CSS ***/

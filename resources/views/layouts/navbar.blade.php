@@ -14,13 +14,11 @@
 
                 @if(Auth::user()->role_user->role_id==2)
                      {{-- <h4>User Type: {{Auth::user()->userType->name}} user</h4> --}}
-
                 @endif
             </li>
         </ul>
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-{{--                <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>--}}
                 <h4>  {{Auth::user()->name}}</h4>
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"

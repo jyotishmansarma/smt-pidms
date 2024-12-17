@@ -24,6 +24,9 @@ class RoleTableSeeder extends Seeder
             [
                 'title' => 'Manufacture',
             ],
+            [
+                'title' => 'Dealer',
+            ],
         ];
 
         Role::insert($roles);

@@ -15,7 +15,7 @@
                 </div>
             </div>
         <div class="card">
-        <div class="card-body">
+        <div class="card-body padding-2px">
 
         <div class="form_wrap p-2">
         
@@ -107,7 +107,7 @@
                         <label class="form-label">&nbsp;&nbsp; YES </label> &nbsp;&nbsp; <input type="checkbox"  name="is_through_dealer[]" wire:click="toggleClick( {{ $index }})" wire:model="product_items.{{ $index }}.is_dealer_exist" value="" /> 
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="input_wrap mb-4">
                         <label class="form-label">Product Type</label><span style="color:red">&#42;</span>
                         <select class="form-select" wire:model="product_items.{{ $index }}.selectedProductType">

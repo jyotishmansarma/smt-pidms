@@ -6,6 +6,7 @@ use App\Models\PdiCertificate;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use App\Models\PurchaseOrderStatus;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,11 @@ class PurchaseOrderController extends Controller
     public function create()
     {
         return view('purchaseorder.create');
+    }
+
+    public function init()
+    {
+        return view('purchaseorder.init');
     }
 
     /**
@@ -83,7 +89,6 @@ class PurchaseOrderController extends Controller
             'product.*' => 'required|integer', 
             'product_type.*' => 'required|integer', 
             'dealer.*' => 'integer',
-            'batchno.*' => 'required|string', 
             'quantity.*' => 'required|integer|min:1', 
             'price.*' => 'required|numeric|min:0',
         ]);
@@ -102,7 +107,6 @@ class PurchaseOrderController extends Controller
                 'producttype_id' => $request->product_type[$index],
                 'product_id' => $product_item,
                 'dealer_id' => $request->dealer[$index],
-                'batchno' => $request->batchno[$index],
                 'quantity' => $request->quantity[$index],
                 'price' => $request->price[$index],
                 'totalprice' => $total_price
@@ -193,4 +197,5 @@ class PurchaseOrderController extends Controller
     {
         //
     }
+
 }
