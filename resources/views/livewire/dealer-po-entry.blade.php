@@ -2,8 +2,6 @@
 
 <div>
     <div class="container-fluid">
-
-
         <div class="card">
             <div class="card-body">
                 @if(session('success'))
@@ -23,6 +21,30 @@
         @csrf
         <div class="scheme-info-wrap mx-2">
         <div class="row">
+
+
+            <div class="col-md-2">
+                <div class="input_wrap mb-4">
+                <label class="form-label">Select Manufacturar</label><span style="color:red">&#42;</span>
+                <select id="select2-selection" class="form-select" name="manufacturer_id" wire:model='selectedManufacturer' @error('manufacturer_id') is-invalid @enderror> 
+                    <option value="">Select Manufacturer </option>
+                    @if($manufacturers)
+                        @foreach ($manufacturers as $manufacturer)
+                        <option value="{{ $manufacturer->id }}" wire:key={{ "manufacturer".$manufacturer->id }}> {{ $manufacturer->name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+                
+                @error('selectedManufacturer')
+                    <span class="invalid-feedback" role="alert">
+                        <strong> Manufacturer required </strong>
+                    </span>
+                @enderror
+
+                </div>
+            </div>
+
+
                 <div class="col-md-2">
                     <div class="input_wrap mb-4">
                     <label class="form-label">Select Division</label><span style="color:red">&#42;</span>

@@ -30,31 +30,30 @@
                         <span class="hide-menu">Purchase</span>
                     </li>
                 
-                 @can('purchase')
-
+                 @can('create_purchase')
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('purchase.create') }}" aria-expanded="false"> 
-                            <span> <i class="ti ti-article"></i> </span> <span class="hide-menu">Create PO</span>
+                            <span> <i class="ti ti-article"></i> </span> <span class="hide-menu">Create PO (FOR OLD DATA) </span>
                         </a>
                     </li>
                 @endcan
 
-                {{-- @can('purchase') --}}
+                @can('init_purchase')
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('purchase.init') }}" aria-expanded="false"> 
                         <span> <i class="ti ti-article"></i> </span> <span class="hide-menu">Initiate PO</span>
                     </a>
                 </li>
-                {{-- @endcan --}}
+                @endcan
 
                 @can('list_purchase')
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('purchase.index') }}" aria-expanded="false">
-                <span>
-                  <i class="ti ti-alert-circle"></i>
-                </span>
-                            <span class="hide-menu">PO List</span>
+                        <span>
+                        <i class="ti ti-alert-circle"></i>
+                        </span>
+                        <span class="hide-menu">PO List</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

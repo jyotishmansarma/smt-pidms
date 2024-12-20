@@ -3,7 +3,10 @@
 namespace App\Http\Livewire;
 
 use App\Models\Contractor;
+use App\Models\Dealer;
+use App\Models\DealerManufacturer;
 use App\Models\Division;
+use App\Models\Manufacturer;
 use App\Models\Product;
 use App\Models\ProductType;
 use App\Models\PurchaseOrder;
@@ -23,6 +26,7 @@ class DealerPoEntry extends Component
 
     use WithFileUploads;
 
+    public $manufacturers;
     public $divisions;
     public $searchDivision;
     public $schemes;
@@ -32,6 +36,7 @@ class DealerPoEntry extends Component
     public $dealers;
     public $acceptDeclaration;
 
+    public $selectedManufacturer;
     public $selectedDivision;
     public $selectedScheme;
     public $selectedContractor;
@@ -189,6 +194,7 @@ class DealerPoEntry extends Component
         Log::debug('log',[$this->product_items]);
 
         $validated = $this->validate([
+            'selectedManufacturer' => 'required|integer',
             'selectedDivision' => 'required|integer',
             'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id',
             'selectedContractor' => 'required|integer',
@@ -211,6 +217,9 @@ class DealerPoEntry extends Component
         $serial =$lastRecord ? $lastRecord->id+1 : 1;
             
         $order_id = 'ORD/'.$currentDate.'/'.$this->selectedScheme.'/'.$serial;
+
+        $dealers = User::find(Auth::user()->id)->dealer()->get();
+        $dealer_id = $dealers[0]->id;
         
         $order_created =  PurchaseOrder::create( [
             'order_id' => $order_id,
@@ -221,6 +230,8 @@ class DealerPoEntry extends Component
             'order_grand_total' => 0.00,
             'status' => 2,
             'remarks' => '',
+            'dealer_id' => $dealer_id,
+            'manufacturer_id' => $this->selectedManufacturer,
             'pidms_user_id' => Auth::user()->id]
         );
 
@@ -264,9 +275,11 @@ class DealerPoEntry extends Component
                     'status'=>1
                 ],
 
-                ['purchase_id'=>$order_created->id,
+                [
+                    'purchase_id'=>$order_created->id,
                     'created_by'=> Auth::user()->id,
-                    'status'=>2]
+                    'status'=>2
+                ]
             ]);
 
         } catch (\Exception $e) {
@@ -290,6 +303,11 @@ class DealerPoEntry extends Component
 
     public function render()
     {
+
+        $user = User::find(Auth::user()->id);
+        $manufacturer_ids =  DealerManufacturer::where('dealer_id', $user->dealer->id)->get()->pluck('manufacturer_id'); 
+        $this->manufacturers = Manufacturer::whereIn('id', $manufacturer_ids)->get();
+
         $this->divisions = Division::where('division_name', 'like', '%' . $this->searchDivision . '%')->get();;
         $this->product_types =  ProductType::all();
     

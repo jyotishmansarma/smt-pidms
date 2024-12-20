@@ -18,7 +18,10 @@ class PurchaseOrder extends Model
                 'order_grand_total',
                 'status',
                 'remarks',
-                'pidms_user_id'];
+                'pidms_user_id',
+                'dealer_id',
+                'manufacturer_id'
+            ];
 
     protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus', 'purchase_order_statuses'];
 

@@ -10,4 +10,9 @@ class Dealer extends Model
     use HasFactory;
     protected $table = 'dealers';
     protected $guarded = ['id'];
+
+    public function user() {
+        $this->belongsTo(User::class);
+    }
+
 }

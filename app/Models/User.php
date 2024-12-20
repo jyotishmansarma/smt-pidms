@@ -102,4 +102,29 @@ class User extends Authenticatable
         return $this->belongsTo(RoleUser::class,'id','user_id');
     }
 
+    public function dealer(){
+        return $this->hasOne(Dealer::class,'pidms_user_id','id');
+    }
+
+    public function manufacturer(){
+        return $this->hasOne(Manufacturer::class,'pidms_user_id','id');
+    }
+
+
+    public function scopeDealers($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('title', 'Dealer');
+        })->with('dealer');
+    }
+
+    public function scopeManufacturers($query)
+    {
+        return $query->whereHas('roles', function ($q) {
+            $q->where('title', 'Manufacturer');
+        })->with('manufacturer');
+    }
+
+
+
 }
