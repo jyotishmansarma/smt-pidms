@@ -109,7 +109,7 @@ class DealerTableSeeder extends Seeder
         //     }
         // }
         // }
-        
+
         
     }
 }

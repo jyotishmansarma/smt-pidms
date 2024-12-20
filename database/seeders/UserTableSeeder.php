@@ -71,31 +71,5 @@ class UserTableSeeder extends Seeder
         $user = User::create($user);
         User::findOrFail($user->id)->roles()->sync(4);
 
-
-
-
-        // User table Seeder from IPET
-
-
-        //Dealers
-
-        $dealerArray = DB::table('ipet_users')->where('user_type', '=', 'Dealer')->get();
-
-        foreach ($dealerArray as $dealer) {
-
-            // Create Dealer
-            Dealer::create([
-                'name' => $dealer->name,
-                
-            ]);
-
-            
-        }
-
-        
-
-
-
-
     }
 }

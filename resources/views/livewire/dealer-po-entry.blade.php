@@ -28,6 +28,7 @@
                 <label class="form-label">Select Manufacturar</label><span style="color:red">&#42;</span>
                 <select id="select2-selection" class="form-select" name="manufacturer_id" wire:model='selectedManufacturer' @error('manufacturer_id') is-invalid @enderror> 
                     <option value="">Select Manufacturer </option>
+
                     @if($manufacturers)
                         @foreach ($manufacturers as $manufacturer)
                         <option value="{{ $manufacturer->id }}" wire:key={{ "manufacturer".$manufacturer->id }}> {{ $manufacturer->name }}</option>

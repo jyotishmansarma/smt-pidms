@@ -22,7 +22,7 @@ class RoleTableSeeder extends Seeder
                 'title' => 'TPIA',
             ],
             [
-                'title' => 'Manufacture',
+                'title' => 'Manufacturer',
             ],
             [
                 'title' => 'Dealer',

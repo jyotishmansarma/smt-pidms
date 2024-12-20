@@ -306,7 +306,10 @@ class DealerPoEntry extends Component
 
         $user = User::find(Auth::user()->id);
         $manufacturer_ids =  DealerManufacturer::where('dealer_id', $user->dealer->id)->get()->pluck('manufacturer_id'); 
-        $this->manufacturers = Manufacturer::whereIn('id', $manufacturer_ids)->get();
+
+        if($manufacturer_ids) {
+            $this->manufacturers = Manufacturer::whereIn('id', $manufacturer_ids)->get();
+        }
 
         $this->divisions = Division::where('division_name', 'like', '%' . $this->searchDivision . '%')->get();;
         $this->product_types =  ProductType::all();
