@@ -13,7 +13,7 @@ class AddPortalToPurchaseOrderStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_order_statuses', function (Blueprint $table) {
+        Schema::table('pidms_purchase_order_statuses', function (Blueprint $table) {
             $table->integer('portal')->after('status')->comment('1:smt,2:pidms')->nullable();
         });
     }
