@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('product_type_id');
             $table->boolean('status')->default(true);
             $table->timestamps();
-            $table->foreign('product_type_id')->references('id')->on('product_types');
+            $table->foreign('product_type_id')->references('id')->on('pidms_product_types');
         });
     }
 

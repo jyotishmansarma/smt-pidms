@@ -22,7 +22,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->double('order_grand_total');
             $table->string('remarks');
             $table->unsignedBigInteger('status')->default(1);
-            $table->foreign('status')->references('id')->on('statuses');
+            $table->foreign('status')->references('id')->on('pidms_statuses');
             $table->boolean('is_verified');
             $table->boolean('is_completed');
             $table->foreign('division_id')->references('id')->on('division_master');

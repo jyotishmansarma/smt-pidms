@@ -15,7 +15,7 @@ class DropStatusFromPurchaseOrder extends Migration
     {
         Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             $table->unsignedBigInteger('status')->after('order_grand_total')->default(1);
-            $table->foreign('status')->references('id')->on('statuses');
+            $table->foreign('status')->references('id')->on('pidms_statuses');
 
         });
     }

@@ -18,8 +18,8 @@ class AddManufactureDealerToPurchaseOrderTable extends Migration
             $table->unsignedBigInteger('dealer_id')->nullable();
             $table->unsignedBigInteger('manufacturer_id')->nullable();
 
-            $table->foreign('dealer_id')->references('id')->on('dealers');
-            $table->foreign('manufacturer_id')->references('id')->on('manufacturers');
+            $table->foreign('dealer_id')->references('id')->on('pidms_dealers');
+            $table->foreign('manufacturer_id')->references('id')->on('pidms_manufacturers');
 
         });
     }

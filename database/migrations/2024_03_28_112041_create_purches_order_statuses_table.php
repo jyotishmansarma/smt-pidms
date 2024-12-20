@@ -21,8 +21,8 @@ class CreatePurchesOrderStatusesTable extends Migration
             $table->unsignedBigInteger('status');
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('purchase_id')->references('id')->on('purchase_orders');
-            $table->foreign('status')->references('id')->on('statuses');
+            $table->foreign('purchase_id')->references('id')->on('pidms_purchase_orders');
+            $table->foreign('status')->references('id')->on('pidms_statuses');
         });
     }
 

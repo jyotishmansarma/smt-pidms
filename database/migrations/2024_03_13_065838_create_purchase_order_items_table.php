@@ -23,10 +23,10 @@ class CreatePurchaseOrderItemsTable extends Migration
             $table->double('quantity');
             $table->double('price');
             $table->double('totalprice');
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->foreign('producttype_id')->references('id')->on('product_types');
-            $table->foreign('dealer_id')->references('id')->on('dealers');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            $table->foreign('product_id')->references('id')->on('pidms_products');
+            $table->foreign('producttype_id')->references('id')->on('pidms_product_types');
+            $table->foreign('dealer_id')->references('id')->on('pidms_dealers');
+            $table->foreign('purchase_order_id')->references('id')->on('pidms_purchase_orders');
             $table->timestamps();
         });
     }

@@ -20,7 +20,7 @@ class CreatePdiCertificatesTable extends Migration
             $table->string('certificate_no');
             $table->timestamp('certificate_date');
             $table->string('certificate_file');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
+            $table->foreign('purchase_order_id')->references('id')->on('pidms_purchase_orders');
             $table->foreign('pdi_agency_id')->references('id')->on('pidms_users');
             $table->timestamps();
         });

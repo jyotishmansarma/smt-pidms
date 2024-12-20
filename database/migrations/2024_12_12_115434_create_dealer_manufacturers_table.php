@@ -15,8 +15,8 @@ class CreateDealerManufacturersTable extends Migration
     {
         Schema::create('pidms_dealer_manufacturers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dealer_id')->constrained('dealers');
-            $table->foreignId('manufacturer_id')->constrained('manufacturers');
+            $table->foreignId('dealer_id')->constrained('pidms_dealers');
+            $table->foreignId('manufacturer_id')->constrained('pidms_manufacturers');
             $table->timestamps();
         });
     }
