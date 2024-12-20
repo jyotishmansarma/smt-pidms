@@ -13,7 +13,7 @@ class CreatePdiAgenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pdi_agencies', function (Blueprint $table) {
+        Schema::create('pidms_pdi_agencies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreatePdiAgenciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pdi_agencies');
+        Schema::dropIfExists('pidms_pdi_agencies');
     }
 }

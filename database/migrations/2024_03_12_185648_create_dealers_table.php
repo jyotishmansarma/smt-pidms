@@ -13,8 +13,12 @@ class CreateDealersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dealers', function (Blueprint $table) {
+        Schema::create('pidms_dealers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('phone_number');
+            $table->string('address');
+            $table->string('gst_no');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateDealersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dealers');
+        Schema::dropIfExists('pidms_dealers');
     }
 }

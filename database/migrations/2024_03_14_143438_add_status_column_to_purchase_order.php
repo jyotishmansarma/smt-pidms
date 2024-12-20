@@ -13,10 +13,8 @@ class AddStatusColumnToPurchaseOrder extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             $table->double('order_grand_total')->after('workorder_no');
-            $table->boolean('is_verified')->after('status');
-            $table->boolean('is_completed')->after('is_verified');
 
         });
     }
@@ -28,7 +26,7 @@ class AddStatusColumnToPurchaseOrder extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
             $table->dropColumn('order_grand_total','is_verified','is_completed');
         });

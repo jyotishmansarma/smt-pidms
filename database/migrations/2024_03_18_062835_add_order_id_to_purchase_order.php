@@ -13,7 +13,7 @@ class AddOrderIdToPurchaseOrder extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             $table->string('order_id')->after('id');
         });
     }
@@ -25,7 +25,7 @@ class AddOrderIdToPurchaseOrder extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             $table->dropColumn('order_id');
         });
     }

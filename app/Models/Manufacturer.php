@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Manufacturer extends Model
 {
     use HasFactory;
+    protected $table = 'pidms_manufacturers';
     protected $fillable = ['name','phone','email','address','cmlno','pidms_user_id'];
     protected $with = ['user'];
     

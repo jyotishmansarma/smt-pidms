@@ -19,97 +19,129 @@ class DealerTableSeeder extends Seeder
     public function run()
     {
         
-        $dealers = DB::table('ipet_dealer')->select('d_name','d_phone','d_address')->get();
+        // $dealers = DB::table('ipet_dealer')->select('d_name','d_phone','d_address')->get();
         
-        foreach($dealers as $dealer) {
-            Dealer::create([
-               'name' => $dealer->d_name,
-               'address' => $dealer->d_address,
-               'phone_number' => $dealer->d_phone,
-               'gst_no' => 'GSN_NO'
+        // foreach($dealers as $dealer) {
+        //     Dealer::create([
+        //        'name' => $dealer->d_name,
+        //        'address' => $dealer->d_address,
+        //        'phone_number' => $dealer->d_phone,
+        //        'gst_no' => 'GSN_NO'
+        //     ]);
+        // }
+
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            DB::table('dealers')->truncate();
+            DB::table('manufacturers')->truncate();
+            DB::table('dealer_manufacturers')->truncate();
+            DB::table('pidms_users')->truncate();
+
+            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+            $upvc_manufacturers =  DB::table('web_data')
+            ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
+            ->where('category', 'Pipe')
+            ->where('type', 'UPVC')
+            ->where('parent_id', NULL)
+            ->get();
+
+
+        foreach($upvc_manufacturers as $upvc_manufacturer){
+
+            $manufacturer_created =  Manufacturer::create([
+                'name' => $upvc_manufacturer->name, 
+                'phone' => $upvc_manufacturer->mobile,
+                'email' => $upvc_manufacturer->email,
+                'address' => $upvc_manufacturer->address,
+                'cmlno' => 'cml_no',
+                'pidms_user_id' => NULL
+
             ]);
-        }
 
+            $username = strtolower(
+                preg_replace('/[^a-zA-Z0-9]/', '', substr($upvc_manufacturer->name, 0, 5))
+            ) . '_upvc_' . mt_rand(1000, 9999);
 
-        //     DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        //     DB::table('dealers')->truncate();
-        //     DB::table('manufacturers')->truncate();
-        //     DB::table('dealer_manufacturers')->truncate();
+            $user_created = User::create([
+                'name'           => $upvc_manufacturer->name,
+                'email'          => $upvc_manufacturer->email,
+                'username'          => $username,
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+            ]);
 
-        //     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-        //     $upvc_manufacturers =  DB::table('web_data')
-        //     ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
-        //     ->where('category', 'Pipe')
-        //     ->where('type', 'UPVC')
-        //     ->where('parent_id', NULL)
-        //     ->get();
-
-        
-
-        // foreach($upvc_manufacturers as $upvc_manufacturer){
-
-        //     $manufacturer_created =  Manufacturer::create([
-        //         'name' => $upvc_manufacturer->name, 
-        //         'phone' => $upvc_manufacturer->mobile,
-        //         'email' => $upvc_manufacturer->email,
-        //         'address' => $upvc_manufacturer->address,
-        //         'cmlno' => 'cml_no',
-        //         'pidms_user_id' => NULL
-
-        //     ]);
-
-        //     $user_created = User::create([
-        //         'name'           => $upvc_manufacturer->name,
-        //         'email'          => $upvc_manufacturer->email,
-        //         'username'          => strtolower(substr($upvc_manufacturer->name, 0, 5)).'_upvc',
-        //         'password'       => bcrypt('password'),
-        //         'remember_token' => null,
-        //     ]);
-
-        //     User::findOrFail($user_created->id)->roles()->sync(3);
+            User::findOrFail($user_created->id)->roles()->sync(3);
             
-        //     $manufacturer_created->pidms_user_id = $user_created->id;
-        //     $manufacturer_created->save();
+            $manufacturer_created->pidms_user_id = $user_created->id;
+            $manufacturer_created->save();
 
-        //     $dealers =  DB::table('web_data')
-        //     ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
-        //     ->where('parent_id', $upvc_manufacturer->id)->get();
+            $dealers =  DB::table('web_data')
+            ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
+            ->where('parent_id', $upvc_manufacturer->id)->get();
 
 
-        //     if($dealers) {
+            if($dealers) {
 
-        //     foreach($dealers as $dealer) {
+            foreach($dealers as $dealer) {
 
-        //         $dealer_created = Dealer::create([
-        //                'name' => $dealer->name,
-        //                'address' => $dealer->address,
-        //                'phone_number' => $dealer->mobile,
-        //                'gst_no' => 'GSN_NO',
-        //                'pidms_user_id' => NULL
-        //         ]);
+                $dealer_by_phone = Dealer::where('phone_number', $dealer->mobile)->first();
 
-        //         $user_created = User::create([
-        //             'name'           => $dealer->name,
-        //             'email'          => $dealer->email,
-        //             'username'       => strtolower(substr($dealer->name, 0, 5)) . '_upvcd',
-        //             'password'       => bcrypt('password'),
-        //             'remember_token' => null,
-        //         ]);
+                if($dealer_by_phone) {
 
-        //         $dealer_created->pidms_user_id = $user_created->id;
-        //         $dealer->save();
+                    DealerManufacturer::create([
+                        'dealer_id' => $dealer_by_phone->id, 
+                        'manufacturer_id' => $manufacturer_created->id
+                    ]);
+                   
+                }else {
 
-        //         User::findOrFail($user_created->id)->roles()->sync(4);
+                    $dealer_by_name = Dealer::where('name', $dealer->name)->first();
 
-        //         DealerManufacturer::create([
-        //             'dealer_id' => $dealer_created->id, 
-        //             'manufacturer_id' => $manufacturer_created->id
-        //         ]);
-        //     }
-        // }
-        // }
+                    if($dealer_by_name) { 
 
-        
+                        DealerManufacturer::create([
+                            'dealer_id' => $dealer_by_name->id, 
+                            'manufacturer_id' => $manufacturer_created->id
+                        ]);
+
+                    }
+
+                    else {
+
+                        $dealer_created = Dealer::create([
+                            'name' => $dealer->name,
+                            'address' => $dealer->address,
+                            'phone_number' => $dealer->mobile,
+                            'gst_no' => 'GSN_NO',
+                            'pidms_user_id' => NULL
+                        ]);
+
+                        $username = strtolower(
+                            preg_replace('/[^a-zA-Z0-9]/', '', substr($dealer->name, 0, 5))
+                        ) . '_upvc_' . mt_rand(1000, 9999);
+    
+                        $user_created = User::create([
+                            'name'           => $dealer->name,
+                            'email'          => $dealer->email,
+                            'username'       => $username,
+                            'password'       => bcrypt('password'),
+                            'remember_token' => null,
+                        ]);
+    
+                        $dealer_created->pidms_user_id = $user_created->id;
+                        $dealer_created->save();
+    
+                        User::findOrFail($user_created->id)->roles()->sync(4);
+    
+                        DealerManufacturer::create([
+                            'dealer_id' => $dealer_created->id, 
+                            'manufacturer_id' => $manufacturer_created->id
+                        ]);
+
+                    }
+                }                
+            }
+        }  
+      }
     }
 }

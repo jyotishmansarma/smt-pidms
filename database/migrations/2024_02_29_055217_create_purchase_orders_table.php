@@ -13,19 +13,25 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_orders', function (Blueprint $table) {
+        Schema::create('pidms_purchase_orders', function (Blueprint $table) {
             $table->id();
             $table->Integer('division_id');
             $table->Integer('scheme_id');
             $table->Integer('contractor_id');
             $table->string('workorder_no');
+            $table->double('order_grand_total');
             $table->string('remarks');
             $table->unsignedBigInteger('status')->default(1);
             $table->foreign('status')->references('id')->on('statuses');
+            $table->boolean('is_verified');
+            $table->boolean('is_completed');
             $table->foreign('division_id')->references('id')->on('division_master');
             $table->foreign('scheme_id')->references('scheme_id')->on('schemes');
             $table->foreign('contractor_id')->references('id')->on('contractors');
             $table->timestamps();
+
+            
+            
         });
     }
 
@@ -36,6 +42,6 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_orders');
+        Schema::dropIfExists('pidms_purchase_orders');
     }
 }

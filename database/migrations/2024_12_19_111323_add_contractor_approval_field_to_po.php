@@ -13,7 +13,7 @@ class AddContractorApprovalFieldToPo extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
             $table->boolean('contractor_approval')->default(false);
         });
@@ -26,7 +26,7 @@ class AddContractorApprovalFieldToPo extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
         });
     }

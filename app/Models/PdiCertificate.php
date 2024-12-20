@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PdiCertificate extends Model
 {
     use HasFactory;
+
+    protected $table = 'pidms_pdi_certificates';
+
     protected $fillable = [
         'purchase_order_id',
         'pdi_agency_id',

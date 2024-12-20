@@ -13,7 +13,7 @@ class CreatePdiCertificatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pdi_certificates', function (Blueprint $table) {
+        Schema::create('pidms_pdi_certificates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_order_id');
             $table->unsignedBigInteger('pdi_agency_id');
@@ -33,6 +33,6 @@ class CreatePdiCertificatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pdi_certificates');
+        Schema::dropIfExists('pidms_pdi_certificates');
     }
 }

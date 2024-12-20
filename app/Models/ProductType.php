@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ProductType extends Model
 {
     use HasFactory;
+    protected $table = 'pidms_product_types';
     protected $fillable = [ 'name'];
 }

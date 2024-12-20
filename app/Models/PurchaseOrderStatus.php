@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseOrderStatus extends Model
 {
     use HasFactory;
+    protected $table = 'pidms_purchase_order_statuses';
     protected $guarded = ['id'];
 
 }

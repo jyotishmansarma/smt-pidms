@@ -13,7 +13,7 @@ class AddUserIdDealersTable extends Migration
      */
     public function up()
     {
-        Schema::table('dealers', function (Blueprint $table) {
+        Schema::table('pidms_dealers', function (Blueprint $table) {
             //
             $table->unsignedBigInteger('pidms_user_id')->nullable();
             $table->foreign('pidms_user_id')->references('id')->on('pidms_users');

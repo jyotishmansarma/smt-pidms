@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('pidms_products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('product_type_id');
@@ -30,6 +30,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('pidms_products');
     }
 }

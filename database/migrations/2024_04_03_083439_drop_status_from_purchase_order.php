@@ -13,9 +13,7 @@ class DropStatusFromPurchaseOrder extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
-            
-//            $table->dropColumn('is_verified','is_completed');
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             $table->unsignedBigInteger('status')->after('order_grand_total')->default(1);
             $table->foreign('status')->references('id')->on('statuses');
 
@@ -29,7 +27,7 @@ class DropStatusFromPurchaseOrder extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
         });
     }

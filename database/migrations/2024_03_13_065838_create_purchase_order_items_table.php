@@ -13,7 +13,7 @@ class CreatePurchaseOrderItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order_items', function (Blueprint $table) {
+        Schema::create('pidms_purchase_order_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('purchase_order_id');
             $table->unsignedBigInteger('producttype_id');
@@ -40,6 +40,6 @@ class CreatePurchaseOrderItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_order_items');
+        Schema::dropIfExists('pidms_purchase_order_items');
     }
 }

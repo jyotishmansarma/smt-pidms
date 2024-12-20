@@ -13,7 +13,7 @@ class AddManufactureDealerToPurchaseOrderTable extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
             $table->unsignedBigInteger('dealer_id')->nullable();
             $table->unsignedBigInteger('manufacturer_id')->nullable();
@@ -31,7 +31,7 @@ class AddManufactureDealerToPurchaseOrderTable extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_orders', function (Blueprint $table) {
+        Schema::table('pidms_purchase_orders', function (Blueprint $table) {
             //
         });
     }

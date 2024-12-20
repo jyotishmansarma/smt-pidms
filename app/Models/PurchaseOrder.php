@@ -9,6 +9,9 @@ use Schema;
 class PurchaseOrder extends Model
 {
     use HasFactory;
+
+    protected $table = 'pidms_purchase_orders';
+
     protected $fillable = [ 
                 'order_id',
                 'division_id',

@@ -13,7 +13,7 @@ class CreateDealerManufacturersTable extends Migration
      */
     public function up()
     {
-        Schema::create('dealer_manufacturers', function (Blueprint $table) {
+        Schema::create('pidms_dealer_manufacturers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('dealer_id')->constrained('dealers');
             $table->foreignId('manufacturer_id')->constrained('manufacturers');
@@ -28,6 +28,6 @@ class CreateDealerManufacturersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dealer_manufacturers');
+        Schema::dropIfExists('pidms_dealer_manufacturers');
     }
 }

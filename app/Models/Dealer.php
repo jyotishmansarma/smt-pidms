@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dealer extends Model
 {
     use HasFactory;
-    protected $table = 'dealers';
+    protected $table = 'pidms_dealers';
     protected $guarded = ['id'];
 
     public function user() {

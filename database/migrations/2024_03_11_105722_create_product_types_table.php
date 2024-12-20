@@ -13,7 +13,7 @@ class CreateProductTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_types', function (Blueprint $table) {
+        Schema::create('pidms_product_types', function (Blueprint $table) {
             $table->id();
             $table->string('name',255);
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateProductTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_types');
+        Schema::dropIfExists('pidms_product_types');
     }
 }

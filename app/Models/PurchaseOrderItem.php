@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PurchaseOrderItem extends Model
 {
     use HasFactory;
+    protected $table = 'pidms_purchase_order_items';
+
     protected $fillable = [
         'purchase_order_id',
         'producttype_id',

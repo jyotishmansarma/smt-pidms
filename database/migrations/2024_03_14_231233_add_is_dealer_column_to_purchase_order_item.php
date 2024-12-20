@@ -13,7 +13,7 @@ class AddIsDealerColumnToPurchaseOrderItem extends Migration
      */
     public function up()
     {
-        Schema::table('purchase_order_items', function (Blueprint $table) {
+        Schema::table('pidms_purchase_order_items', function (Blueprint $table) {
             $table->boolean('is_dealer_exist')->after('product_id');
         });
     }
@@ -25,7 +25,7 @@ class AddIsDealerColumnToPurchaseOrderItem extends Migration
      */
     public function down()
     {
-        Schema::table('purchase_order_items', function (Blueprint $table) {
+        Schema::table('pidms_purchase_order_items', function (Blueprint $table) {
             //[
             $table->dropColumn('is_dealer_exist');
         });
