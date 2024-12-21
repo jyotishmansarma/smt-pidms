@@ -12,12 +12,14 @@
                     <div class="notification bg-primary rounded-circle"></div>
                 </a> --}}
             </li>
-            <li class="nav-item">
-                <a href="{{route('get_myprofile',Crypt::encrypt(Auth::user()->id))}}" class="nav-link">
-                    <i class="ti ti-user fs-6"></i>
-                    <p class="mb-0 fs-3">Update Profile</p>
-                </a>
-            </li>
+            @if( auth()->user()->hasAnyRole(['Dealer']) || auth()->user()->hasAnyRole(['Manufacturer'])   )
+                <li class="nav-item">
+                    <a href="{{route('get_myprofile',Crypt::encrypt(Auth::user()->id))}}" class="nav-link">
+                        <i class="ti ti-user fs-6"></i>
+                        <p class="mb-0 fs-3">Update Profile</p>
+                    </a>
+                </li>
+            @endif
 
             <li class="nav-item">
                 <a href="{{route('change_password',Crypt::encrypt(Auth::user()->id))}}" class="nav-link">
