@@ -14,15 +14,9 @@ class UserCreateForm extends Component
 {
 
     public $user_role;
-    public $user_type;
     public function render()
     {
         $roles = Role::get();
-        $zones = Zone::get();
-        $issuetypes = IssueType::get();
-        $usertypes = userType::get();
-        $division=Division::select('id','division_name')->get();
-        $circle=Circle::get();
-        return view('livewire.user-create-form', compact('roles', 'zones', 'issuetypes','usertypes','division','circle'));
+        return view('livewire.user-create-form', compact('roles'));
     }
 }

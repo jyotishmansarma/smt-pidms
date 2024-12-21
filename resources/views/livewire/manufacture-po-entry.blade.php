@@ -210,7 +210,7 @@
                     <div class="col-md-2">
                         <div class="input_wrap mb-4">
                             <label for="price" class="form-label">Unit price per R.M. (In INR)</label><span style="color:red">&#42;</span>
-                            <input type="text" name='price[]' @error('price') is-invalid @enderror wire:model="product_items.{{ $index }}.price" step="0.01" min="0" class="form-control" oninput="validateInput(this)">
+                            <input type="text" name='price[]' @error('price') is-invalid @enderror wire:model="product_items.{{ $index }}.price" step="0.01" min="0" class="form-control">
                             
                             @error('product_items.'.$index.'.price')
                                 <span class="invalid-feedback" role="alert">
