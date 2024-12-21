@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\PurchaseOrder;
 use App\Models\Status;
+use App\Models\User;
 use Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -46,7 +47,35 @@ class ManufacturePoRejectedList extends Component
         $user = Auth::user();
         $this->statuses = Status::all();
 
-        if ($user->hasAnyRole(['Manufacture'])) {
+
+
+        if($user->hasAnyRole(['Dealer'])) {
+
+            $dealers = User::find(Auth::user()->id)->dealer()->get();
+            $dealer_id = $dealers[0]->id;
+            
+            $purchaseorders = PurchaseOrder::query()
+            ->where('status',4)
+            ->when($this->searchTerm, function ($query) {
+                $query->where('order_id', "LIKE", "%{$this->searchTerm}%");
+                // ->orWhere("contractor_id", "LIKE", "%{$this->search}%")
+                // ->where('status','==','1');
+            })
+            ->when($this->filterStatus, function ($query) {
+                $query->where('status',$this->filterStatus);
+            })
+            // ->when($this->tableStatus !== "", function($query){
+            //     $query->where("status", $this->tableStatus)
+            //     ->where('status','==','1');
+            // })
+            ->where('dealer_id', $dealer_id)
+            ->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+            ->paginate($this->perPage);
+            return view('livewire.manufacture-po-entry-list', compact('purchaseorders'));
+
+        } 
+
+        else if ($user->hasAnyRole(['Manufacturer'])) {
 
         $purchaseorders = PurchaseOrder::query()
             ->where('status',4)

@@ -9,6 +9,7 @@ class Status extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    protected $table = 'pidms_statuses';
 
     public function getStatusColor($name)
     {

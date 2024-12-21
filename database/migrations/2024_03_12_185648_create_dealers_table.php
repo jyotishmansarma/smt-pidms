@@ -17,7 +17,7 @@ class CreateDealersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone_number');
-            $table->string('address');
+            $table->text('address');
             $table->string('gst_no');
             $table->timestamps();
         });

@@ -45,6 +45,7 @@
                         <th >Scheme Name</th>
                         <th >Contractor Name</th>
                         <th >Contractor Bid No</th>
+                        <th >Manufacturer Name</th>
                         <th >Order Status</th>
                         <th >#</th>
                     </tr>
@@ -58,6 +59,7 @@
                             <td >{{ $purchaseorders_item->scheme->scheme_name }}</td>
                             <td >{{ $purchaseorders_item->contractor->name }}</td>
                             <td >{{ $purchaseorders_item->contractor->bid_no }}</td>
+                            <td >{{ $purchaseorders_item->manufacturer->name }}</td>
                             <td >
                                 <span class="badge bg-{{ $purchaseorders_item->postatus->getStatusColor($purchaseorders_item->postatus->name) }}">
                                      {{ $purchaseorders_item->postatus->name }}

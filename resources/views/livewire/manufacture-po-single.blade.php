@@ -142,6 +142,8 @@
                     </tbody>
                 </table>
                     </div>
+                    
+                    @if( auth()->user()->hasAnyRole(['Manufacturer']) )
 
                     <div class="row">
                         <div class="col-md-8">
@@ -202,6 +204,10 @@
                              
                         </div>
                     </div>
+
+                    @endif
+
+
                 </div>
             </div>
     </div>

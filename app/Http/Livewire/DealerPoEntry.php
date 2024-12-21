@@ -196,7 +196,8 @@ class DealerPoEntry extends Component
         $validated = $this->validate([
             'selectedManufacturer' => 'required|integer',
             'selectedDivision' => 'required|integer',
-            'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id',
+            // 'selectedScheme' => 'required|integer|unique:purchase_orders,scheme_id',
+            'selectedScheme' => 'required|integer',
             'selectedContractor' => 'required|integer',
             'acceptDeclaration' => 'required|boolean|accepted',
             'product_items.*.selectedProductType' => 'required|integer',
@@ -228,7 +229,7 @@ class DealerPoEntry extends Component
             'contractor_id' => $this->selectedContractor,
             'workorder_no' => 'workorder_no',
             'order_grand_total' => 0.00,
-            'status' => 2,
+            'status' => 1,
             'remarks' => '',
             'dealer_id' => $dealer_id,
             'manufacturer_id' => $this->selectedManufacturer,
@@ -273,12 +274,6 @@ class DealerPoEntry extends Component
                     'purchase_id'=>$order_created->id,
                     'created_by'=> Auth::user()->id,
                     'status'=>1
-                ],
-
-                [
-                    'purchase_id'=>$order_created->id,
-                    'created_by'=> Auth::user()->id,
-                    'status'=>2
                 ]
             ]);
 

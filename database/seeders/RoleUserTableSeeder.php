@@ -12,9 +12,13 @@ class RoleUserTableSeeder extends Seeder
      *
      * @return void
      */
+
+     const ROLE_ADMIN = 1;
+     const ROLE_DEALER = 4;
+
     public function run()
     {
-        User::findOrFail(1)->roles()->sync(1);
-        User::findOrFail(2)->roles()->sync(2);
+        User::findOrFail(1)->roles()->sync(self::ROLE_ADMIN);
+        User::findOrFail(2)->roles()->sync(self::ROLE_DEALER);
     }
 }

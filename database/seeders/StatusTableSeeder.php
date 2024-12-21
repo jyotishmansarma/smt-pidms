@@ -16,25 +16,30 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         $roles = [
-//           [
-//               'name' => 'Initiated',
-//           ],
-//           [
-//               'name' => 'Acknowledged',
-//           ],
-//           [
-//               'name' => 'Verified',
-//           ], [
-//               'name' => 'Not Verified',
-//           ],[
-//               'name' => 'On Process',
-//           ],[
-//               'name' => 'PDI Call',
-//           ],[
-//               'name' => 'Delivered',
-//           ],[
-//               'name' => 'Received',
-//           ],
+            [
+                'name' => 'Initiated',
+            ],
+            [
+                'name' => 'Acknowledged',
+            ],
+            [
+                'name' => 'Verified',
+            ], 
+            [
+                'name' => 'Not Verified',
+            ],
+            [
+                'name' => 'On Process',
+            ],
+            [
+                'name' => 'PDI Call',
+            ],
+            [
+                'name' => 'Delivered',
+            ],
+            [
+                'name' => 'Received',
+            ],
             [
                 'name' => 'Resubmitted',
             ],

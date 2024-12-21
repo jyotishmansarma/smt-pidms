@@ -26,7 +26,7 @@ class PurchaseOrder extends Model
                 'manufacturer_id'
             ];
 
-    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'pidms_user','postatus', 'purchase_order_statuses'];
+    protected $with = [ 'division', 'scheme', 'contractor', 'purchase_item','pdi_certificate', 'manufacturer', 'pidms_user','postatus', 'purchase_order_statuses'];
 
     protected $casts = [
         'order_grand_total' => 'decimal:2'
@@ -59,6 +59,10 @@ class PurchaseOrder extends Model
 
     public function pidms_user() {
         return $this->belongsTo(User::class,'pidms_user_id','id');
+    }
+
+    public function manufacturer() {
+        return $this->hasOne(Manufacturer::class,'id','manufacturer_id');
     }
 
     public function postatus() {

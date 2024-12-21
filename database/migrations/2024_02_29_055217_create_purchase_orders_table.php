@@ -23,8 +23,6 @@ class CreatePurchaseOrdersTable extends Migration
             $table->string('remarks');
             $table->unsignedBigInteger('status')->default(1);
             $table->foreign('status')->references('id')->on('pidms_statuses');
-            $table->boolean('is_verified');
-            $table->boolean('is_completed');
             $table->foreign('division_id')->references('id')->on('division_master');
             $table->foreign('scheme_id')->references('scheme_id')->on('schemes');
             $table->foreign('contractor_id')->references('id')->on('contractors');

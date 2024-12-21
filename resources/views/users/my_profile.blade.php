@@ -13,42 +13,48 @@
                 <div class="card-body">
                     <form action="{{route('update_myprofile',['id' => $user->id])}}" method="post">
                         @csrf
-                        <fieldset disabled>
-
+                       
                             <div class="mb-3">
                                 <div class="row">
+                                    <fieldset disabled>
                                     <div class="col-sm">
                                         <label for="disabledTextInput" class="form-label">Name</label>
                                         <input type="text" value="{{$user->name}}" class="form-control" placeholder="Disabled input">
                                     </div>
-
+                                    </fieldset>
 
                                 </div>
                                 <div class="row">
                                     <div class="col-sm">
-                                        <label for="disabledTextInput" class="form-label">Contact number</label>
-                                        <input type="text" value="{{$user->contact_number}}" class="form-control" placeholder="Disabled input">
+                                        <fieldset disabled>
+                                            <label for="disabledTextInput" class="form-label">Contact number</label>
+                                            <input type="text" value="{{ $user->profile->phone_number }}" class="form-control" placeholder="Disabled input">
+                                        </fieldset>
                                     </div>
                                     <div class="col-sm">
                                         <label for="disabledTextInput" class="form-label">Email</label>
-                                        <input type="text" value="{{$user->email}}" class="form-control" placeholder="Disabled input">
+                                        <input type="text" value="{{$user->email}}" class="form-control" placeholder="Email">
+                                        @error('email')
+                                        <span style="color: red">{{ $message }}</span>
+                                        @enderror
                                     </div>
+                                    </div>
+                        
 
-
-                                </div>
-                        </fieldset>
                                 <div class="row">
                                     <div class="col-sm">
-                                        <label for="disabledTextInput" class="form-label">Password</label>
-                                        <input type="password" value="" name="password" class="form-control" placeholder="Password">
-                                        @error('password')
+                                        <label for="disabledTextInput" class="form-label">Address</label>
+                                        <textarea name="address" class="form-control" placeholder="Address">
+                                            {{ $user->profile->address }}
+                                        </textarea>
+                                        @error('address')
                                         <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-sm">
-                                        <label for="disabledTextInput" class="form-label">Confirm password</label>
-                                        <input type="password" value="" name="password_confirmation" class="form-control" placeholder="Confirm password">
-                                        @error('password')
+                                        <label for="disabledTextInput" class="form-label">GST No</label>
+                                        <input type="text" value="" name="gst_no" class="form-control" placeholder="GST No.">
+                                        @error('gst_no')
                                         <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>

@@ -53,10 +53,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-search-issue-details/{id}', [ \App\Http\Controllers\IssueTrackingController::class, 'search_issue_details'])->name('get_search_issue_details');
     Route::post('/issue_update', [ \App\Http\Controllers\IssueTrackingController::class, 'issue_update'])->name('issue_update');
     Route::get('/issue_update/{id}', [ \App\Http\Controllers\IssueTrackingController::class, 'delete'])->name('delete');
+    
+    
     Route::get('/my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'get_myprofile'])->name('get_myprofile');
     Route::post('/update-my-profile/{id}', [ \App\Http\Controllers\UserCreateController::class, 'update_myprofile'])->name('update_myprofile');
 
+    Route::get('/password-change/{id}', [ \App\Http\Controllers\UserCreateController::class, 'change_password'])->name('change_password');
+
+    Route::post('/update-password/{id}', [ \App\Http\Controllers\UserCreateController::class, 'update_password'])->name('update_password');
+
+    
+
 
 });
-
 

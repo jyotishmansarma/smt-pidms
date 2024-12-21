@@ -6,20 +6,30 @@
                     <i class="ti ti-menu-2"></i>
                 </a>
             </li>
-            <li class="nav-item">
-{{--                <a class="nav-link nav-icon-hover" href="javascript:void(0)">--}}
-{{--                    <i class="ti ti-bell-ringing"></i>--}}
-{{--                    <div class="notification bg-primary rounded-circle"></div>--}}
-{{--                </a>--}}
-
-                @if(Auth::user()->role_user->role_id==2)
-                     {{-- <h4>User Type: {{Auth::user()->userType->name}} user</h4> --}}
-                @endif
+            {{-- <li class="nav-item">
+               <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                    <i class="ti ti-bell-ringing"></i>
+                    <div class="notification bg-primary rounded-circle"></div>
+                </a> --}}
             </li>
+            <li class="nav-item">
+                <a href="{{route('get_myprofile',Crypt::encrypt(Auth::user()->id))}}" class="nav-link">
+                    <i class="ti ti-user fs-6"></i>
+                    <p class="mb-0 fs-3">Update Profile</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{route('change_password',Crypt::encrypt(Auth::user()->id))}}" class="nav-link">
+                    <i class="ti ti-user fs-6"></i>
+                    <p class="mb-0 fs-3">Change password</p>
+                </a>
+            </li>
+
         </ul>
         <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-                <h4>  {{Auth::user()->name}}</h4>
+                <h4>  {{Auth::user()->name}}</h4> <br/>
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                        aria-expanded="false">

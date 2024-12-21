@@ -16,14 +16,20 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         //admin
-        $admin_permissions = Permission::all();
-        Role::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
+        $all_permissions = Permission::all();
 
-//        $user_permissions = $admin_permissions->filter(function ($permission) {
-//            return substr($permission->title, 0, 5) != 'user_';
-//        });
-        $user_permissions = $admin_permissions->where('title','purchase')->pluck('id');
+        $admin_titles = ['list_purchase', 'edit_purchase'];
+        $admin_permissions = $all_permissions->whereIn('title', $admin_titles)->pluck('id');
+        Role::findOrFail(1)->permissions()->sync($admin_permissions);
+
         //manufacture
-        Role::findOrFail(3)->permissions()->sync($user_permissions);
+        $manufacturerp_titles = ['old_purchase_entry', 'list_purchase', 'edit_purchase'];
+        $manufacturer_permissions = $all_permissions->whereIn('title', $manufacturerp_titles)->pluck('id');
+        Role::findOrFail(3)->permissions()->sync($manufacturer_permissions);
+
+        //dealer
+        $dealerp_titles = ['create_purchase', 'list_purchase', 'edit_purchase'];
+        $dealer_permissions = $all_permissions->whereIn('title',$dealerp_titles)->pluck('id');
+        Role::findOrFail(4)->permissions()->sync($dealer_permissions);
     }
 }

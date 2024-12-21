@@ -9,7 +9,7 @@ use App\Models\User;
 use DB;
 use Illuminate\Database\Seeder;
 
-class DealerTableSeeder extends Seeder
+class UserDealManuTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,53 +18,54 @@ class DealerTableSeeder extends Seeder
      */
     public function run()
     {
-        
-        // $dealers = DB::table('ipet_dealer')->select('d_name','d_phone','d_address')->get();
-        
-        // foreach($dealers as $dealer) {
-        //     Dealer::create([
-        //        'name' => $dealer->d_name,
-        //        'address' => $dealer->d_address,
-        //        'phone_number' => $dealer->d_phone,
-        //        'gst_no' => 'GSN_NO'
-        //     ]);
-        // }
 
+
+    
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            DB::table('dealers')->truncate();
-            DB::table('manufacturers')->truncate();
-            DB::table('dealer_manufacturers')->truncate();
+            DB::table('pidms_dealers')->truncate();
+            DB::table('pidms_manufacturers')->truncate();
+            DB::table('pidms_dealer_manufacturers')->truncate();
             DB::table('pidms_users')->truncate();
 
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-            $upvc_manufacturers =  DB::table('web_data')
+            $user = [
+                'name'           => 'Admin',
+                'email'          => 'admin@admin.com',
+                'username'          => 'admin',
+                'password'       => bcrypt('password'),
+                'remember_token' => null,
+            ];
+            $user = User::create($user);
+            User::findOrFail($user->id)->roles()->sync(1);
+
+
+            $manufacturers =  DB::table('web_data')
             ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
             ->where('category', 'Pipe')
-            ->where('type', 'UPVC')
             ->where('parent_id', NULL)
             ->get();
 
 
-        foreach($upvc_manufacturers as $upvc_manufacturer){
+        foreach($manufacturers as $manufacturer){
 
             $manufacturer_created =  Manufacturer::create([
-                'name' => $upvc_manufacturer->name, 
-                'phone' => $upvc_manufacturer->mobile,
-                'email' => $upvc_manufacturer->email,
-                'address' => $upvc_manufacturer->address,
+                'name' => $manufacturer->name, 
+                'phone' => trim($manufacturer->mobile),
+                'email' => $manufacturer->email,
+                'address' => $manufacturer->address,
                 'cmlno' => 'cml_no',
                 'pidms_user_id' => NULL
 
             ]);
 
             $username = strtolower(
-                preg_replace('/[^a-zA-Z0-9]/', '', substr($upvc_manufacturer->name, 0, 5))
-            ) . '_upvc_' . mt_rand(1000, 9999);
+                preg_replace('/[^a-zA-Z0-9]/', '', substr($manufacturer->name, 0, 5))
+             . '_'.$manufacturer->type . mt_rand(1000, 9999));
 
             $user_created = User::create([
-                'name'           => $upvc_manufacturer->name,
-                'email'          => $upvc_manufacturer->email,
+                'name'           => $manufacturer->name,
+                'email'          => $manufacturer->email,
                 'username'          => $username,
                 'password'       => bcrypt('password'),
                 'remember_token' => null,
@@ -77,30 +78,24 @@ class DealerTableSeeder extends Seeder
 
             $dealers =  DB::table('web_data')
             ->select('id', 'category', 'type', 'parent_id', 'name', 'address', 'mobile', 'email')
-            ->where('parent_id', $upvc_manufacturer->id)->get();
+            ->where('parent_id', $manufacturer->id)->get();
 
 
             if($dealers) {
 
             foreach($dealers as $dealer) {
 
-                $dealer_by_phone = Dealer::where('phone_number', $dealer->mobile)->first();
+                
 
-                if($dealer_by_phone) {
+                if($dealer->mobile) {
 
-                    DealerManufacturer::create([
-                        'dealer_id' => $dealer_by_phone->id, 
-                        'manufacturer_id' => $manufacturer_created->id
-                    ]);
-                   
-                }else {
+                    $dealer_by_phone = Dealer::where('phone_number', trim($dealer->mobile))->first();
 
-                    $dealer_by_name = Dealer::where('name', $dealer->name)->first();
 
-                    if($dealer_by_name) { 
+                    if($dealer_by_phone)  {
 
-                        DealerManufacturer::create([
-                            'dealer_id' => $dealer_by_name->id, 
+                        DealerManufacturer::firstOrCreate([
+                            'dealer_id' => $dealer_by_phone->id, 
                             'manufacturer_id' => $manufacturer_created->id
                         ]);
 
@@ -111,14 +106,14 @@ class DealerTableSeeder extends Seeder
                         $dealer_created = Dealer::create([
                             'name' => $dealer->name,
                             'address' => $dealer->address,
-                            'phone_number' => $dealer->mobile,
+                            'phone_number' => trim($dealer->mobile),
                             'gst_no' => 'GSN_NO',
                             'pidms_user_id' => NULL
                         ]);
 
                         $username = strtolower(
                             preg_replace('/[^a-zA-Z0-9]/', '', substr($dealer->name, 0, 5))
-                        ) . '_upvc_' . mt_rand(1000, 9999);
+                         . '_'.$dealer->type. mt_rand(1000, 9999));
     
                         $user_created = User::create([
                             'name'           => $dealer->name,
@@ -138,10 +133,11 @@ class DealerTableSeeder extends Seeder
                             'manufacturer_id' => $manufacturer_created->id
                         ]);
 
-                    }
-                }                
+                    }   
+                   
+                }             
             }
-        }  
+         }  
       }
     }
 }

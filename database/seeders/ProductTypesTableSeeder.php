@@ -23,7 +23,6 @@ class ProductTypesTableSeeder extends Seeder
                 'name' => 'PPR'
 
             ],
-
             [
                 'name' => 'HDPE'
 

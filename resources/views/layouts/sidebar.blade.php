@@ -10,6 +10,21 @@
                 <i class="ti ti-x fs-8"></i>
             </div>
         </div>
+        <div class="px-4 ">
+        <p class="badge bg-primary">
+            @if(Auth::user()->hasAnyRole(['Dealer']))
+                Dealer
+                @elseif(Auth::user()->hasAnyRole(['Admin']))
+                Admin
+                @elseif(Auth::user()->hasAnyRole(['TPIA']))
+                TPIA
+                @elseif(Auth::user()->hasAnyRole(['Manufacturer']))
+                Manufacturer
+                @endif
+
+                Dashboard
+        </p>
+        </div>
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
             <ul id="sidebarnav">
@@ -30,7 +45,7 @@
                         <span class="hide-menu">Purchase</span>
                     </li>
                 
-                 @can('create_purchase')
+                 @can('old_purchase_entry')
                     <li class="sidebar-item">
                         <a class="sidebar-link" href="{{ route('purchase.create') }}" aria-expanded="false"> 
                             <span> <i class="ti ti-article"></i> </span> <span class="hide-menu">Create PO (FOR OLD DATA) </span>
@@ -38,7 +53,7 @@
                     </li>
                 @endcan
 
-                @can('init_purchase')
+                @can('create_purchase')
 
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('purchase.init') }}" aria-expanded="false"> 

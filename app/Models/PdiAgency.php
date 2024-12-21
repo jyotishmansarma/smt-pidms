@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PdiAgency extends Model
 {
     use HasFactory;
-    protected $table = 'pidms_pdiagencies';
+    protected $table = 'pidms_pdi_agencies';
     protected $fillable = ['name'];
 }

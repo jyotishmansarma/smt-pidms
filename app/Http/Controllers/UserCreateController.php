@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Role;
+use Monolog\Handler\IFTTTHandler;
+
 class UserCreateController extends Controller
 {
     /**
@@ -97,6 +99,32 @@ class UserCreateController extends Controller
     {
 
         $validatedData = $request->validate([
+            'address' => 'required|string',
+            'gst_no' => 'required|string',
+
+
+        ]);
+
+        User::where('id',$id)->update(
+            
+        );
+
+        return redirect()->back()->with('success', 'Update profile Successfully');
+    }
+
+
+    public  function  change_password($id)
+    {
+        $id=\Crypt::decrypt($id);
+        $user= User::where('id',$id)->first();
+        return view('users.change_password',compact('user'));
+    }
+
+
+    public function update_password(Request $request ,$id)
+    {
+
+        $validatedData = $request->validate([
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
 
@@ -107,4 +135,5 @@ class UserCreateController extends Controller
 
         return redirect()->back()->with('success', 'Update profile Successfully');
     }
+
 }

@@ -22,11 +22,11 @@ class PermissionTableSeeder extends Seeder
                 'title' => 'list_purchase',
             ],
             [
-                'title' => 'purchase',
-            ],
-            [
                 'title' => 'edit_purchase',
             ],
+            [
+                'title' => 'old_purchase_entry',
+            ]
         ];
 
         Permission::insert($permissions);
