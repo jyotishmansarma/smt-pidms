@@ -33,7 +33,7 @@
                                     </div>
                                     <div class="col-sm">
                                         <label for="disabledTextInput" class="form-label">Email</label>
-                                        <input type="text" value="{{$user->email}}" class="form-control" placeholder="Email">
+                                        <input type="text" name="email"  value="{{$user->email}}" class="form-control" placeholder="Email">
                                         @error('email')
                                         <span style="color: red">{{ $message }}</span>
                                         @enderror
@@ -44,16 +44,14 @@
                                 <div class="row">
                                     <div class="col-sm">
                                         <label for="disabledTextInput" class="form-label">Address</label>
-                                        <textarea name="address" class="form-control" placeholder="Address">
-                                            {{ $user->profile->address }}
-                                        </textarea>
+                                        <textarea name="address" class="form-control" placeholder="Address">{{ $user->profile->address }}</textarea>
                                         @error('address')
                                         <span style="color: red">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-sm">
                                         <label for="disabledTextInput" class="form-label">GST No</label>
-                                        <input type="text" value="" name="gst_no" class="form-control" placeholder="GST No.">
+                                        <input type="text" value="{{ $user->profile->gst_no }}" name="gst_no" class="form-control" placeholder="GST No.">
                                         @error('gst_no')
                                         <span style="color: red">{{ $message }}</span>
                                         @enderror

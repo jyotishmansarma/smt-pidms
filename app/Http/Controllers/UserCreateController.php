@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dealer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -99,15 +100,21 @@ class UserCreateController extends Controller
     {
 
         $validatedData = $request->validate([
+            'email' =>  'required|string',
             'address' => 'required|string',
-            'gst_no' => 'required|string',
-
+            'gst_no' => 'required|string'
 
         ]);
 
-        User::where('id',$id)->update(
-            
+        User::where('id',$id)->update([
+            'email' => $request->email
+            ]
         );
+        
+        Dealer::where('pidms_user_id',$id)->update([
+            'address' => $request->address,
+            'gst_no'  => $request->gst_no
+        ]);  
 
         return redirect()->back()->with('success', 'Update profile Successfully');
     }
